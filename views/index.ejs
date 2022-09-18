@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Bulma!</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/eefa1d8796.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="bg-dark">
+        <div class="container">
+            <h1 class="h1 is-size-1 text-white pt-2">
+                Waiter Duty Program
+            </h1>
+            <p class="subtitle is-size-5 text-white pb-4">
+                A website that makes organizing <strong class="has-text-white">Waiter Duty Rosters</strong> easier!
+            </p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <h1 class="title col-3">
+                Cadets:
+            </h1>
+        </div>
+        <div class="row">
+            <div class="col-1">
+                <button class="btn btn-dark mt-2" onclick="toggleDay('monday')">
+                    <span class="text-white is-size-4">
+                        Monday
+                    </span>
+                </button>
+            </div>
+            <div class="col-1">
+                <button class="btn btn-dark mt-2" onclick="toggleDay('tuesday')">
+                    <span class="text-white is-size-4">
+                        Tuesday
+                    </span>
+                </button>
+            </div>
+            <div class="col-1">
+                <button class="btn btn-dark mt-2" onclick="toggleDay('thursday')">
+                    <span class="text-white is-size-4">
+                        Thursday
+                    </span>
+                </button>
+            </div>
+            <div class="col-1">
+                <button class="btn btn-dark mt-2" onclick="toggleDay('friday')">
+                    <span class="text-white is-size-4">
+                        Friday
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-10">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Cadet Name</th>
+                            <th>Lunches</th>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <% cadetList.forEach((cadet) => { %>
+                            <th class = "<%= cadet.cadetName %>"><%= cadet.cadetName %></th>
+                            <th>|</th>
+                            <th class = "monday <%= cadet.parsedLunchTimes[0] %>"><%= cadet.parsedLunchTimes[0] %></th>
+                            <th class = "tuesday <%= cadet.parsedLunchTimes[1] %>"><%= cadet.parsedLunchTimes[1] %></th>
+                            <th class = "wednesday <%= cadet.parsedLunchTimes[2] %>"><%= cadet.parsedLunchTimes[2] %></th>
+                            <th class = "thursday <%= cadet.parsedLunchTimes[3] %>"><%= cadet.parsedLunchTimes[3] %></th>
+                            <th class = "friday <%= cadet.parsedLunchTimes[4] %>"><%= cadet.parsedLunchTimes[4] %></th>
+                        <% })%> 
+                    </tbody>
+                    <tfoot class="bg-light">
+                        <tr>
+                            <th>Example Cadet</th>
+                            <th>|</th>
+                            <th>1st</th>
+                            <th>2nd</th>
+                            <th>2nd</th>
+                            <th>3rd</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="col">
+                <button class="btn btn-primary rounded-circle" data-toggle="modal" data-target="#cadet-modal">
+                    <span class="icon">
+                        <i class="fa-solid fa-plus"></i>
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-6">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Monday</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="mondayTable">
+                        <% if(mon) { %> 
+                            <th>Breakfast</th><th><%= mon.breakfast.join(", ") %></th>
+                            <th>1st Lunch</th><th><%= mon.lunches.firstLunch.join(", ") %></th>
+                            <th>2nd Lunch</th><th><%= mon.lunches.secondLunch.join(", ") %></th>
+                            <th>3rd Lunch</th><th><%= mon.lunches.thirdLunch.join(", ") %></th>
+                            <th>1st Dinner</th><th><%= mon.dinners.firstDinner.join(", ") %></th>
+                            <th>2nd Dinner</th><th><%= mon.dinners.secondDinner.join(", ") %></th>
+                        <% } %> 
+                    </tbody>
+                    <tfoot class="bg-light">
+                        <tr>
+                            <th>Shift</th>
+                            <th>Cadets on Duty</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-6">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Tuesday</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tuesdayTable">
+                        <% if(tues) { %> 
+                            <th>Breakfast</th><th><%= tues.breakfast.join(", ") %></th>
+                            <th>1st Lunch</th><th><%= tues.lunches.firstLunch.join(", ") %></th>
+                            <th>2nd Lunch</th><th><%= tues.lunches.secondLunch.join(", ") %></th>
+                            <th>3rd Lunch</th><th><%= tues.lunches.thirdLunch.join(", ") %></th>
+                            <th>1st Dinner</th><th><%= tues.dinners.firstDinner.join(", ") %></th>
+                            <th>2nd Dinner</th><th><%= tues.dinners.secondDinner.join(", ") %></th>
+                        <% } %> 
+                    </tbody>
+                    <tfoot class="bg-light">
+                        <tr>
+                            <th>Shift</th>
+                            <th>Cadets on Duty</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-6">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Wednesday</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="wednesdayTable">
+                        <% if(wed) { %> 
+                            <th>Breakfast</th><th><%= wed.breakfast.join(", ") %></th>
+                            <th>1st Lunch</th><th><%= wed.lunches.firstLunch.join(", ") %></th>
+                            <th>2nd Lunch</th><th><%= wed.lunches.secondLunch.join(", ") %></th>
+                            <th>3rd Lunch</th><th><%= wed.lunches.thirdLunch.join(", ") %></th>
+                            <th>1st Dinner</th><th><%= wed.dinners.firstDinner.join(", ") %></th>
+                            <th>2nd Dinner</th><th><%= wed.dinners.secondDinner.join(", ") %></th>
+                        <% } %> 
+                    </tbody>
+                    <tfoot class="bg-light">
+                        <tr>
+                            <th>Shift</th>
+                            <th>Cadets on Duty</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-6">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Thursday</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="thursdayTable">
+                        <% if(thurs) { %> 
+                            <th>Breakfast</th><th><%= thurs.breakfast.join(", ") %></th>
+                            <th>1st Lunch</th><th><%= thurs.lunches.firstLunch.join(", ") %></th>
+                            <th>2nd Lunch</th><th><%= thurs.lunches.secondLunch.join(", ") %></th>
+                            <th>3rd Lunch</th><th><%= thurs.lunches.thirdLunch.join(", ") %></th>
+                            <th>1st Dinner</th><th><%= thurs.dinners.firstDinner.join(", ") %></th>
+                            <th>2nd Dinner</th><th><%= thurs.dinners.secondDinner.join(", ") %></th>
+                        <% } %> 
+                    </tbody>
+                    <tfoot class="bg-light">
+                        <tr>
+                            <th>Shift</th>
+                            <th>Cadets on Duty</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-6">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Friday</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="fridayTable">
+                        <% if(fri) { %> 
+                            <th>Breakfast</th><th><%= fri.breakfast.join(", ") %></th>
+                            <th>1st Lunch</th><th><%= fri.lunches.firstLunch.join(", ") %></th>
+                            <th>2nd Lunch</th><th><%= fri.lunches.secondLunch.join(", ") %></th>
+                            <th>3rd Lunch</th><th><%= fri.lunches.thirdLunch.join(", ") %></th>
+                            <th>1st Dinner</th><th><%= fri.dinners.firstDinner.join(", ") %></th>
+                            <th>2nd Dinner</th><th><%= fri.dinners.secondDinner.join(", ") %></th>
+                        <% } %> 
+                    </tbody>
+                    <tfoot class="bg-light">
+                        <tr>
+                            <th>Shift</th>
+                            <th>Cadets on Duty</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-primary mt-2" onclick="">
+                    <span class="text-white is-size-4">
+                        Create Roster
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <span id="warningText" class="text-danger is-size-6 ">
+                    Not Enough People to Fill Each Lunch Slot
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-warning mt-2" onclick="viewPastEntries()" data-toggle="modal" data-target="#past-cadets">
+                    <span class="text-white is-size-4">
+                        View Past Cadets
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-warning mt-2" onclick="updateStudents()">
+                    <span class="text-white is-size-4">
+                        Update Past Cadets
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-warning mt-2" onclick="loadStudents()">
+                    <span class="text-white is-size-4">
+                        Load Past Cadets
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-warning mt-2" onclick="clearEntries()">
+                    <span class="text-white is-size-4">
+                        Clear Past Entries
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button type="but" class="btn btn-danger mt-2" onclick="clearTable()" title="Will Also Clear Saved Data" data-toggle="tooltip" data-placement="top">
+                    <span class="text-white is-size-4">
+                        Clear Table Content
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="past-cadets" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">View Past Entries</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="container">
+                            <p class="h5">
+                                Past Cadets:
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <table class="table table-hover table-sm">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Cadet Name</th>
+                                        <th>Lunches</th>
+                                        <th>Monday</th>
+                                        <th>Tuesday</th>
+                                        <th>Thursday</th>
+                                        <th>Friday</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="pastEntries">
+                                </tbody>
+                                <tfoot class="has-background-light">
+                                    <tr>
+                                        <th>Example Cadet</th>
+                                        <th>|</th>
+                                        <th>1st</th>
+                                        <th>2nd</th>
+                                        <th>2nd</th>
+                                        <th>3rd</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary text-white" onclick="" data-dismiss="modal">Leave</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="cadet-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cadet Information</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <p class="h5">
+                                Cadet Name:
+                            </p>
+                            <div class="input-group mb-3">
+                                <input id="cadetName" type="text" class="form-control" placeholder="Example Person" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <p class="h5">
+                                Monday Lunch:
+                            </p>
+                        </div>
+                        <div class="row mb-2">
+                            <select id="monLunch" class="form-select mb-3 pt-1 pb-1" aria-label="Default select example">
+                                <option selected>Daily Lunches</option>
+                                <option value="1st Lunch">1st Lunch</option>
+                                <option value="2nd Lunch">2nd Lunch</option>
+                                <option value="3rd Lunch">3rd Lunch</option>
+                                <option value="Free">Free Period</option>
+                                <option value="None Available">Can't Make It</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <p class="h5">
+                                Tuesday Lunch:
+                            </p>
+                        </div>
+                        <div class="row mb-2">
+                            <select id="tuesLunch" class="form-select mb-3 pt-1 pb-1" aria-label="Default select example">
+                                <option selected>Daily Lunches</option>
+                                <option value="1st Lunch">1st Lunch</option>
+                                <option value="2nd Lunch">2nd Lunch</option>
+                                <option value="3rd Lunch">3rd Lunch</option>
+                                <option value="Free">Free Period</option>
+                                <option value="None Available">Can't Make It</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <p class="h5">
+                                Thursday Lunch:
+                            </p>
+                        </div>
+                        <div class="row mb-2">
+                            <select id="thursLunch" class="form-select mb-3 pt-1 pb-1" aria-label="Default select example">
+                                <option selected>Daily Lunches</option>
+                                <option value="1st Lunch">1st Lunch</option>
+                                <option value="2nd Lunch">2nd Lunch</option>
+                                <option value="3rd Lunch">3rd Lunch</option>
+                                <option value="Free">Free Period</option>
+                                <option value="None Available">Can't Make It</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <p class="h5">
+                                Friday Lunch:
+                            </p>
+                        </div>
+                        <div class="row mb-2">
+                            <select id="friLunch" class="form-select mb-3 pt-1 pb-1" aria-label="Default select example">
+                                <option selected>Daily Lunches</option>
+                                <option value="1st Lunch">1st Lunch</option>
+                                <option value="2nd Lunch">2nd Lunch</option>
+                                <option value="3rd Lunch">3rd Lunch</option>
+                                <option value="Free">Free Period</option>
+                                <option value="None Available">Can't Make It</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary text-white" onclick="" data-dismiss="modal">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="main.js" ></script>
+</body>
+</html>
