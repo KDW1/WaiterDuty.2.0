@@ -34,3 +34,5 @@ class Cadet {
         }
     }
 }
+
+module.exports = Cadet

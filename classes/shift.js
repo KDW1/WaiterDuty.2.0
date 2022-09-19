@@ -78,3 +78,5 @@ class Shift {
         console.log(`On ${this.day} | ${this.assignedPerson} has waiter duty during ${this.period}\n`);
     }
 }
+
+module.exports = Shift

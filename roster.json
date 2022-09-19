@@ -1,1 +1,124 @@
-utf8
+{
+    "rosters": {
+        "monday": {
+            "breakfast": [
+
+            ],
+            "lunches": {
+                "first": [
+
+                ],
+                "second": [
+
+                ], 
+                "third": [
+
+                ]
+            },
+            "dinners": {
+                "first": [
+
+                ],
+                "second": [
+
+                ]
+            }
+        },
+        "tuesday": {
+            "breakfast": [
+
+            ],
+            "lunches": {
+                "first": [
+
+                ],
+                "second": [
+
+                ], 
+                "third": [
+
+                ]
+            },
+            "dinners": {
+                "first": [
+
+                ],
+                "second": [
+                    
+                ]
+            }
+        },
+        "wednesday": {
+            "breakfast": [
+
+            ],
+            "lunches": {
+                "first": [
+
+                ],
+                "second": [
+
+                ], 
+                "third": [
+
+                ]
+            },
+            "dinners": {
+                "first": [
+
+                ],
+                "second": [
+                    
+                ]
+            }
+        },
+        "thursday": {
+            "breakfast": [
+
+            ],
+            "lunches": {
+                "first": [
+
+                ],
+                "second": [
+
+                ], 
+                "third": [
+
+                ]
+            },
+            "dinners": {
+                "first": [
+
+                ],
+                "second": [
+                    
+                ]
+            }
+        },
+        "friday": {
+            "breakfast": [
+
+            ],
+            "lunches": {
+                "first": [
+
+                ],
+                "second": [
+
+                ], 
+                "third": [
+
+                ]
+            },
+            "dinners": {
+                "first": [
+
+                ],
+                "second": [
+                    
+                ]
+            }
+        }
+    }
+}

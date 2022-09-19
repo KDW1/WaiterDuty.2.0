@@ -191,3 +191,5 @@ class Day {
             }
     }
 }
+
+module.exports = Day

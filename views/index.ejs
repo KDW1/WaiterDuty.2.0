@@ -72,15 +72,17 @@
                         </tr>
                     </thead>
                     <tbody id="tableBody">
-                        <% cadetList.forEach((cadet) => { %>
-                            <th class = "<%= cadet.cadetName %>"><%= cadet.cadetName %></th>
-                            <th>|</th>
-                            <th class = "monday <%= cadet.parsedLunchTimes[0] %>"><%= cadet.parsedLunchTimes[0] %></th>
-                            <th class = "tuesday <%= cadet.parsedLunchTimes[1] %>"><%= cadet.parsedLunchTimes[1] %></th>
-                            <th class = "wednesday <%= cadet.parsedLunchTimes[2] %>"><%= cadet.parsedLunchTimes[2] %></th>
-                            <th class = "thursday <%= cadet.parsedLunchTimes[3] %>"><%= cadet.parsedLunchTimes[3] %></th>
-                            <th class = "friday <%= cadet.parsedLunchTimes[4] %>"><%= cadet.parsedLunchTimes[4] %></th>
-                        <% })%> 
+                        <% if(locals.cadetList) { %>
+                            <% locals.cadetList.forEach((cadet) => { %>
+                                <th class = "<%= cadet.cadetName %>"><%= cadet.cadetName %></th>
+                                <th>|</th>
+                                <th class = "monday <%= cadet.parsedLunchTimes[0] %>"><%= cadet.parsedLunchTimes[0] %></th>
+                                <th class = "tuesday <%= cadet.parsedLunchTimes[1] %>"><%= cadet.parsedLunchTimes[1] %></th>
+                                <th class = "wednesday <%= cadet.parsedLunchTimes[2] %>"><%= cadet.parsedLunchTimes[2] %></th>
+                                <th class = "thursday <%= cadet.parsedLunchTimes[3] %>"><%= cadet.parsedLunchTimes[3] %></th>
+                                <th class = "friday <%= cadet.parsedLunchTimes[4] %>"><%= cadet.parsedLunchTimes[4] %></th>
+                            <% })%> 
+                        <% } %>  
                     </tbody>
                     <tfoot class="bg-light">
                         <tr>
@@ -112,7 +114,7 @@
                         </tr>
                     </thead>
                     <tbody id="mondayTable">
-                        <% if(mon) { %> 
+                        <% if(locals.mon) { %> 
                             <th>Breakfast</th><th><%= mon.breakfast.join(", ") %></th>
                             <th>1st Lunch</th><th><%= mon.lunches.firstLunch.join(", ") %></th>
                             <th>2nd Lunch</th><th><%= mon.lunches.secondLunch.join(", ") %></th>
@@ -140,7 +142,7 @@
                         </tr>
                     </thead>
                     <tbody id="tuesdayTable">
-                        <% if(tues) { %> 
+                        <% if(locals.tues) { %> 
                             <th>Breakfast</th><th><%= tues.breakfast.join(", ") %></th>
                             <th>1st Lunch</th><th><%= tues.lunches.firstLunch.join(", ") %></th>
                             <th>2nd Lunch</th><th><%= tues.lunches.secondLunch.join(", ") %></th>
@@ -168,7 +170,7 @@
                         </tr>
                     </thead>
                     <tbody id="wednesdayTable">
-                        <% if(wed) { %> 
+                        <% if(locals.wed) { %> 
                             <th>Breakfast</th><th><%= wed.breakfast.join(", ") %></th>
                             <th>1st Lunch</th><th><%= wed.lunches.firstLunch.join(", ") %></th>
                             <th>2nd Lunch</th><th><%= wed.lunches.secondLunch.join(", ") %></th>
@@ -196,7 +198,7 @@
                         </tr>
                     </thead>
                     <tbody id="thursdayTable">
-                        <% if(thurs) { %> 
+                        <% if(locals.thurs) { %> 
                             <th>Breakfast</th><th><%= thurs.breakfast.join(", ") %></th>
                             <th>1st Lunch</th><th><%= thurs.lunches.firstLunch.join(", ") %></th>
                             <th>2nd Lunch</th><th><%= thurs.lunches.secondLunch.join(", ") %></th>
@@ -224,7 +226,7 @@
                         </tr>
                     </thead>
                     <tbody id="fridayTable">
-                        <% if(fri) { %> 
+                        <% if(locals.fri) { %> 
                             <th>Breakfast</th><th><%= fri.breakfast.join(", ") %></th>
                             <th>1st Lunch</th><th><%= fri.lunches.firstLunch.join(", ") %></th>
                             <th>2nd Lunch</th><th><%= fri.lunches.secondLunch.join(", ") %></th>
