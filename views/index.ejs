@@ -74,13 +74,15 @@
                     <tbody id="tableBody">
                         <% if(locals.cadetList) { %>
                             <% locals.cadetList.forEach((cadet) => { %>
-                                <th class = "<%= cadet.cadetName %>"><%= cadet.cadetName %></th>
-                                <th>|</th>
-                                <th class = "monday <%= cadet.parsedLunchTimes[0] %>"><%= cadet.parsedLunchTimes[0] %></th>
-                                <th class = "tuesday <%= cadet.parsedLunchTimes[1] %>"><%= cadet.parsedLunchTimes[1] %></th>
-                                <th class = "wednesday <%= cadet.parsedLunchTimes[2] %>"><%= cadet.parsedLunchTimes[2] %></th>
-                                <th class = "thursday <%= cadet.parsedLunchTimes[3] %>"><%= cadet.parsedLunchTimes[3] %></th>
-                                <th class = "friday <%= cadet.parsedLunchTimes[4] %>"><%= cadet.parsedLunchTimes[4] %></th>
+                                <tr>
+                                    <th class = "<%= cadet.cadetName %>"><%= cadet.cadetName %></th>
+                                    <th>|</th>
+                                    <th class = "monday <%= cadet.parsedLunchTimes[0] %>"><%= cadet.parsedLunchTimes[0] %></th>
+                                    <th class = "tuesday <%= cadet.parsedLunchTimes[1] %>"><%= cadet.parsedLunchTimes[1] %></th>
+                                    <th class = "thursday <%= cadet.parsedLunchTimes[2] %>"><%= cadet.parsedLunchTimes[2] %></th>
+                                    <th class = "friday <%= cadet.parsedLunchTimes[3] %>"><%= cadet.parsedLunchTimes[3] %></th>
+                                    <th><a href="/deleteCadet?cadetName=<%= cadet.cadetName %>"><button class='btn btn-sm rounded-circle px-2 btn-danger delete-cell'><span class='icon'><i class='fa-solid fa-lg fa-xmark'></i></span></button></a></th>
+                                </tr>
                             <% })%> 
                         <% } %>  
                     </tbody>
@@ -306,7 +308,10 @@
             </div>
         </div>
     </div>
-
+    <form action="/addCadet" method="POST">
+        <input name="cadetName" type="text" placeholder="Example Person">
+        <button type="submit" value="submit">Submit</button>
+    </form>
     <div class="modal fade" id="past-cadets" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
@@ -371,13 +376,14 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <form action="/addCadet" method="POST">
                     <div class="container">
                         <div class="row">
                             <p class="h5">
                                 Cadet Name:
                             </p>
                             <div class="input-group mb-3">
-                                <input id="cadetName" type="text" class="form-control" placeholder="Example Person" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                                <input name="cadetName" type="text" class="form-control" placeholder="Example Person">
                             </div>
                         </div>
                         <div class="row">
@@ -386,13 +392,13 @@
                             </p>
                         </div>
                         <div class="row mb-2">
-                            <select id="monLunch" class="form-select mb-3 pt-1 pb-1" aria-label="Default select example">
+                            <select name="mon" class="form-select mb-3 pt-1 pb-1">
                                 <option selected>Daily Lunches</option>
-                                <option value="1st Lunch">1st Lunch</option>
-                                <option value="2nd Lunch">2nd Lunch</option>
-                                <option value="3rd Lunch">3rd Lunch</option>
-                                <option value="Free">Free Period</option>
-                                <option value="None Available">Can't Make It</option>
+                                <option value="1">1st Lunch</option>
+                                <option value="2">2nd Lunch</option>
+                                <option value="3">3rd Lunch</option>
+                                <option value="0">Free Period</option>
+                                <option value="5">Can't Make It</option>
                             </select>
                         </div>
                         <div class="row">
@@ -401,13 +407,13 @@
                             </p>
                         </div>
                         <div class="row mb-2">
-                            <select id="tuesLunch" class="form-select mb-3 pt-1 pb-1" aria-label="Default select example">
+                            <select name="tues" class="form-select mb-3 pt-1 pb-1">
                                 <option selected>Daily Lunches</option>
-                                <option value="1st Lunch">1st Lunch</option>
-                                <option value="2nd Lunch">2nd Lunch</option>
-                                <option value="3rd Lunch">3rd Lunch</option>
-                                <option value="Free">Free Period</option>
-                                <option value="None Available">Can't Make It</option>
+                                <option value="1">1st Lunch</option>
+                                <option value="2">2nd Lunch</option>
+                                <option value="3">3rd Lunch</option>
+                                <option value="0">Free Period</option>
+                                <option value="5">Can't Make It</option>
                             </select>
                         </div>
                         <div class="row">
@@ -416,13 +422,13 @@
                             </p>
                         </div>
                         <div class="row mb-2">
-                            <select id="thursLunch" class="form-select mb-3 pt-1 pb-1" aria-label="Default select example">
+                            <select name="thurs" class="form-select mb-3 pt-1 pb-1">
                                 <option selected>Daily Lunches</option>
-                                <option value="1st Lunch">1st Lunch</option>
-                                <option value="2nd Lunch">2nd Lunch</option>
-                                <option value="3rd Lunch">3rd Lunch</option>
-                                <option value="Free">Free Period</option>
-                                <option value="None Available">Can't Make It</option>
+                                <option value="1">1st Lunch</option>
+                                <option value="2">2nd Lunch</option>
+                                <option value="3">3rd Lunch</option>
+                                <option value="0">Free Period</option>
+                                <option value="5">Can't Make It</option>
                             </select>
                         </div>
                         <div class="row">
@@ -431,19 +437,18 @@
                             </p>
                         </div>
                         <div class="row mb-2">
-                            <select id="friLunch" class="form-select mb-3 pt-1 pb-1" aria-label="Default select example">
+                            <select name="fri" class="form-select mb-3 pt-1 pb-1">
                                 <option selected>Daily Lunches</option>
-                                <option value="1st Lunch">1st Lunch</option>
-                                <option value="2nd Lunch">2nd Lunch</option>
-                                <option value="3rd Lunch">3rd Lunch</option>
-                                <option value="Free">Free Period</option>
-                                <option value="None Available">Can't Make It</option>
+                                <option value="1">1st Lunch</option>
+                                <option value="2">2nd Lunch</option>
+                                <option value="3">3rd Lunch</option>
+                                <option value="0">Free Period</option>
+                                <option value="5">Can't Make It</option>
                             </select>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary text-white" onclick="" data-dismiss="modal">Submit</button>
+                    <button type="submit" class="btn btn-primary text-white" value="submit">Submit</button>
+                </form>
                 </div>
             </div>
         </div>
