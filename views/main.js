@@ -80,6 +80,7 @@ function createRowBasedOnCadet(cadet) {
 // Will stay in 'main.js'
 function presetCadetList() { //To be called from the console | 0 -> "Free Lunch Period" | 5 -> "Not Available"
     console.log("\nLoading Preset Cadet List");
+    let cadetList = []
     let gageS = new Cadet("Gage Smith", 1, 1, 2, 2);
     let haoboS = new Cadet("Haobo Sun", 1, 3, 3, 3);
     let kingdiorrW = new Cadet("King-Diorr Willsun", 1, 3, 3, 3);
@@ -99,6 +100,7 @@ function presetCadetList() { //To be called from the console | 0 -> "Free Lunch 
     let boscoF = new Cadet("Bosco Fox", 5, 5, 5, 5);
     cadetList.unshift(gageS, haoboS, kingdiorrW, ericZ, justinC, ernestoU, nathanielC, beckettP, andrewD, lorenzoA, hermanH);
     cadetList.unshift(jorgeX, jeronimoC, alonsoP, jakeD, diegoU, boscoF);
+    return cadetList
 }
 
 // Will become backend function
@@ -276,6 +278,7 @@ function toggleRecursive() {
     canRepeat = !canRepeat;
     console.log("Can Repeat: ", canRepeat);
 }
+
 function AssignBreakfastShifts(cadetList, chosenWeek) {
     breakfastShift = chosenWeek.breakfast;
     for (let i = 0; i < cadetList.length; i++) {
@@ -591,7 +594,7 @@ function shuffle(array) { //From Stack Overflow ---------------------
 // --------
 
 // Need to examine this function before I move to backend, may not be necessary
-function generateWaiterRoster() {
+function generateWaiterRoster(cadetList) {
     console.log("This would generate the roster");
     for (let j = 0; j < cadetList.length; j++) {
         console.log(`${cadetList[j].cadetName}`);

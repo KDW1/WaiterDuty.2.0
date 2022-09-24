@@ -1,3 +1,5 @@
+let Shift = require("./shift")
+
 class Day {
     breakfast = [];
     wednesday = [];
@@ -134,13 +136,11 @@ class Day {
     }
 
     displayAllShifts() {
-        makeRowBasedOnShifts(this.dayNum, this.breakfast, "Breakfast");
         for (let i = 0; i < 5; i++) {
             console.log("Breakfast---------");
             this.logShift(this.breakfast[i]);
         }
         if (this.day == "Wednesday") {
-            makeRowBasedOnShifts(this.dayNum, this.wednesday, "Wednesday Lunch");
         }
             for (let i = 0; i < 7; i++) {
                 if (this.wednesday.length > 0) {
@@ -150,28 +150,23 @@ class Day {
                 }
             }
             if (this.day != "Wednesday") {
-                makeRowBasedOnShifts(this.dayNum, this.lunches.firstLunch, "1st Lunch");
                 for (let i = 0; i < 3; i++) {
                     console.log("First Lunch---------");
                     this.logShift(this.lunches.firstLunch[i]);
                 }
-                makeRowBasedOnShifts(this.dayNum, this.lunches.secondLunch, "2nd Lunch");
                 for (let i = 0; i < 3; i++) {
                     console.log("Second Lunch---------");
                     this.logShift(this.lunches.secondLunch[i]);
                 }
-                makeRowBasedOnShifts(this.dayNum, this.lunches.thirdLunch, "3rd Lunch");
                 for (let i = 0; i < 3; i++) {
                     console.log("Third Lunch---------");
                     this.logShift(this.lunches.thirdLunch[i]);
                 }
             }
-            makeRowBasedOnShifts(this.dayNum, this.dinners.firstDinner, "1st Dinner");
             for (let i = 0; i < 3; i++) {
                 console.log("First Dinner---------");
                 this.logShift(this.dinners.firstDinner[i]);
             }
-            makeRowBasedOnShifts(this.dayNum, this.dinners.secondDinner, "2nd Dinner");
             for (let i = 0; i < 2; i++) {
                 console.log("Second Dinner---------");
                 this.logShift(this.dinners.secondDinner[i]);
