@@ -30,7 +30,7 @@ week.unshift(mon, tues, wed, thur, fri);
 
 app.get('/', (req, res) => {
     let cadetsData = fs.readFileSync('./cadets.json', 'utf-8')
-    cadetsData = JSON.parse(cadetsData).cadets;
+    cadetsData = JSON.parse(cadetsData).cadets ?? JSON.parse(cadetsData);
     for(let i = 0; i < cadetsData.length; i++) {
         cadetsData[i].parsedLunchTimes = []
         let cadet = cadetsData[i]
@@ -84,6 +84,16 @@ app.get('/addCadet', (req, res) => {
         cadetList: cadetList
     })
     
+})
+
+app.get('/returnWeek', async (req, res) => {
+    let obj = {
+        message: "bruh",
+        addressing: "oooooff...."
+    }
+    await basicFuncs.weekInteraction(obj)
+    let week = await basicFuncs.weekInteraction()
+    res.send(week)
 })
 
 app.get('/createRoster', async (req, res) => {
