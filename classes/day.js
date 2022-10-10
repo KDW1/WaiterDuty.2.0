@@ -64,6 +64,7 @@ class Day {
     }
 
     assignShift(timePeriod, shift, cadet) {
+        console.log("Assigning Shift")
         switch (timePeriod) {
             case 1:
                 this.breakfast.unshift(new Shift(this.dayNum, timePeriod, shift, cadet.cadetName));
