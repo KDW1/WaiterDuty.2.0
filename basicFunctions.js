@@ -15,6 +15,7 @@ function getLunchTime(num) {
     }
 }
 
+
 async function weekInteraction(week = null) {
     let data = JSON.parse(await fs.readFileSync("./roster.json", "utf-8"))
     let weekToReturn = data

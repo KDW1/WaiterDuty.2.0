@@ -12,6 +12,11 @@ class Cadet {
         this.shifts = [];
     }
 
+    
+    fromJson(json) {
+        Object.assign(this, json);
+    }
+
     printInfo() {
         for (let i = 0; i < this.lunchTimes.length; i++) {
             switch (this.lunchTimes[i]) {

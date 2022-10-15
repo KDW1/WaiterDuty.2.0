@@ -10,6 +10,13 @@ class Shift {
         this.shift = shift;
         this.assignedPerson = cadetName;
     }
+    
+    fromJson(json) {
+        this.dayNum = json.dayNum;
+        this.timePeriod = json.timePeriod;
+        this.shift = json.shift;
+        this.assignedPerson = json.assignedPerson;
+    }
 
     get day() {
         switch (this.dayNum) {

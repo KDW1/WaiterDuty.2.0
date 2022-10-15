@@ -19,6 +19,85 @@ class Day {
         this.dayNum = dayNum;
     }
 
+    returnArrOfShifts(arr) {
+        if(!arr || arr.length == 0) {
+            return [];
+        }
+        console.log(arr)
+        returnArr = []
+        arr.forEach((shift) => {
+            let data = new Shift();
+            data.fromJson(shift);
+            returnArr.unshift(data);
+        })
+
+        return returnArr;
+    }
+
+    returnArrOfShiftsLunch(arr) {
+        if(!arr || arr.length == 0) {
+            return [];
+        }
+        console.log(arr)
+        let firstLunch = []
+        let secondLunch = []
+        let thirdLunch = []
+
+        arr.firstLunch.forEach((shift) => {
+            let data = new Shift();
+            data.fromJson(shift);
+            console.log(firstLunch)
+            firstLunch.unshift(data);
+        })
+
+        arr.secondLunch.forEach((shift) => {
+            let data = new Shift();
+            data.fromJson(shift);
+            secondLunch.unshift(data);
+        })
+
+        arr.thirdLunch.forEach((shift) => {
+            let data = new Shift();
+            data.fromJson(shift);
+            thirdLunch.unshift(data);
+        })
+
+        return { firstLunch, secondLunch, thirdLunch };
+    }
+
+    returnArrOfShiftsDinner(arr) {
+        if(!arr || arr.length == 0) {
+            return [];
+        }
+        console.log(arr)
+        let firstDinner = []
+        let secondDinner = []
+        arr.firstDinner.forEach((shift) => {
+            let data = new Shift();
+            data.fromJson(shift);
+            firstDinner.unshift(data);
+        })
+
+        arr.secondDinner.forEach((shift) => {
+            let data = new Shift();
+            data.fromJson(shift);
+            secondDinner.unshift(data);
+        })
+
+        console.log({ firstDinner, secondDinner })
+        return { firstDinner, secondDinner };
+    }
+
+    fromJson(json) {
+        console.log("Recieved JSON:")
+        console.log(json)
+        this.breakfast = this.returnArrOfShifts(json.breakfast);
+        this.wednesday = this.returnArrOfShifts(json.wednesday);
+        this.lunches = this.returnArrOfShiftsLunch(json.lunches);
+        this.dinners = this.returnArrOfShiftsDinner(json.dinners);
+        this.dayNum = json.dayNum;
+    }
+
     get firstLunchFull() {
         if (this.lunches.firstLunch.length == 3) {
             return true;
