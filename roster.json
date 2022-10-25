@@ -1,81 +1,39 @@
 {
     "rosters": {
         "monday": {
-            "breakfast": [],
-            "lunches": {
-                "firstLunch": [
-                    {
-                        "dayNum": 1,
-                        "timePeriod": 2,
-                        "shift": 3,
-                        "assignedPerson": "Mr. Bruh"
-                    }
-                ],
-                "secondLunch": [],
-                "thirdLunch": []
-            },
-            "wednesday": [],
-            "dinners": {
-                "firstDinner": [],
-                "secondDinner": []
-            },
-            "dayNum": 1
+          "breakfast": [],
+          "lunches": { "firstLunch": [], "secondLunch": [], "thirdLunch": [] },
+          "wednesday": [],
+          "dinners": { "firstDinner": [], "secondDinner": [] },
+          "dayNum": 1
         },
         "tuesday": {
-            "breakfast": [],
-            "lunches": {
-                "firstLunch": [],
-                "secondLunch": [],
-                "thirdLunch": []
-            },
-            "wednesday": [],
-            "dinners": {
-                "firstDinner": [],
-                "secondDinner": []
-            },
-            "dayNum": 2
+          "breakfast": [],
+          "lunches": { "firstLunch": [], "secondLunch": [], "thirdLunch": [] },
+          "wednesday": [],
+          "dinners": { "firstDinner": [], "secondDinner": [] },
+          "dayNum": 2
         },
         "wednesday": {
-            "breakfast": [],
-            "lunches": {
-                "firstLunch": [],
-                "secondLunch": [],
-                "thirdLunch": []
-            },
-            "wednesday": [],
-            "dinners": {
-                "firstDinner": [],
-                "secondDinner": []
-            },
-            "dayNum": 3
+          "breakfast": [],
+          "lunches": { "firstLunch": [], "secondLunch": [], "thirdLunch": [] },
+          "wednesday": [],
+          "dinners": { "firstDinner": [], "secondDinner": [] },
+          "dayNum": 3
         },
         "thursday": {
-            "breakfast": [],
-            "lunches": {
-                "firstLunch": [],
-                "secondLunch": [],
-                "thirdLunch": []
-            },
-            "wednesday": [],
-            "dinners": {
-                "firstDinner": [],
-                "secondDinner": []
-            },
-            "dayNum": 4
+          "breakfast": [],
+          "lunches": { "firstLunch": [], "secondLunch": [], "thirdLunch": [] },
+          "wednesday": [],
+          "dinners": { "firstDinner": [], "secondDinner": [] },
+          "dayNum": 4
         },
         "friday": {
-            "breakfast": [],
-            "lunches": {
-                "firstLunch": [],
-                "secondLunch": [],
-                "thirdLunch": []
-            },
-            "wednesday": [],
-            "dinners": {
-                "firstDinner": [],
-                "secondDinner": []
-            },
-            "dayNum": 5
+          "breakfast": [],
+          "lunches": { "firstLunch": [], "secondLunch": [], "thirdLunch": [] },
+          "wednesday": [],
+          "dinners": { "firstDinner": [], "secondDinner": [] },
+          "dayNum": 5
         }
     }
 }

@@ -23,7 +23,6 @@ class Day {
         if(!arr || arr.length == 0) {
             return [];
         }
-        console.log(arr)
         returnArr = []
         arr.forEach((shift) => {
             let data = new Shift();
@@ -38,7 +37,6 @@ class Day {
         if(!arr || arr.length == 0) {
             return [];
         }
-        console.log(arr)
         let firstLunch = []
         let secondLunch = []
         let thirdLunch = []
@@ -46,7 +44,6 @@ class Day {
         arr.firstLunch.forEach((shift) => {
             let data = new Shift();
             data.fromJson(shift);
-            console.log(firstLunch)
             firstLunch.unshift(data);
         })
 
@@ -69,7 +66,6 @@ class Day {
         if(!arr || arr.length == 0) {
             return [];
         }
-        console.log(arr)
         let firstDinner = []
         let secondDinner = []
         arr.firstDinner.forEach((shift) => {
@@ -83,14 +79,10 @@ class Day {
             data.fromJson(shift);
             secondDinner.unshift(data);
         })
-
-        console.log({ firstDinner, secondDinner })
         return { firstDinner, secondDinner };
     }
 
     fromJson(json) {
-        console.log("Recieved JSON:")
-        console.log(json)
         this.breakfast = this.returnArrOfShifts(json.breakfast);
         this.wednesday = this.returnArrOfShifts(json.wednesday);
         this.lunches = this.returnArrOfShiftsLunch(json.lunches);
