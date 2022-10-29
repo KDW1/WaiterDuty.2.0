@@ -24,6 +24,7 @@ let rosters = JSON.parse(fs.readFileSync("./roster.json", 'utf-8')).rosters;
 // console.log(rosters)
 rosterData.fromJson(rosters)
 // console.log(rosterData.monday.lunches);
+console.log(cadetList)
 basicFuncs.createRoster(cadetList, rosterData)
 
 function presetCadetList() { //To be called from the console | 0 -> "Free Lunch Period" | 5 -> "Not Available"
