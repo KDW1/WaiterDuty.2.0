@@ -16,19 +16,19 @@ function getLunchTime(num) {
 }
 
 
-function weekInteraction(week = null) {
-    let data = JSON.parse(fs.readFileSync("./roster.json", "utf-8"))
-    let weekToReturn = data
-    if(week == null) {
-        weekToReturn = data.rosters
-        return weekToReturn
-    } 
-    let days = ["monday","tuesday","wednesday","thursday","friday"]
-    console.log("Rosters:")
-    console.log(weekToReturn.rosters[days[week.dayNum-1]])
-    weekToReturn.rosters[days[week.dayNum-1]] = week;
-    fs.writeFileSync("./roster.json", JSON.stringify(weekToReturn))
-}
+// function weekInteraction(week = null) {
+//     let data = JSON.parse(fs.readFileSync("./roster.json", "utf-8"))
+//     let weekToReturn = data
+//     if(week == null) {
+//         weekToReturn = data.rosters
+//         return weekToReturn
+//     } 
+//     let days = ["monday","tuesday","wednesday","thursday","friday"]
+//     console.log("Rosters:")
+//     console.log(weekToReturn.rosters[days[week.dayNum-1]])
+//     weekToReturn.rosters[days[week.dayNum-1]] = week;
+//     fs.writeFileSync("./roster.json", JSON.stringify(weekToReturn))
+// }
 // async function bS(change = 0) {
 //     let amt = JSON.parse(await fs.readFileSync("./baseShifts.json", 'utf-8'));
 //     if(change == 0) {
@@ -48,29 +48,42 @@ function toggleRecursive() {
 }
 
 function AssignBreakfastShifts(cadetList, week, baseShifts, dayNum) {
+    console.log("Starting for Day: " + dayNum)
     // Return base shifts, cadet array and the week/roster
     // data = await weekInteraction(); ---- Week will be passed in
     let days = ["monday","tuesday","wednesday","thursday","friday"]
     let currentDay = week[days[dayNum]];
+    if(dayNum == 2) {
+        console.log("Current Day:")
+        console.log(currentDay)
+    }
     // console.log(data[0])
     // Object.assign(chosenWeek, data[0][days[currentDay]])
     for (let i = 0; i < cadetList.length; i++) {
         let metTheMinimum = metMinimumNumOfShifts(cadetList, baseShifts)
-        console.log(`Has everyone met the minimum number of shifts: ${metTheMinimum}`)
+        // console.log(`Has everyone met the minimum number of shifts: ${metTheMinimum}`)
+        if(!metTheMinimum) {
+            // console.log(cadetList)
+        }
+
         if ( metTheMinimum && (cadetList[i].shiftAmounts == baseShifts) && (cadetList[i].shiftAmounts != 0)) {
             // baseShifts = await bS(1) 
             baseShifts++;
-            console.log(cadetList);
+            // console.log(cadetList);
             console.log(`\n\n${baseShifts} is the base number of shifts at breakfast\n\n`);
             // console.log(cadetList);
         }
         if (!fullShifts(currentDay.breakfast, 5)) {
+            // console.log("Assigning Breakfast")
             if (cadetList[i].shiftAmounts < baseShifts) {
                 currentDay.assignShift(1, 1, cadetList[i]);
                 // console.log(`${cadetList[i].cadetName} assigned shift, taking ${cadetList[i].shiftAmounts} shifts`);
             }
+        } else {
+            break;
         }
     }
+    console.log("Broken out of loop")
     // let obj = { cadets: cadetList }
     // chosenWeek.breakfast = breakfastShift;
     // await weekInteraction(chosenWeek);
@@ -78,7 +91,7 @@ function AssignBreakfastShifts(cadetList, week, baseShifts, dayNum) {
     week[days[dayNum]] = currentDay;
     if (Array.isArray(currentDay.breakfast)) {
         if (!fullShifts(currentDay.breakfast, 5) && canRepeat) {
-            AssignBreakfastShifts(cadetList, week, baseShifts, dayNum);
+            return AssignBreakfastShifts(cadetList, week, baseShifts, dayNum);
         } else {
             return [cadetList, week, baseShifts];
         }
@@ -101,6 +114,8 @@ function AssignWednesdayShifts(cadetList, week, baseShifts, dayNum) {
                 // cadetList[i].shiftAmounts++;
                 // console.log(`${cadetList[i].cadetName} assigned shift, taking ${cadetList[i].shiftAmounts} shifts`);
             }
+        } else {
+            break;
         }
     }
     // let obj = { cadets: cadetList }
@@ -109,10 +124,10 @@ function AssignWednesdayShifts(cadetList, week, baseShifts, dayNum) {
     week[days[dayNum]] = currentDay;
     if (Array.isArray(currentDay.wednesday)) {
         if (!fullShifts(currentDay.wednesday, 7) && canRepeat) {
-            AssignWednesdayShifts(cadetList, week, baseShifts, dayNum);
+            return AssignWednesdayShifts(cadetList, week, baseShifts, dayNum);
         } else {
-            console.log([cadetList, week, baseShifts])
-            return [cadetList, week, baseShifts];
+            console.log("Wednesday print");
+            return [cadetList, week, baseShifts]; //As in successfully proceeded in all scenarios
         }
     }
 }
@@ -164,7 +179,7 @@ function AssignDinnerShifts(cadetList, chosenWeek) {
 
 function othersAvailableForLunch(chosenWeek, currentDay, lunch, baseShifts, cadetList) {
     let overworked = 0;
-    let peopleAvailable;
+    let peopleAvailable = 0;
     if (Array.isArray(cadetList)) {
         for (let i = 0; i < cadetList.length; i++) {
             if (i != 0) {
@@ -209,22 +224,25 @@ function AssignLunchShifts(cadetList, week, baseShifts, dayNum) {
          aren't necessarily used most efficiently, in spots that others can't fill, currently
          there's a failsafe where if no one else is available for a shift
          (under the condition that they've all met the base amount), someone will bare a heavier load */
+        let firstFull = currentDay.firstLunchFull;
+        let secondFull = currentDay.secondLunchFull;
+        let thirdFull = currentDay.thirdLunchFull;
 
         switch (cadetList[i].lunchTimes[dayNum]) {
             case 0:
-                if (!currentDay.firstLunchFull) {
+                if (!firstFull) {
                     if ((overWorked == false) || noOneLeftForFirst) {
                         currentDay.assignShift(2, 1, cadetList[i]);
                         // cadetList[i].shiftAmounts++;
                     }
                 }
-                if (!currentDay.secondLunchFull) {
+                if (!secondFull) {
                     if ((overWorked == false) || noOneLeftForSecond) {
                         currentDay.assignShift(2, 2, cadetList[i]);
                         // cadetList[i].shiftAmounts++;
                     }
                 }
-                if (!currentDay.thirdLunchFull) {
+                if (!thirdFull) {
                     if ((overWorked == false) || noOneLeftForThird) {
                         currentDay.assignShift(2, 3, cadetList[i]);
                         // cadetList[i].shiftAmounts++;
@@ -232,7 +250,7 @@ function AssignLunchShifts(cadetList, week, baseShifts, dayNum) {
                 }
                 break;
             case 1:
-                if (!currentDay.firstLunchFull) {
+                if (!firstFull) {
                     if ((overWorked == false) || noOneLeftForFirst) {
                         currentDay.assignShift(2, 1, cadetList[i]);
                         // cadetList[i].shiftAmounts++;
@@ -240,7 +258,7 @@ function AssignLunchShifts(cadetList, week, baseShifts, dayNum) {
                 }
                 break;
             case 2:
-                if (!currentDay.secondLunchFull) {
+                if (!secondFull) {
                     if ((overWorked == false) || noOneLeftForSecond) {
                         currentDay.assignShift(2, 2, cadetList[i]);
                         // cadetList[i].shiftAmounts++;
@@ -248,7 +266,7 @@ function AssignLunchShifts(cadetList, week, baseShifts, dayNum) {
                 }
                 break;
             case 3:
-                if (!currentDay.thirdLunchFull) {
+                if (!thirdFull) {
                     if ((overWorked == false) || noOneLeftForThird) {
                         currentDay.assignShift(2, 3, cadetList[i]);
                         // cadetList[i].shiftAmounts++;
@@ -272,14 +290,13 @@ function AssignLunchShifts(cadetList, week, baseShifts, dayNum) {
     // console.log(`Should Run Again: 1st) ${runFirstLunchAgain}, 2nd) ${runSecondLunchAgain}, 3rd) ${runThirdLunchAgain}`);
     if (!allOk && canRepeat) {
         if (runFirstLunchAgain) {
-            console.log("First Lunch Not Full on Day:" + dayNum);
+            // console.log("First Lunch Not Full on Day:" + dayNum);
         } else if (runSecondLunchAgain) {
-            console.log("Second Lunch Not Full on Day:" + dayNum);
+            // console.log("Second Lunch Not Full on Day:" + dayNum);
         } else if (runThirdLunchAgain) {
-            console.log("Third Lunch Not Full on Day:" + dayNum);
+            // console.log("Third Lunch Not Full on Day:" + dayNum);
         }
-        AssignLunchShifts(cadetList, week, baseShifts, dayNum);
-        return;
+        return AssignLunchShifts(cadetList, week, baseShifts, dayNum);
     }
     if (allOk) {
         return [cadetList, week, baseShifts];
@@ -310,6 +327,7 @@ function minimumNumberOfShifts(cadetList) {
 }
 
 function metMinimumNumOfShifts(cadetList, baseShifts) {
+    console.log("Base Shifts: " + baseShifts)
     let variations = 0;
     if (Array.isArray(cadetList)) {
         for (let i = 0; i < cadetList.length; i++) {
@@ -335,11 +353,67 @@ function metMinimumNumOfShifts(cadetList, baseShifts) {
     }
 }
 
-function createRoster(cadetList, week) {
+async function createRoster(cadetList, week) {
     let baseShifts = 1;
     for (let l = 0; l < week.length; l++) {
         week[l].clearShifts();
     }
+    let result = AssignBreakfastShifts(cadetList, week, baseShifts, 0);
+    console.log("Results1:");
+    console.log(result[1].monday);
+    result = AssignLunchShifts(result[0], result[1], result[2], 0);
+    console.log("Results2:");
+    console.log(result[1].monday);
+    result = AssignWednesdayShifts(result[0], result[1], result[2], 2);
+    console.log("Results2:");
+    console.log(result);
+        // AssignBreakfastShifts(cadetList, week, baseShifts, 0).then((data) => {
+        //     console.log("First Results:");
+        //     console.log(data);
+        //     AssignLunchShifts(data[0], data[1], data[2], 0).then((elem) => {
+        //         console.log("Second Results:");
+        //         console.log(elem);
+        //         AssignBreakfastShifts(elem[0], elem[1], elem[2], 2).then((bruh) => {
+        //             console.log("Third Results:");
+        //             console.log(bruh);
+        //         })
+        //     })
+        // })
+        // result = await AssignLunchShifts(result[0], result[1], result[2], baseShifts);
+        // console.log("Second Results:");
+        // console.log(result);
+        // result = await AssignBreakfastShifts(result[0], result[1], result[2], 2);
+        // console.log("Third Results:");
+        // console.log(result);
+        // console.log("Ran2")
+        // let value = await AssignBreakfastShifts(val[0], val[1], val[2], 0)
+        // console.log(val)
+        // let values = await AssignBreakfastShifts(value[0], value[1], value[2], 2);
+        // console.log("Ran3")
+        // console.log(values)
+        //     console.log("Ran2")
+        //     console.log("This is Monday completed")
+        //     // console.log("Rosters:")
+        //     // console.log(data[1])
+        //     console.log("Base Shift Be: " + baseShifts +"\n\n\n")
+        //     AssignBreakfastShifts(data[0], data[1], data[2], 2).then((data) => {
+        //         console.log("Ran3")
+        //         console.log(data)
+        //         // AssignWednesdayShifts(data[0], data[1], data[2], 2).then((data) => {
+        //         //     console.log("Rosters:")
+        //         //     console.log(data[1])
+        //         // })
+        //     });
+        // })
+
+
+
+    // AssignBreakfastShifts(cadetList, week, baseShifts, 2).then((data) => {
+    //     AssignWednesdayShifts(data[0], data[1], data[2], 2).then((data) => {
+    //         console.log("This is Wednesday completed")
+    //         [cadetList, week, baseShifts] = data;
+    //     })
+    // });
     // for (let i = 0; i < 5; i++) {
     //     if (i != 2) { //2 means that it is 
     //         console.log("Cadet List:")
@@ -358,13 +432,10 @@ function createRoster(cadetList, week) {
     // }
     // console.log("Cadets:")
     // console.log(cadetList)
-    console.log("Rosters:")
-    console.log(week)
     // for(day in week) {
     //     console.log(`\n\n${day}`)
     //     console.log(week[day])
     // }
-    console.log("Done")
 
 
     // for (let j = 0; j < 5; j++) { 
