@@ -53,19 +53,10 @@ function AssignBreakfastShifts(cadetList, week, baseShifts, dayNum) {
     // data = await weekInteraction(); ---- Week will be passed in
     let days = ["monday","tuesday","wednesday","thursday","friday"]
     let currentDay = week[days[dayNum]];
-    if(dayNum == 2) {
-        console.log("Current Day:")
-        console.log(currentDay)
-    }
     // console.log(data[0])
     // Object.assign(chosenWeek, data[0][days[currentDay]])
     for (let i = 0; i < cadetList.length; i++) {
         let metTheMinimum = metMinimumNumOfShifts(cadetList, baseShifts)
-        // console.log(`Has everyone met the minimum number of shifts: ${metTheMinimum}`)
-        if(!metTheMinimum) {
-            // console.log(cadetList)
-        }
-
         if ( metTheMinimum && (cadetList[i].shiftAmounts == baseShifts) && (cadetList[i].shiftAmounts != 0)) {
             // baseShifts = await bS(1) 
             baseShifts++;
@@ -132,47 +123,46 @@ function AssignWednesdayShifts(cadetList, week, baseShifts, dayNum) {
     }
 }
 
-function AssignDinnerShifts(cadetList, chosenWeek) {
-    dinnerShift = new Day();
-    Object.assign(chosenWeek, data)
-    cadetList = JSON.parse(fs.readFileSync("./cadets.json", 'utf-8')).cadets ?? JSON.parse(fs.readFileSync("./cadets.json", 'utf-8'))
-    dinnerShift = chosenWeek.dinners;
+function AssignDinnerShifts(cadetList, week, baseShifts, dayNum) {
+    console.log("Dinner:");
+    console.log([cadetList, week.wednesday, baseShifts])
+    let days = ["monday","tuesday","wednesday","thursday","friday"]
+    let currentDay = week[days[dayNum]];
     for (let i = 0; i < cadetList.length; i++) {
-        if (metMinimumNumOfShifts(cadetList) && (cadetList[i].shiftAmounts == baseShifts) && (cadetList[i].shiftAmounts != 0)) {
+        let metMinimum = metMinimumNumOfShifts(cadetList, baseShifts);
+        if (metMinimum && (cadetList[i].shiftAmounts == baseShifts) && (cadetList[i].shiftAmounts != 0)) {
+            baseShifts++;
             console.log(`${baseShifts} is the base number of shifts at dinner`);
             // console.log(cadetList);
         }
-        if (!fullShifts(dinnerShift.firstDinner, 3)) {
+        if (!fullShifts(currentDay.dinners.firstDinner, 3)) {
             if (cadetList[i].shiftAmounts < baseShifts) {
-                chosenWeek.assignShift(3, 1, cadetList[i]);
+                currentDay.assignShift(3, 1, cadetList[i]);
                 // cadetList[i].shiftAmounts++;
             }
         }
-        if (!fullShifts(dinnerShift.secondDinner, 2)) {
+        if (!fullShifts(currentDay.dinners.secondDinner, 2)) {
             if (cadetList[i].shiftAmounts < baseShifts) {
-                chosenWeek.assignShift(3, 2, cadetList[i]);
+                currentDay.assignShift(3, 2, cadetList[i]);
                 // cadetList[i].shiftAmounts++;
             }
         }
     }
-    let checkFirstDinner = !fullShifts(dinnerShift.firstDinner, 3);
-    let checkSecondDinner = !fullShifts(dinnerShift.secondDinner, 2);
-    let obj = { cadets: cadetList }
-    fs.writeFileSync("./cadets.json", JSON.stringify(cadetList))
-    if (Array.isArray(dinnerShift.firstDinner)) {
-        if (checkFirstDinner && canRepeat) {
-            AssignDinnerShifts(cadetList, chosenWeek);
-            return;
+    let checkFirstDinner = !fullShifts(currentDay.dinners.firstDinner, 3);
+    let checkSecondDinner = !fullShifts(currentDay.dinners.secondDinner, 2);
+    week[days[dayNum]] = currentDay;
+    if (Array.isArray(currentDay.dinners.firstDinner)) {
+        if (checkFirstDinner) {
+            return AssignDinnerShifts(cadetList, week, baseShifts, dayNum);
         }
     }
-    if (Array.isArray(dinnerShift.secondDinner)) {
-        if (checkSecondDinner && canRepeat) {
-            AssignDinnerShifts(cadetList, chosenWeek);
-            return;
+    if (Array.isArray(currentDay.dinners.secondDinner)) {
+        if (checkSecondDinner) {
+            return AssignDinnerShifts(cadetList, week, baseShifts, dayNum);
         }
     }
     if (!checkSecondDinner && !checkFirstDinner) {
-        return;
+        return [cadetList, week, baseShifts];
     }
 }
 
@@ -355,94 +345,27 @@ function metMinimumNumOfShifts(cadetList, baseShifts) {
 
 async function createRoster(cadetList, week) {
     let baseShifts = 1;
+    let result;
     for (let l = 0; l < week.length; l++) {
         week[l].clearShifts();
     }
-    let result = AssignBreakfastShifts(cadetList, week, baseShifts, 0);
-    console.log("Results1:");
-    console.log(result[1].monday);
-    result = AssignLunchShifts(result[0], result[1], result[2], 0);
-    console.log("Results2:");
-    console.log(result[1].monday);
-    result = AssignWednesdayShifts(result[0], result[1], result[2], 2);
-    console.log("Results2:");
-    console.log(result);
-        // AssignBreakfastShifts(cadetList, week, baseShifts, 0).then((data) => {
-        //     console.log("First Results:");
-        //     console.log(data);
-        //     AssignLunchShifts(data[0], data[1], data[2], 0).then((elem) => {
-        //         console.log("Second Results:");
-        //         console.log(elem);
-        //         AssignBreakfastShifts(elem[0], elem[1], elem[2], 2).then((bruh) => {
-        //             console.log("Third Results:");
-        //             console.log(bruh);
-        //         })
-        //     })
-        // })
-        // result = await AssignLunchShifts(result[0], result[1], result[2], baseShifts);
-        // console.log("Second Results:");
-        // console.log(result);
-        // result = await AssignBreakfastShifts(result[0], result[1], result[2], 2);
-        // console.log("Third Results:");
-        // console.log(result);
-        // console.log("Ran2")
-        // let value = await AssignBreakfastShifts(val[0], val[1], val[2], 0)
-        // console.log(val)
-        // let values = await AssignBreakfastShifts(value[0], value[1], value[2], 2);
-        // console.log("Ran3")
-        // console.log(values)
-        //     console.log("Ran2")
-        //     console.log("This is Monday completed")
-        //     // console.log("Rosters:")
-        //     // console.log(data[1])
-        //     console.log("Base Shift Be: " + baseShifts +"\n\n\n")
-        //     AssignBreakfastShifts(data[0], data[1], data[2], 2).then((data) => {
-        //         console.log("Ran3")
-        //         console.log(data)
-        //         // AssignWednesdayShifts(data[0], data[1], data[2], 2).then((data) => {
-        //         //     console.log("Rosters:")
-        //         //     console.log(data[1])
-        //         // })
-        //     });
-        // })
-
-
-
-    // AssignBreakfastShifts(cadetList, week, baseShifts, 2).then((data) => {
-    //     AssignWednesdayShifts(data[0], data[1], data[2], 2).then((data) => {
-    //         console.log("This is Wednesday completed")
-    //         [cadetList, week, baseShifts] = data;
-    //     })
-    // });
-    // for (let i = 0; i < 5; i++) {
-    //     if (i != 2) { //2 means that it is 
-    //         console.log("Cadet List:")
-    //         console.log(cadetList)
-    //         cadetList = shuffle(cadetList);
-    //         // await AssignLunchShifts(cadetList, week[i], i);
-    //         [cadetList, week, baseShifts] = AssignBreakfastShifts(cadetList, week, baseShifts, i);
-    //         [cadetList, week, baseShifts] = AssignLunchShifts(cadetList, week, baseShifts, i);
-    //         // console.log(results)
-    //     } else if (i == 2) { //On Wednesday, a different set of shifts are made 
-    //         cadetList = shuffle(cadetList);
-    //         [cadetList, week, baseShifts] = AssignBreakfastShifts(cadetList, week, baseShifts, 2);
-    //         console.log("Breakfast is done and data present:" + (cadetList != undefined));
-    //         [cadetList, week, baseShifts] = AssignWednesdayShifts(cadetList, week, baseShifts, 2);
-    //     }
-    // }
-    // console.log("Cadets:")
-    // console.log(cadetList)
-    // for(day in week) {
-    //     console.log(`\n\n${day}`)
-    //     console.log(week[day])
-    // }
-
-
-    // for (let j = 0; j < 5; j++) { 
-    //     console.log("\n\n\n\n\n\------------\n");
-    //     console.log(`${week[j].day} has: \n`);
-    //     week[j].displayAllShifts();
-    // }
+    console.log("Week Length:")
+    for(let i = 0; i < 5; i++) {
+        if(i != 2) {
+            console.log("Breakfast Result:");
+            [cadetList, week, baseShifts] = AssignBreakfastShifts(cadetList, week, baseShifts, i)
+            [cadetList, week, baseShifts] = AssignLunchShifts(cadetList, week, baseShifts, i);
+            [cadetList, week, baseShifts] = AssignDinnerShifts(cadetList, week, baseShifts, i);
+        } else {
+            [cadetList, week, baseShifts] = AssignBreakfastShifts(cadetList, week, baseShifts, i);
+            [cadetList, week, baseShifts] = AssignWednesdayShifts(cadetList, week, baseShifts, i);
+            [cadetList, week, baseShifts] = AssignDinnerShifts(cadetList, week, baseShifts, i);
+        }
+    }
+    console.log("Roster:");
+    console.log(week)
+    console.log("\n\n\nCadets:");
+    console.log(cadetList)
 }
 
 function generateWaiterRoster(cadetList, week) {
