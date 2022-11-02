@@ -48,7 +48,6 @@ function toggleRecursive() {
 }
 
 function AssignBreakfastShifts(cadetList, week, baseShifts, dayNum) {
-    console.log("Starting for Day: " + dayNum)
     // Return base shifts, cadet array and the week/roster
     // data = await weekInteraction(); ---- Week will be passed in
     let days = ["monday","tuesday","wednesday","thursday","friday"]
@@ -70,11 +69,8 @@ function AssignBreakfastShifts(cadetList, week, baseShifts, dayNum) {
                 currentDay.assignShift(1, 1, cadetList[i]);
                 // console.log(`${cadetList[i].cadetName} assigned shift, taking ${cadetList[i].shiftAmounts} shifts`);
             }
-        } else {
-            break;
         }
     }
-    console.log("Broken out of loop")
     // let obj = { cadets: cadetList }
     // chosenWeek.breakfast = breakfastShift;
     // await weekInteraction(chosenWeek);
@@ -117,15 +113,12 @@ function AssignWednesdayShifts(cadetList, week, baseShifts, dayNum) {
         if (!fullShifts(currentDay.wednesday, 7) && canRepeat) {
             return AssignWednesdayShifts(cadetList, week, baseShifts, dayNum);
         } else {
-            console.log("Wednesday print");
             return [cadetList, week, baseShifts]; //As in successfully proceeded in all scenarios
         }
     }
 }
 
 function AssignDinnerShifts(cadetList, week, baseShifts, dayNum) {
-    console.log("Dinner:");
-    console.log([cadetList, week.wednesday, baseShifts])
     let days = ["monday","tuesday","wednesday","thursday","friday"]
     let currentDay = week[days[dayNum]];
     for (let i = 0; i < cadetList.length; i++) {
@@ -352,7 +345,6 @@ async function createRoster(cadetList, week) {
     console.log("Week Length:")
     for(let i = 0; i < 5; i++) {
         if(i != 2) {
-            console.log("Breakfast Result:");
             [cadetList, week, baseShifts] = AssignBreakfastShifts(cadetList, week, baseShifts, i)
             [cadetList, week, baseShifts] = AssignLunchShifts(cadetList, week, baseShifts, i);
             [cadetList, week, baseShifts] = AssignDinnerShifts(cadetList, week, baseShifts, i);
@@ -369,12 +361,6 @@ async function createRoster(cadetList, week) {
 }
 
 function generateWaiterRoster(cadetList, week) {
-    console.log("This would generate the roster");
-    console.log(baseShifts);
-    for (let j = 0; j < cadetList.length; j++) {
-        console.log(`${cadetList[j].cadetName}`);
-    }
-    let errorMsg;
     let mondayFullLunches;
     let tuesdayFullLunches;
     let thursdayFullLunches;

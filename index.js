@@ -98,15 +98,18 @@ app.get('/returnWeek', async (req, res) => {
 
 app.get('/createRoster', async (req, res) => {
     let cadetsData = fs.readFileSync('./cadets.json', 'utf-8')
-    cadetsData = JSON.parse(cadetsData).cadets
-    let roster = new Roster()
-    let cadetList = presetCadetList()
-    let baseShifts = 1
-    let obj = {
-        cadets: cadetList
+    cadetsData = JSON.parse(cadetsData).cadets;
+    let roster = new Roster();
+    let rosterData = JSON.parse(fs.readFileSync('./roster.json', 'utf-8')).rosters
+    console.log("Roster JSON")
+    console.log(rosterData)
+    roster.fromJson(fs.readFileSync('./roster.json', 'utf-8').rosters);
+    let cadetList;
+    for(let i = 0; i < cadetsData.length; i++) {
+        let cadet = new Cadet();
+        cadet.fromJson(cadetsData[i]);
+        cadetList.shift(cadet);
     }
-    await fs.writeFileSync("./baseShifts.json", JSON.stringify(baseShifts))
-    await fs.writeFileSync("./cadets.json", JSON.stringify(obj))
     basicFuncs.generateWaiterRoster(cadetList, week)
     // let response = basicFuncs.generateWaiterRoster(cadetsData, week)
 })
