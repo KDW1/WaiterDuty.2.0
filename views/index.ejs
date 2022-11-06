@@ -12,13 +12,18 @@
 </head>
 <body>
     <div class="bg-dark">
-        <div class="container">
+        <div class="container pb-2">
             <h1 class="h1 is-size-1 text-white pt-2">
                 Waiter Duty Program
             </h1>
             <p class="subtitle is-size-5 text-white pb-4">
                 A website that makes organizing <strong class="has-text-white">Waiter Duty Rosters</strong> easier!
             </p>
+                <% locals.errorMsg.forEach((data) => { %>
+                    <p class="subtitle is-size-5 text-white">
+                        <%= data %> 
+                    </p>
+                <% }) %> 
         </div>
     </div>
     <div class="container">
@@ -116,8 +121,8 @@
                         </tr>
                     </thead>
                     <tbody id="mondayTable">
-                        <% if(locals.roster.monday) { %> 
-                            <% data = locals.roster.monday %> 
+                        <% if(locals.roster) { %> 
+                            <% data = roster.monday %> 
                             <% function iterateShifts(arr) {
                                 let terms = [];
                                 terms = arr.map((data) => {
@@ -152,8 +157,8 @@
                         </tr>
                     </thead>
                     <tbody id="tuesdayTable">
-                        <% if(locals.roster.tuesday) { %> 
-                            <% data = locals.roster.tuesday %> 
+                        <% if(locals.roster) { %> 
+                            <% data = roster.tuesday %> 
                             <% function iterateShifts(arr) {
                                 let terms = [];
                                 terms = arr.map((data) => {
@@ -188,8 +193,8 @@
                         </tr>
                     </thead>
                     <tbody id="wednesdayTable">
-                        <% if(locals.roster.wednesday) { %> 
-                            <% data = locals.roster.wednesday %> 
+                        <% if(locals.roster) { %> 
+                            <% data = roster.wednesday %> 
                             <% function iterateShifts(arr) {
                                 let terms = [];
                                 terms = arr.map((data) => {
@@ -222,8 +227,8 @@
                         </tr>
                     </thead>
                     <tbody id="thursdayTable">
-                        <% if(locals.roster.thursday) { %> 
-                            <% data = locals.roster.thursday %> 
+                        <% if(locals.roster) { %> 
+                            <% data = roster.thursday %> 
                             <% function iterateShifts(arr) {
                                 let terms = [];
                                 terms = arr.map((data) => {
@@ -258,8 +263,8 @@
                         </tr>
                     </thead>
                     <tbody id="fridayTable">
-                        <% if(locals.roster.friday) { %> 
-                            <% data = locals.roster.friday %> 
+                        <% if(locals.roster) { %> 
+                            <% data = roster.friday %> 
                             <% function iterateShifts(arr) {
                                 let terms = [];
                                 terms = arr.map((data) => {

@@ -99,11 +99,20 @@ app.get('/roster', (req, res) => {
     // // console.log("Cadets:");
     // // console.log(cadetList)
     let relevantInfo = (cadetList) ? basicFuncs.generateWaiterRoster(cadetList, roster) : false;
-    if(relevantInfo) {
-        console.log("Roster:")
-        console.log(relevantInfo.roster)
+    if(relevantInfo.roster && relevantInfo.cadetList) {
+        // console.log("Roster:")
+        // console.log(relevantInfo.roster)
         fs.writeFileSync('./roster.json', JSON.stringify(relevantInfo.roster));
         fs.writeFileSync('./cadets.json', JSON.stringify(cadetList));
+        res.redirect('/')
+    } else {
+        console.log("Error:")
+        console.log(relevantInfo)
+        res.render('index', {
+            errorMsg: relevantInfo,
+            roster: null,
+            cadetList: JSON.parse(fs.readFileSync('./cadets.json', 'utf-8'))
+        })
     }
     // basicFuncs.generateWaiterRoster(cadetList, week)
     // let response = basicFuncs.generateWaiterRoster(cadetsData, week)

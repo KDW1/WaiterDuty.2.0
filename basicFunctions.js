@@ -369,7 +369,7 @@ function generateWaiterRoster(cadetList, week) {
     let tuesdayFullLunches;
     let thursdayFullLunches;
     let fridayFullLunches;
-    let errorMsg = "";
+    let debrief = [];
     for (let i = 0; i < 5; i++) {
         firstLunchPossible = hasEnoughToFillLunch(cadetList, 1, i);
         secondLunchPossible = hasEnoughToFillLunch(cadetList, 2, i);
@@ -377,21 +377,21 @@ function generateWaiterRoster(cadetList, week) {
         switch (i) {
             case 0:
                 mondayFullLunches = firstLunchPossible && secondLunchPossible && thirdLunchPossible;
-                console.log(`Monday Lunches | (First : ${firstLunchPossible}) - (Second : ${secondLunchPossible}) - (Third : ${thirdLunchPossible})`);
+                debrief.unshift(`Monday Lunches | (First : ${firstLunchPossible}) - (Second : ${secondLunchPossible}) - (Third : ${thirdLunchPossible}) \n`);
                 break;
             case 1:
                 tuesdayFullLunches = firstLunchPossible && secondLunchPossible && thirdLunchPossible;
-                console.log(`Tuesday Lunches | (First : ${firstLunchPossible}) - (Second : ${secondLunchPossible}) - (Third : ${thirdLunchPossible})`);
+                debrief.unshift(`Tuesday Lunches | (First : ${firstLunchPossible}) - (Second : ${secondLunchPossible}) - (Third : ${thirdLunchPossible}) \n`);
                 break;
             case 2:
                 break;
             case 3:
                 thursdayFullLunches = firstLunchPossible && secondLunchPossible && thirdLunchPossible;
-                console.log(`Thursday Lunches | (First : ${firstLunchPossible}) - (Second : ${secondLunchPossible}) - (Third : ${thirdLunchPossible})`);
+                debrief.unshift(`Thursday Lunches | (First : ${firstLunchPossible}) - (Second : ${secondLunchPossible}) - (Third : ${thirdLunchPossible}) \n`);
                 break;
             case 4:
                 fridayFullLunches = firstLunchPossible && secondLunchPossible && thirdLunchPossible;
-                console.log(`Friday Lunches | (First : ${firstLunchPossible}) - (Second : ${secondLunchPossible}) - (Third : ${thirdLunchPossible})`);
+                debrief.unshift(`Friday Lunches | (First : ${firstLunchPossible}) - (Second : ${secondLunchPossible}) - (Third : ${thirdLunchPossible}) \n`);
                 break;
         }
     }
@@ -400,7 +400,7 @@ function generateWaiterRoster(cadetList, week) {
         console.log("Creating a roster")
         return createRoster(cadetList, week);
     } else {
-        return "Can't make a roster \n ;(";
+        return debrief;
     }
 }
 
