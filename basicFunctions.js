@@ -336,7 +336,7 @@ function metMinimumNumOfShifts(cadetList, baseShifts) {
     }
 }
 
-async function createRoster(cadetList, week) {
+function createRoster(cadetList, week) {
     let baseShifts = 1;
     let result;
     for (let l = 0; l < week.length; l++) {
@@ -358,6 +358,10 @@ async function createRoster(cadetList, week) {
     console.log(week)
     console.log("\n\n\nCadets:");
     console.log(cadetList)
+    return {
+        cadetList: cadetList,
+        roster: week
+    };
 }
 
 function generateWaiterRoster(cadetList, week) {
@@ -365,6 +369,7 @@ function generateWaiterRoster(cadetList, week) {
     let tuesdayFullLunches;
     let thursdayFullLunches;
     let fridayFullLunches;
+    let errorMsg = "";
     for (let i = 0; i < 5; i++) {
         firstLunchPossible = hasEnoughToFillLunch(cadetList, 1, i);
         secondLunchPossible = hasEnoughToFillLunch(cadetList, 2, i);
@@ -372,30 +377,30 @@ function generateWaiterRoster(cadetList, week) {
         switch (i) {
             case 0:
                 mondayFullLunches = firstLunchPossible && secondLunchPossible && thirdLunchPossible;
-                lunchesCovered(mondayFullLunches, i);
+                console.log(`Monday Lunches | (First : ${firstLunchPossible}) - (Second : ${secondLunchPossible}) - (Third : ${thirdLunchPossible})`);
                 break;
             case 1:
                 tuesdayFullLunches = firstLunchPossible && secondLunchPossible && thirdLunchPossible;
-                lunchesCovered(tuesdayFullLunches, i);
+                console.log(`Tuesday Lunches | (First : ${firstLunchPossible}) - (Second : ${secondLunchPossible}) - (Third : ${thirdLunchPossible})`);
                 break;
             case 2:
                 break;
             case 3:
                 thursdayFullLunches = firstLunchPossible && secondLunchPossible && thirdLunchPossible;
-                lunchesCovered(thursdayFullLunches, i);
+                console.log(`Thursday Lunches | (First : ${firstLunchPossible}) - (Second : ${secondLunchPossible}) - (Third : ${thirdLunchPossible})`);
                 break;
             case 4:
                 fridayFullLunches = firstLunchPossible && secondLunchPossible && thirdLunchPossible;
-                lunchesCovered(fridayFullLunches, i);
+                console.log(`Friday Lunches | (First : ${firstLunchPossible}) - (Second : ${secondLunchPossible}) - (Third : ${thirdLunchPossible})`);
                 break;
         }
     }
     let rosterPossible = mondayFullLunches && tuesdayFullLunches && thursdayFullLunches && fridayFullLunches;
     if (rosterPossible) {
         console.log("Creating a roster")
-        createRoster(cadetList, week);
+        return createRoster(cadetList, week);
     } else {
-        console.log("Can't make a roster \n ;(")
+        return "Can't make a roster \n ;(";
     }
 }
 
@@ -433,16 +438,8 @@ function shuffle(array) { //From Stack Overflow ---------------------
     return array;
 }
 
-function lunchesCovered(condition, dayNum) {
-    if (condition) {
-        console.log("Lunches all Covered on Day ", dayNum);
-    } else {
-        console.log("Not Enough Covered on Day ", dayNum);
-
-    }
-}
 
 module.exports = { getLunchTime, toggleRecursive, AssignBreakfastShifts, AssignLunchShifts,
-     AssignDinnerShifts, AssignWednesdayShifts, othersAvailableForLunch, fullShifts, lunchesCovered,
+     AssignDinnerShifts, AssignWednesdayShifts, othersAvailableForLunch, fullShifts,
     shuffle, hasEnoughToFillLunch, generateWaiterRoster, createRoster, metMinimumNumOfShifts,
      minimumNumberOfShifts }

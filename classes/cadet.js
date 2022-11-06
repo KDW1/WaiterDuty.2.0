@@ -1,6 +1,7 @@
 class Cadet {
     cadetName = "";
     lunchTimes = [];
+    parsedLunchTimes = [];
     shiftAmounts = 0;
     shifts = [];
 
@@ -10,6 +11,12 @@ class Cadet {
         this.lunchTimes.unshift(mon, tues, 0, thurs, fri);
         this.shiftAmounts = 0;
         this.shifts = [];
+        for(let i = 0; i < this.lunchTimes.length; i++) {
+            if(this.cadetName == "Herman Habermann") {
+                console.log("Parsed Time: " + this.getLunchTime(this.lunchTimes[i]))
+            }
+            this.parsedLunchTimes.unshift(this.getLunchTime(this.lunchTimes[i]))
+        }
     }
 
     
@@ -17,6 +24,29 @@ class Cadet {
         Object.assign(this, json);
     }
 
+    
+    getLunchTime(num) {
+        switch (num) {
+            case 0:
+                return "Free Period";
+            case 1:
+                return "1st Lunch";
+            case 2:
+                return "2nd Lunch";
+            case 3:
+                return "3rd Lunch";
+            case 5:
+                return "No Available Lunch"
+        }
+    }
+ 
+    get parsedLunchTimes() {
+        let parsedLunchTimes = [];
+        for(let i = 0; i < parsedLunchTime; i++) {
+            parsedLunchTimes.unshift(getLunchTime(this.lunchTimes[i]))
+        }
+        return parsedLunchTimes;
+    }
     printInfo() {
         for (let i = 0; i < this.lunchTimes.length; i++) {
             switch (this.lunchTimes[i]) {

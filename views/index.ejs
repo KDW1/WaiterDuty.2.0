@@ -73,7 +73,7 @@
                     </thead>
                     <tbody id="tableBody">
                         <% if(locals.cadetList) { %>
-                            <% locals.cadetList.forEach((cadet) => { %>
+                            <% locals.cadetList.forEach((cadet) => {%>
                                 <tr>
                                     <th class = "<%= cadet.cadetName %>"><%= cadet.cadetName %></th>
                                     <th>|</th>
@@ -116,13 +116,21 @@
                         </tr>
                     </thead>
                     <tbody id="mondayTable">
-                        <% if(locals.mon) { %> 
-                            <th>Breakfast</th><th><%= mon.breakfast.join(", ") %></th>
-                            <th>1st Lunch</th><th><%= mon.lunches.firstLunch.join(", ") %></th>
-                            <th>2nd Lunch</th><th><%= mon.lunches.secondLunch.join(", ") %></th>
-                            <th>3rd Lunch</th><th><%= mon.lunches.thirdLunch.join(", ") %></th>
-                            <th>1st Dinner</th><th><%= mon.dinners.firstDinner.join(", ") %></th>
-                            <th>2nd Dinner</th><th><%= mon.dinners.secondDinner.join(", ") %></th>
+                        <% if(locals.roster.monday) { %> 
+                            <% data = locals.roster.monday %> 
+                            <% function iterateShifts(arr) {
+                                let terms = [];
+                                terms = arr.map((data) => {
+                                    return data.assignedPerson;
+                                })
+                                return terms.join(", ");
+                            } %> 
+                            <tr><th>Breakfast</th><th><%= iterateShifts(data.breakfast) %></th></tr>
+                            <tr><th>1st Lunch</th><th><%= iterateShifts(data.lunches.firstLunch) %></th></tr>
+                            <tr><th>2nd Lunch</th><th><%= iterateShifts(data.lunches.secondLunch) %></th></tr>
+                            <tr><th>3rd Lunch</th><th><%= iterateShifts(data.lunches.thirdLunch) %></th></tr>
+                            <tr><th>1st Dinner</th><th><%= iterateShifts(data.dinners.firstDinner) %></th></tr>
+                            <tr><th>2nd Dinner</th><th><%= iterateShifts(data.dinners.secondDinner) %></th></tr>
                         <% } %> 
                     </tbody>
                     <tfoot class="bg-light">
@@ -144,13 +152,21 @@
                         </tr>
                     </thead>
                     <tbody id="tuesdayTable">
-                        <% if(locals.tues) { %> 
-                            <th>Breakfast</th><th><%= tues.breakfast.join(", ") %></th>
-                            <th>1st Lunch</th><th><%= tues.lunches.firstLunch.join(", ") %></th>
-                            <th>2nd Lunch</th><th><%= tues.lunches.secondLunch.join(", ") %></th>
-                            <th>3rd Lunch</th><th><%= tues.lunches.thirdLunch.join(", ") %></th>
-                            <th>1st Dinner</th><th><%= tues.dinners.firstDinner.join(", ") %></th>
-                            <th>2nd Dinner</th><th><%= tues.dinners.secondDinner.join(", ") %></th>
+                        <% if(locals.roster.tuesday) { %> 
+                            <% data = locals.roster.tuesday %> 
+                            <% function iterateShifts(arr) {
+                                let terms = [];
+                                terms = arr.map((data) => {
+                                    return data.assignedPerson;
+                                })
+                                return terms.join(", ");
+                            } %> 
+                            <tr><th>Breakfast</th><th><%= iterateShifts(data.breakfast) %></th></tr>
+                            <tr><th>1st Lunch</th><th><%= iterateShifts(data.lunches.firstLunch) %></th></tr>
+                            <tr><th>2nd Lunch</th><th><%= iterateShifts(data.lunches.secondLunch) %></th></tr>
+                            <tr><th>3rd Lunch</th><th><%= iterateShifts(data.lunches.thirdLunch) %></th></tr>
+                            <tr><th>1st Dinner</th><th><%= iterateShifts(data.dinners.firstDinner) %></th></tr>
+                            <tr><th>2nd Dinner</th><th><%= iterateShifts(data.dinners.secondDinner) %></th></tr>
                         <% } %> 
                     </tbody>
                     <tfoot class="bg-light">
@@ -172,13 +188,19 @@
                         </tr>
                     </thead>
                     <tbody id="wednesdayTable">
-                        <% if(locals.wed) { %> 
-                            <th>Breakfast</th><th><%= wed.breakfast.join(", ") %></th>
-                            <th>1st Lunch</th><th><%= wed.lunches.firstLunch.join(", ") %></th>
-                            <th>2nd Lunch</th><th><%= wed.lunches.secondLunch.join(", ") %></th>
-                            <th>3rd Lunch</th><th><%= wed.lunches.thirdLunch.join(", ") %></th>
-                            <th>1st Dinner</th><th><%= wed.dinners.firstDinner.join(", ") %></th>
-                            <th>2nd Dinner</th><th><%= wed.dinners.secondDinner.join(", ") %></th>
+                        <% if(locals.roster.wednesday) { %> 
+                            <% data = locals.roster.wednesday %> 
+                            <% function iterateShifts(arr) {
+                                let terms = [];
+                                terms = arr.map((data) => {
+                                    return data.assignedPerson;
+                                })
+                                return terms.join(", ");
+                            } %> 
+                            <tr><th>Breakfast</th><th><%= iterateShifts(data.breakfast) %></th></tr>
+                            <tr><th>Wednesday</th><th><%= iterateShifts(data.wednesday) %></th></tr>
+                            <tr><th>1st Dinner</th><th><%= iterateShifts(data.dinners.firstDinner) %></th></tr>
+                            <tr><th>2nd Dinner</th><th><%= iterateShifts(data.dinners.secondDinner) %></th></tr>
                         <% } %> 
                     </tbody>
                     <tfoot class="bg-light">
@@ -200,13 +222,21 @@
                         </tr>
                     </thead>
                     <tbody id="thursdayTable">
-                        <% if(locals.thurs) { %> 
-                            <th>Breakfast</th><th><%= thurs.breakfast.join(", ") %></th>
-                            <th>1st Lunch</th><th><%= thurs.lunches.firstLunch.join(", ") %></th>
-                            <th>2nd Lunch</th><th><%= thurs.lunches.secondLunch.join(", ") %></th>
-                            <th>3rd Lunch</th><th><%= thurs.lunches.thirdLunch.join(", ") %></th>
-                            <th>1st Dinner</th><th><%= thurs.dinners.firstDinner.join(", ") %></th>
-                            <th>2nd Dinner</th><th><%= thurs.dinners.secondDinner.join(", ") %></th>
+                        <% if(locals.roster.thursday) { %> 
+                            <% data = locals.roster.thursday %> 
+                            <% function iterateShifts(arr) {
+                                let terms = [];
+                                terms = arr.map((data) => {
+                                    return data.assignedPerson;
+                                })
+                                return terms.join(", ");
+                            } %> 
+                            <tr><th>Breakfast</th><th><%= iterateShifts(data.breakfast) %></th></tr>
+                            <tr><th>1st Lunch</th><th><%= iterateShifts(data.lunches.firstLunch) %></th></tr>
+                            <tr><th>2nd Lunch</th><th><%= iterateShifts(data.lunches.secondLunch) %></th></tr>
+                            <tr><th>3rd Lunch</th><th><%= iterateShifts(data.lunches.thirdLunch) %></th></tr>
+                            <tr><th>1st Dinner</th><th><%= iterateShifts(data.dinners.firstDinner) %></th></tr>
+                            <tr><th>2nd Dinner</th><th><%= iterateShifts(data.dinners.secondDinner) %></th></tr>
                         <% } %> 
                     </tbody>
                     <tfoot class="bg-light">
@@ -228,13 +258,21 @@
                         </tr>
                     </thead>
                     <tbody id="fridayTable">
-                        <% if(locals.fri) { %> 
-                            <th>Breakfast</th><th><%= fri.breakfast.join(", ") %></th>
-                            <th>1st Lunch</th><th><%= fri.lunches.firstLunch.join(", ") %></th>
-                            <th>2nd Lunch</th><th><%= fri.lunches.secondLunch.join(", ") %></th>
-                            <th>3rd Lunch</th><th><%= fri.lunches.thirdLunch.join(", ") %></th>
-                            <th>1st Dinner</th><th><%= fri.dinners.firstDinner.join(", ") %></th>
-                            <th>2nd Dinner</th><th><%= fri.dinners.secondDinner.join(", ") %></th>
+                        <% if(locals.roster.friday) { %> 
+                            <% data = locals.roster.friday %> 
+                            <% function iterateShifts(arr) {
+                                let terms = [];
+                                terms = arr.map((data) => {
+                                    return data.assignedPerson;
+                                })
+                                return terms.join(", ");
+                            } %> 
+                            <tr><th>Breakfast</th><th><%= iterateShifts(data.breakfast) %></th></tr>
+                            <tr><th>1st Lunch</th><th><%= iterateShifts(data.lunches.firstLunch) %></th></tr>
+                            <tr><th>2nd Lunch</th><th><%= iterateShifts(data.lunches.secondLunch) %></th></tr>
+                            <tr><th>3rd Lunch</th><th><%= iterateShifts(data.lunches.thirdLunch) %></th></tr>
+                            <tr><th>1st Dinner</th><th><%= iterateShifts(data.dinners.firstDinner) %></th></tr>
+                            <tr><th>2nd Dinner</th><th><%= iterateShifts(data.dinners.secondDinner) %></th></tr>
                         <% } %> 
                     </tbody>
                     <tfoot class="bg-light">

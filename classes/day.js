@@ -23,7 +23,7 @@ class Day {
         if(!arr || arr.length == 0) {
             return [];
         }
-        returnArr = []
+        let returnArr = []
         arr.forEach((shift) => {
             let data = new Shift();
             data.fromJson(shift);

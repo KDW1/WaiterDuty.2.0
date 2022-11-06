@@ -19,29 +19,13 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 
 app.get('/', (req, res) => {
-    let cadetsData = fs.readFileSync('./cadets.json', 'utf-8')
-    cadetsData = JSON.parse(cadetsData).cadets ?? JSON.parse(cadetsData);
-    for(let i = 0; i < cadetsData.length; i++) {
-        cadetsData[i].parsedLunchTimes = []
-        let cadet = cadetsData[i]
-
-        console.log(cadet)
-        for(let j = 0; j < cadet.lunchTimes.length; j++) {
-            if(j != 2) {
-                let parsedLunchTime =  basicFuncs.getLunchTime(parseInt(cadet.lunchTimes[j]))
-                console.log(parsedLunchTime)
-                cadetsData[i].parsedLunchTimes.push(parsedLunchTime)
-            }
-        }
-    }
-    console.log(cadetsData)
-    if(cadetsData) {
-        res.render('index', {
-            cadetList: cadetsData
-        })
-    } else {
-        res.render('index')
-    }
+    console.log("hi")
+    let cadetsData = JSON.parse(fs.readFileSync('./cadets.json', 'utf-8'));
+    let rosterData = JSON.parse(fs.readFileSync('./roster.json', 'utf-8'));
+    res.render('index', {
+        cadetList: cadetsData,
+        roster: rosterData
+    })
 })
 
 app.get('/deleteCadet', (req, res) => {
@@ -73,12 +57,26 @@ app.get('/addCadet', (req, res) => {
     
 })
 
-app.get('/createRoster', async (req, res) => {
-    //Getting Cadet Info
+app.get('/configCadets', (req, res) => {
+    let cadetList = presetCadetList();
+    fs.writeFileSync('./cadets.json', JSON.stringify(cadetList))
+    res.send(cadetList)
+})
 
-    let cadetList;
-    let cadetsData = fs.readFileSync('./cadets.json', 'utf-8')
-    cadetsData = JSON.parse(cadetsData).cadets;
+app.get('/deleteAllCadets', (req, res) => {
+    let cadetList = {
+        cadets: []
+    }
+    fs.writeFileSync('./cadets.json', JSON.stringify(cadetList))
+    res.send(cadetList)
+})
+
+app.get('/roster', (req, res) => {
+    console.log("Creating roster")
+    // //Getting Cadet Info
+
+    let cadetList = [];
+    let cadetsData = JSON.parse(fs.readFileSync('./cadets.json', 'utf-8'));
 
     //Getting Roster/Week info 
 
@@ -87,19 +85,26 @@ app.get('/createRoster', async (req, res) => {
     if(rosterData) {
         roster.fromJson(rosterData)
     }
-    console.log("Roster Data:")
-    console.log(roster)
+    // console.log("Roster Data:")
+    // // console.log(roster)
 
-    //Making CadetList
+    // //Making CadetList
     if(cadetsData) {
         for(let i = 0; i < cadetsData.length; i++) {
             let cadet = new Cadet();
             cadet.fromJson(cadetsData[i]);
-            cadetList.shift(cadet);
+            cadetList.unshift(cadet);
         }
-    
     }
-    res.send(cadetList ?? "No Cadet List available");
+    // // console.log("Cadets:");
+    // // console.log(cadetList)
+    let relevantInfo = (cadetList) ? basicFuncs.generateWaiterRoster(cadetList, roster) : false;
+    if(relevantInfo) {
+        console.log("Roster:")
+        console.log(relevantInfo.roster)
+        fs.writeFileSync('./roster.json', JSON.stringify(relevantInfo.roster));
+        fs.writeFileSync('./cadets.json', JSON.stringify(cadetList));
+    }
     // basicFuncs.generateWaiterRoster(cadetList, week)
     // let response = basicFuncs.generateWaiterRoster(cadetsData, week)
 })
