@@ -1,1 +1,658 @@
-{"monday":{"breakfast":[{"dayNum":1,"timePeriod":1,"shift":1,"assignedPerson":"Herman Habermann"},{"dayNum":1,"timePeriod":1,"shift":1,"assignedPerson":"Lorenzo Alonzo"},{"dayNum":1,"timePeriod":1,"shift":1,"assignedPerson":"Andrew Divine"},{"dayNum":1,"timePeriod":1,"shift":1,"assignedPerson":"Beckett Payne"},{"dayNum":1,"timePeriod":1,"shift":1,"assignedPerson":"Nathaniel Caminero"}],"wednesday":[],"lunches":{"firstLunch":[{"dayNum":1,"timePeriod":2,"shift":1,"assignedPerson":"King-Diorr Willsun"},{"dayNum":1,"timePeriod":2,"shift":1,"assignedPerson":"Haobo Sun"},{"dayNum":1,"timePeriod":2,"shift":1,"assignedPerson":"Gage Smith"}],"secondLunch":[{"dayNum":1,"timePeriod":2,"shift":2,"assignedPerson":"Ernesto Urtusuatsegui"},{"dayNum":1,"timePeriod":2,"shift":2,"assignedPerson":"Justin Cheung"},{"dayNum":1,"timePeriod":2,"shift":2,"assignedPerson":"Eric Zhao"}],"thirdLunch":[{"dayNum":1,"timePeriod":2,"shift":3,"assignedPerson":"Andrew Divine"},{"dayNum":1,"timePeriod":2,"shift":3,"assignedPerson":"Beckett Payne"},{"dayNum":1,"timePeriod":2,"shift":3,"assignedPerson":"Nathaniel Caminero"}]},"dinners":{"firstDinner":[{"dayNum":1,"timePeriod":3,"shift":1,"assignedPerson":"Bosco Fox"},{"dayNum":1,"timePeriod":3,"shift":1,"assignedPerson":"Diego Urtusuatsegui"},{"dayNum":1,"timePeriod":3,"shift":1,"assignedPerson":"Jake Dolan"}],"secondDinner":[{"dayNum":1,"timePeriod":3,"shift":2,"assignedPerson":"Alonso Perochena"},{"dayNum":1,"timePeriod":3,"shift":2,"assignedPerson":"Jeronimo Canales"}]},"dayNum":1},"tuesday":{"breakfast":[{"dayNum":2,"timePeriod":1,"shift":1,"assignedPerson":"Jorge Xacur"},{"dayNum":2,"timePeriod":1,"shift":1,"assignedPerson":"Herman Habermann"},{"dayNum":2,"timePeriod":1,"shift":1,"assignedPerson":"Lorenzo Alonzo"},{"dayNum":2,"timePeriod":1,"shift":1,"assignedPerson":"Ernesto Urtusuatsegui"},{"dayNum":2,"timePeriod":1,"shift":1,"assignedPerson":"Justin Cheung"}],"wednesday":[],"lunches":{"firstLunch":[{"dayNum":2,"timePeriod":2,"shift":1,"assignedPerson":"Beckett Payne"},{"dayNum":2,"timePeriod":2,"shift":1,"assignedPerson":"Eric Zhao"},{"dayNum":2,"timePeriod":2,"shift":1,"assignedPerson":"Gage Smith"}],"secondLunch":[{"dayNum":2,"timePeriod":2,"shift":2,"assignedPerson":"Andrew Divine"},{"dayNum":2,"timePeriod":2,"shift":2,"assignedPerson":"Ernesto Urtusuatsegui"},{"dayNum":2,"timePeriod":2,"shift":2,"assignedPerson":"Justin Cheung"}],"thirdLunch":[{"dayNum":2,"timePeriod":2,"shift":3,"assignedPerson":"Nathaniel Caminero"},{"dayNum":2,"timePeriod":2,"shift":3,"assignedPerson":"King-Diorr Willsun"},{"dayNum":2,"timePeriod":2,"shift":3,"assignedPerson":"Haobo Sun"}]},"dinners":{"firstDinner":[{"dayNum":2,"timePeriod":3,"shift":1,"assignedPerson":"Bosco Fox"},{"dayNum":2,"timePeriod":3,"shift":1,"assignedPerson":"Diego Urtusuatsegui"},{"dayNum":2,"timePeriod":3,"shift":1,"assignedPerson":"Jake Dolan"}],"secondDinner":[{"dayNum":2,"timePeriod":3,"shift":2,"assignedPerson":"Alonso Perochena"},{"dayNum":2,"timePeriod":3,"shift":2,"assignedPerson":"Jeronimo Canales"}]},"dayNum":2},"wednesday":{"breakfast":[{"dayNum":3,"timePeriod":1,"shift":1,"assignedPerson":"Jorge Xacur"},{"dayNum":3,"timePeriod":1,"shift":1,"assignedPerson":"Herman Habermann"},{"dayNum":3,"timePeriod":1,"shift":1,"assignedPerson":"Lorenzo Alonzo"},{"dayNum":3,"timePeriod":1,"shift":1,"assignedPerson":"Eric Zhao"},{"dayNum":3,"timePeriod":1,"shift":1,"assignedPerson":"King-Diorr Willsun"}],"wednesday":[{"dayNum":3,"timePeriod":4,"shift":1,"assignedPerson":"Haobo Sun"},{"dayNum":3,"timePeriod":4,"shift":1,"assignedPerson":"Gage Smith"},{"dayNum":3,"timePeriod":4,"shift":1,"assignedPerson":"Bosco Fox"},{"dayNum":3,"timePeriod":4,"shift":1,"assignedPerson":"Diego Urtusuatsegui"},{"dayNum":3,"timePeriod":4,"shift":1,"assignedPerson":"Jake Dolan"},{"dayNum":3,"timePeriod":4,"shift":1,"assignedPerson":"Alonso Perochena"},{"dayNum":3,"timePeriod":4,"shift":1,"assignedPerson":"Jeronimo Canales"}],"lunches":{"firstLunch":[],"secondLunch":[],"thirdLunch":[]},"dinners":{"firstDinner":[{"dayNum":3,"timePeriod":3,"shift":1,"assignedPerson":"Jorge Xacur"},{"dayNum":3,"timePeriod":3,"shift":1,"assignedPerson":"Herman Habermann"},{"dayNum":3,"timePeriod":3,"shift":1,"assignedPerson":"Lorenzo Alonzo"}],"secondDinner":[{"dayNum":3,"timePeriod":3,"shift":2,"assignedPerson":"Andrew Divine"},{"dayNum":3,"timePeriod":3,"shift":2,"assignedPerson":"Beckett Payne"}]},"dayNum":3},"thursday":{"breakfast":[{"dayNum":4,"timePeriod":1,"shift":1,"assignedPerson":"Nathaniel Caminero"},{"dayNum":4,"timePeriod":1,"shift":1,"assignedPerson":"Ernesto Urtusuatsegui"},{"dayNum":4,"timePeriod":1,"shift":1,"assignedPerson":"Justin Cheung"},{"dayNum":4,"timePeriod":1,"shift":1,"assignedPerson":"Eric Zhao"},{"dayNum":4,"timePeriod":1,"shift":1,"assignedPerson":"King-Diorr Willsun"}],"wednesday":[],"lunches":{"firstLunch":[{"dayNum":4,"timePeriod":2,"shift":1,"assignedPerson":"Lorenzo Alonzo"},{"dayNum":4,"timePeriod":2,"shift":1,"assignedPerson":"Andrew Divine"},{"dayNum":4,"timePeriod":2,"shift":1,"assignedPerson":"Eric Zhao"}],"secondLunch":[{"dayNum":4,"timePeriod":2,"shift":2,"assignedPerson":"Herman Habermann"},{"dayNum":4,"timePeriod":2,"shift":2,"assignedPerson":"Justin Cheung"},{"dayNum":4,"timePeriod":2,"shift":2,"assignedPerson":"Gage Smith"}],"thirdLunch":[{"dayNum":4,"timePeriod":2,"shift":3,"assignedPerson":"Nathaniel Caminero"},{"dayNum":4,"timePeriod":2,"shift":3,"assignedPerson":"King-Diorr Willsun"},{"dayNum":4,"timePeriod":2,"shift":3,"assignedPerson":"Haobo Sun"}]},"dinners":{"firstDinner":[{"dayNum":4,"timePeriod":3,"shift":1,"assignedPerson":"Bosco Fox"},{"dayNum":4,"timePeriod":3,"shift":1,"assignedPerson":"Diego Urtusuatsegui"},{"dayNum":4,"timePeriod":3,"shift":1,"assignedPerson":"Jake Dolan"}],"secondDinner":[{"dayNum":4,"timePeriod":3,"shift":2,"assignedPerson":"Alonso Perochena"},{"dayNum":4,"timePeriod":3,"shift":2,"assignedPerson":"Jeronimo Canales"}]},"dayNum":4},"friday":{"breakfast":[{"dayNum":5,"timePeriod":1,"shift":1,"assignedPerson":"Jorge Xacur"},{"dayNum":5,"timePeriod":1,"shift":1,"assignedPerson":"Beckett Payne"},{"dayNum":5,"timePeriod":1,"shift":1,"assignedPerson":"Ernesto Urtusuatsegui"},{"dayNum":5,"timePeriod":1,"shift":1,"assignedPerson":"Haobo Sun"},{"dayNum":5,"timePeriod":1,"shift":1,"assignedPerson":"Gage Smith"}],"wednesday":[],"lunches":{"firstLunch":[{"dayNum":5,"timePeriod":2,"shift":1,"assignedPerson":"Lorenzo Alonzo"},{"dayNum":5,"timePeriod":2,"shift":1,"assignedPerson":"Jeronimo Canales"},{"dayNum":5,"timePeriod":2,"shift":1,"assignedPerson":"Jorge Xacur"}],"secondLunch":[{"dayNum":5,"timePeriod":2,"shift":2,"assignedPerson":"Andrew Divine"},{"dayNum":5,"timePeriod":2,"shift":2,"assignedPerson":"Gage Smith"},{"dayNum":5,"timePeriod":2,"shift":2,"assignedPerson":"Alonso Perochena"}],"thirdLunch":[{"dayNum":5,"timePeriod":2,"shift":3,"assignedPerson":"Ernesto Urtusuatsegui"},{"dayNum":5,"timePeriod":2,"shift":3,"assignedPerson":"King-Diorr Willsun"},{"dayNum":5,"timePeriod":2,"shift":3,"assignedPerson":"Haobo Sun"}]},"dinners":{"firstDinner":[{"dayNum":5,"timePeriod":3,"shift":1,"assignedPerson":"Bosco Fox"},{"dayNum":5,"timePeriod":3,"shift":1,"assignedPerson":"Diego Urtusuatsegui"},{"dayNum":5,"timePeriod":3,"shift":1,"assignedPerson":"Jake Dolan"}],"secondDinner":[{"dayNum":5,"timePeriod":3,"shift":2,"assignedPerson":"Alonso Perochena"},{"dayNum":5,"timePeriod":3,"shift":2,"assignedPerson":"Jeronimo Canales"}]},"dayNum":5}}
+{
+    "monday": {
+        "breakfast": [
+            {
+                "dayNum": 1,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Herman Habermann"
+            },
+            {
+                "dayNum": 1,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Lorenzo Alonzo"
+            },
+            {
+                "dayNum": 1,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Andrew Divine"
+            },
+            {
+                "dayNum": 1,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Beckett Payne"
+            },
+            {
+                "dayNum": 1,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Nathaniel Caminero"
+            }
+        ],
+        "wednesday": [],
+        "lunches": {
+            "firstLunch": [
+                {
+                    "dayNum": 1,
+                    "timePeriod": 2,
+                    "shift": 1,
+                    "assignedPerson": "King-Diorr Willsun"
+                },
+                {
+                    "dayNum": 1,
+                    "timePeriod": 2,
+                    "shift": 1,
+                    "assignedPerson": "Haobo Sun"
+                },
+                {
+                    "dayNum": 1,
+                    "timePeriod": 2,
+                    "shift": 1,
+                    "assignedPerson": "Gage Smith"
+                }
+            ],
+            "secondLunch": [
+                {
+                    "dayNum": 1,
+                    "timePeriod": 2,
+                    "shift": 2,
+                    "assignedPerson": "Ernesto Urtusuatsegui"
+                },
+                {
+                    "dayNum": 1,
+                    "timePeriod": 2,
+                    "shift": 2,
+                    "assignedPerson": "Justin Cheung"
+                },
+                {
+                    "dayNum": 1,
+                    "timePeriod": 2,
+                    "shift": 2,
+                    "assignedPerson": "Eric Zhao"
+                }
+            ],
+            "thirdLunch": [
+                {
+                    "dayNum": 1,
+                    "timePeriod": 2,
+                    "shift": 3,
+                    "assignedPerson": "Andrew Divine"
+                },
+                {
+                    "dayNum": 1,
+                    "timePeriod": 2,
+                    "shift": 3,
+                    "assignedPerson": "Beckett Payne"
+                },
+                {
+                    "dayNum": 1,
+                    "timePeriod": 2,
+                    "shift": 3,
+                    "assignedPerson": "Nathaniel Caminero"
+                }
+            ]
+        },
+        "dinners": {
+            "firstDinner": [
+                {
+                    "dayNum": 1,
+                    "timePeriod": 3,
+                    "shift": 1,
+                    "assignedPerson": "Bosco Fox"
+                },
+                {
+                    "dayNum": 1,
+                    "timePeriod": 3,
+                    "shift": 1,
+                    "assignedPerson": "Diego Urtusuatsegui"
+                },
+                {
+                    "dayNum": 1,
+                    "timePeriod": 3,
+                    "shift": 1,
+                    "assignedPerson": "Jake Dolan"
+                }
+            ],
+            "secondDinner": [
+                {
+                    "dayNum": 1,
+                    "timePeriod": 3,
+                    "shift": 2,
+                    "assignedPerson": "Alonso Perochena"
+                },
+                {
+                    "dayNum": 1,
+                    "timePeriod": 3,
+                    "shift": 2,
+                    "assignedPerson": "Jeronimo Canales"
+                }
+            ]
+        },
+        "dayNum": 1
+    },
+    "tuesday": {
+        "breakfast": [
+            {
+                "dayNum": 2,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Jorge Xacur"
+            },
+            {
+                "dayNum": 2,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Herman Habermann"
+            },
+            {
+                "dayNum": 2,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Lorenzo Alonzo"
+            },
+            {
+                "dayNum": 2,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Ernesto Urtusuatsegui"
+            },
+            {
+                "dayNum": 2,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Justin Cheung"
+            }
+        ],
+        "wednesday": [],
+        "lunches": {
+            "firstLunch": [
+                {
+                    "dayNum": 2,
+                    "timePeriod": 2,
+                    "shift": 1,
+                    "assignedPerson": "Beckett Payne"
+                },
+                {
+                    "dayNum": 2,
+                    "timePeriod": 2,
+                    "shift": 1,
+                    "assignedPerson": "Eric Zhao"
+                },
+                {
+                    "dayNum": 2,
+                    "timePeriod": 2,
+                    "shift": 1,
+                    "assignedPerson": "Gage Smith"
+                }
+            ],
+            "secondLunch": [
+                {
+                    "dayNum": 2,
+                    "timePeriod": 2,
+                    "shift": 2,
+                    "assignedPerson": "Andrew Divine"
+                },
+                {
+                    "dayNum": 2,
+                    "timePeriod": 2,
+                    "shift": 2,
+                    "assignedPerson": "Ernesto Urtusuatsegui"
+                },
+                {
+                    "dayNum": 2,
+                    "timePeriod": 2,
+                    "shift": 2,
+                    "assignedPerson": "Justin Cheung"
+                }
+            ],
+            "thirdLunch": [
+                {
+                    "dayNum": 2,
+                    "timePeriod": 2,
+                    "shift": 3,
+                    "assignedPerson": "Nathaniel Caminero"
+                },
+                {
+                    "dayNum": 2,
+                    "timePeriod": 2,
+                    "shift": 3,
+                    "assignedPerson": "King-Diorr Willsun"
+                },
+                {
+                    "dayNum": 2,
+                    "timePeriod": 2,
+                    "shift": 3,
+                    "assignedPerson": "Haobo Sun"
+                }
+            ]
+        },
+        "dinners": {
+            "firstDinner": [
+                {
+                    "dayNum": 2,
+                    "timePeriod": 3,
+                    "shift": 1,
+                    "assignedPerson": "Bosco Fox"
+                },
+                {
+                    "dayNum": 2,
+                    "timePeriod": 3,
+                    "shift": 1,
+                    "assignedPerson": "Diego Urtusuatsegui"
+                },
+                {
+                    "dayNum": 2,
+                    "timePeriod": 3,
+                    "shift": 1,
+                    "assignedPerson": "Jake Dolan"
+                }
+            ],
+            "secondDinner": [
+                {
+                    "dayNum": 2,
+                    "timePeriod": 3,
+                    "shift": 2,
+                    "assignedPerson": "Alonso Perochena"
+                },
+                {
+                    "dayNum": 2,
+                    "timePeriod": 3,
+                    "shift": 2,
+                    "assignedPerson": "Jeronimo Canales"
+                }
+            ]
+        },
+        "dayNum": 2
+    },
+    "wednesday": {
+        "breakfast": [
+            {
+                "dayNum": 3,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Jorge Xacur"
+            },
+            {
+                "dayNum": 3,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Herman Habermann"
+            },
+            {
+                "dayNum": 3,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Lorenzo Alonzo"
+            },
+            {
+                "dayNum": 3,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Eric Zhao"
+            },
+            {
+                "dayNum": 3,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "King-Diorr Willsun"
+            }
+        ],
+        "wednesday": [
+            {
+                "dayNum": 3,
+                "timePeriod": 4,
+                "shift": 1,
+                "assignedPerson": "Haobo Sun"
+            },
+            {
+                "dayNum": 3,
+                "timePeriod": 4,
+                "shift": 1,
+                "assignedPerson": "Gage Smith"
+            },
+            {
+                "dayNum": 3,
+                "timePeriod": 4,
+                "shift": 1,
+                "assignedPerson": "Bosco Fox"
+            },
+            {
+                "dayNum": 3,
+                "timePeriod": 4,
+                "shift": 1,
+                "assignedPerson": "Diego Urtusuatsegui"
+            },
+            {
+                "dayNum": 3,
+                "timePeriod": 4,
+                "shift": 1,
+                "assignedPerson": "Jake Dolan"
+            },
+            {
+                "dayNum": 3,
+                "timePeriod": 4,
+                "shift": 1,
+                "assignedPerson": "Alonso Perochena"
+            },
+            {
+                "dayNum": 3,
+                "timePeriod": 4,
+                "shift": 1,
+                "assignedPerson": "Jeronimo Canales"
+            }
+        ],
+        "lunches": {
+            "firstLunch": [],
+            "secondLunch": [],
+            "thirdLunch": []
+        },
+        "dinners": {
+            "firstDinner": [
+                {
+                    "dayNum": 3,
+                    "timePeriod": 3,
+                    "shift": 1,
+                    "assignedPerson": "Jorge Xacur"
+                },
+                {
+                    "dayNum": 3,
+                    "timePeriod": 3,
+                    "shift": 1,
+                    "assignedPerson": "Herman Habermann"
+                },
+                {
+                    "dayNum": 3,
+                    "timePeriod": 3,
+                    "shift": 1,
+                    "assignedPerson": "Lorenzo Alonzo"
+                }
+            ],
+            "secondDinner": [
+                {
+                    "dayNum": 3,
+                    "timePeriod": 3,
+                    "shift": 2,
+                    "assignedPerson": "Andrew Divine"
+                },
+                {
+                    "dayNum": 3,
+                    "timePeriod": 3,
+                    "shift": 2,
+                    "assignedPerson": "Beckett Payne"
+                }
+            ]
+        },
+        "dayNum": 3
+    },
+    "thursday": {
+        "breakfast": [
+            {
+                "dayNum": 4,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Nathaniel Caminero"
+            },
+            {
+                "dayNum": 4,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Ernesto Urtusuatsegui"
+            },
+            {
+                "dayNum": 4,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Justin Cheung"
+            },
+            {
+                "dayNum": 4,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Eric Zhao"
+            },
+            {
+                "dayNum": 4,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "King-Diorr Willsun"
+            }
+        ],
+        "wednesday": [],
+        "lunches": {
+            "firstLunch": [
+                {
+                    "dayNum": 4,
+                    "timePeriod": 2,
+                    "shift": 1,
+                    "assignedPerson": "Lorenzo Alonzo"
+                },
+                {
+                    "dayNum": 4,
+                    "timePeriod": 2,
+                    "shift": 1,
+                    "assignedPerson": "Andrew Divine"
+                },
+                {
+                    "dayNum": 4,
+                    "timePeriod": 2,
+                    "shift": 1,
+                    "assignedPerson": "Eric Zhao"
+                }
+            ],
+            "secondLunch": [
+                {
+                    "dayNum": 4,
+                    "timePeriod": 2,
+                    "shift": 2,
+                    "assignedPerson": "Herman Habermann"
+                },
+                {
+                    "dayNum": 4,
+                    "timePeriod": 2,
+                    "shift": 2,
+                    "assignedPerson": "Justin Cheung"
+                },
+                {
+                    "dayNum": 4,
+                    "timePeriod": 2,
+                    "shift": 2,
+                    "assignedPerson": "Gage Smith"
+                }
+            ],
+            "thirdLunch": [
+                {
+                    "dayNum": 4,
+                    "timePeriod": 2,
+                    "shift": 3,
+                    "assignedPerson": "Nathaniel Caminero"
+                },
+                {
+                    "dayNum": 4,
+                    "timePeriod": 2,
+                    "shift": 3,
+                    "assignedPerson": "King-Diorr Willsun"
+                },
+                {
+                    "dayNum": 4,
+                    "timePeriod": 2,
+                    "shift": 3,
+                    "assignedPerson": "Haobo Sun"
+                }
+            ]
+        },
+        "dinners": {
+            "firstDinner": [
+                {
+                    "dayNum": 4,
+                    "timePeriod": 3,
+                    "shift": 1,
+                    "assignedPerson": "Bosco Fox"
+                },
+                {
+                    "dayNum": 4,
+                    "timePeriod": 3,
+                    "shift": 1,
+                    "assignedPerson": "Diego Urtusuatsegui"
+                },
+                {
+                    "dayNum": 4,
+                    "timePeriod": 3,
+                    "shift": 1,
+                    "assignedPerson": "Jake Dolan"
+                }
+            ],
+            "secondDinner": [
+                {
+                    "dayNum": 4,
+                    "timePeriod": 3,
+                    "shift": 2,
+                    "assignedPerson": "Alonso Perochena"
+                },
+                {
+                    "dayNum": 4,
+                    "timePeriod": 3,
+                    "shift": 2,
+                    "assignedPerson": "Jeronimo Canales"
+                }
+            ]
+        },
+        "dayNum": 4
+    },
+    "friday": {
+        "breakfast": [
+            {
+                "dayNum": 5,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Jorge Xacur"
+            },
+            {
+                "dayNum": 5,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Beckett Payne"
+            },
+            {
+                "dayNum": 5,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Ernesto Urtusuatsegui"
+            },
+            {
+                "dayNum": 5,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Haobo Sun"
+            },
+            {
+                "dayNum": 5,
+                "timePeriod": 1,
+                "shift": 1,
+                "assignedPerson": "Gage Smith"
+            }
+        ],
+        "wednesday": [],
+        "lunches": {
+            "firstLunch": [
+                {
+                    "dayNum": 5,
+                    "timePeriod": 2,
+                    "shift": 1,
+                    "assignedPerson": "Lorenzo Alonzo"
+                },
+                {
+                    "dayNum": 5,
+                    "timePeriod": 2,
+                    "shift": 1,
+                    "assignedPerson": "Jeronimo Canales"
+                },
+                {
+                    "dayNum": 5,
+                    "timePeriod": 2,
+                    "shift": 1,
+                    "assignedPerson": "Jorge Xacur"
+                }
+            ],
+            "secondLunch": [
+                {
+                    "dayNum": 5,
+                    "timePeriod": 2,
+                    "shift": 2,
+                    "assignedPerson": "Andrew Divine"
+                },
+                {
+                    "dayNum": 5,
+                    "timePeriod": 2,
+                    "shift": 2,
+                    "assignedPerson": "Gage Smith"
+                },
+                {
+                    "dayNum": 5,
+                    "timePeriod": 2,
+                    "shift": 2,
+                    "assignedPerson": "Alonso Perochena"
+                }
+            ],
+            "thirdLunch": [
+                {
+                    "dayNum": 5,
+                    "timePeriod": 2,
+                    "shift": 3,
+                    "assignedPerson": "Ernesto Urtusuatsegui"
+                },
+                {
+                    "dayNum": 5,
+                    "timePeriod": 2,
+                    "shift": 3,
+                    "assignedPerson": "King-Diorr Willsun"
+                },
+                {
+                    "dayNum": 5,
+                    "timePeriod": 2,
+                    "shift": 3,
+                    "assignedPerson": "Haobo Sun"
+                }
+            ]
+        },
+        "dinners": {
+            "firstDinner": [
+                {
+                    "dayNum": 5,
+                    "timePeriod": 3,
+                    "shift": 1,
+                    "assignedPerson": "Bosco Fox"
+                },
+                {
+                    "dayNum": 5,
+                    "timePeriod": 3,
+                    "shift": 1,
+                    "assignedPerson": "Diego Urtusuatsegui"
+                },
+                {
+                    "dayNum": 5,
+                    "timePeriod": 3,
+                    "shift": 1,
+                    "assignedPerson": "Jake Dolan"
+                }
+            ],
+            "secondDinner": [
+                {
+                    "dayNum": 5,
+                    "timePeriod": 3,
+                    "shift": 2,
+                    "assignedPerson": "Alonso Perochena"
+                },
+                {
+                    "dayNum": 5,
+                    "timePeriod": 3,
+                    "shift": 2,
+                    "assignedPerson": "Jeronimo Canales"
+                }
+            ]
+        },
+        "dayNum": 5
+    }
+}

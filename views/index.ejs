@@ -19,11 +19,13 @@
             <p class="subtitle is-size-5 text-white pb-4">
                 A website that makes organizing <strong class="has-text-white">Waiter Duty Rosters</strong> easier!
             </p>
+            <% if(locals.errorMsg) { %>
                 <% locals.errorMsg.forEach((data) => { %>
                     <p class="subtitle is-size-5 text-white">
                         <%= data %> 
                     </p>
                 <% }) %> 
+            <% } %>  
         </div>
     </div>
     <div class="container">
@@ -437,11 +439,11 @@
                         <div class="row mb-2">
                             <select name="mon" class="form-select mb-3 pt-1 pb-1">
                                 <option selected>Daily Lunches</option>
-                                <option value="1">1st Lunch</option>
-                                <option value="2">2nd Lunch</option>
-                                <option value="3">3rd Lunch</option>
-                                <option value="0">Free Period</option>
-                                <option value="5">Can't Make It</option>
+                                <option value=1>1st Lunch</option>
+                                <option value=2>2nd Lunch</option>
+                                <option value=3>3rd Lunch</option>
+                                <option value=0>Free Period</option>
+                                <option value=5>Can't Make It</option>
                             </select>
                         </div>
                         <div class="row">
@@ -452,11 +454,11 @@
                         <div class="row mb-2">
                             <select name="tues" class="form-select mb-3 pt-1 pb-1">
                                 <option selected>Daily Lunches</option>
-                                <option value="1">1st Lunch</option>
-                                <option value="2">2nd Lunch</option>
-                                <option value="3">3rd Lunch</option>
-                                <option value="0">Free Period</option>
-                                <option value="5">Can't Make It</option>
+                                <option value=1>1st Lunch</option>
+                                <option value=2>2nd Lunch</option>
+                                <option value=3>3rd Lunch</option>
+                                <option value=0>Free Period</option>
+                                <option value=5>Can't Make It</option>
                             </select>
                         </div>
                         <div class="row">
@@ -467,11 +469,11 @@
                         <div class="row mb-2">
                             <select name="thurs" class="form-select mb-3 pt-1 pb-1">
                                 <option selected>Daily Lunches</option>
-                                <option value="1">1st Lunch</option>
-                                <option value="2">2nd Lunch</option>
-                                <option value="3">3rd Lunch</option>
-                                <option value="0">Free Period</option>
-                                <option value="5">Can't Make It</option>
+                                <option value=1>1st Lunch</option>
+                                <option value=2>2nd Lunch</option>
+                                <option value=3>3rd Lunch</option>
+                                <option value=0>Free Period</option>
+                                <option value=5>Can't Make It</option>
                             </select>
                         </div>
                         <div class="row">
@@ -482,11 +484,11 @@
                         <div class="row mb-2">
                             <select name="fri" class="form-select mb-3 pt-1 pb-1">
                                 <option selected>Daily Lunches</option>
-                                <option value="1">1st Lunch</option>
-                                <option value="2">2nd Lunch</option>
-                                <option value="3">3rd Lunch</option>
-                                <option value="0">Free Period</option>
-                                <option value="5">Can't Make It</option>
+                                <option value=1>1st Lunch</option>
+                                <option value=2>2nd Lunch</option>
+                                <option value=3>3rd Lunch</option>
+                                <option value=0>Free Period</option>
+                                <option value=5>Can't Make It</option>
                             </select>
                         </div>
                     </div>

@@ -23,18 +23,24 @@ app.get('/', (req, res) => {
     let cadetsData = JSON.parse(fs.readFileSync('./cadets.json', 'utf-8'));
     let rosterData = JSON.parse(fs.readFileSync('./roster.json', 'utf-8'));
     res.render('index', {
+        errorMsg: null,
         cadetList: cadetsData,
         roster: rosterData
     })
 })
 
 app.get('/deleteCadet', (req, res) => {
-    let { cadetName } = req.query
+    console.log("Trying to delete a cadet")
+    let _cadetName = req.query.cadetName
     let cadetsData = fs.readFileSync('./cadets.json', 'utf-8')
     cadetsData = JSON.parse(cadetsData)
-    cadetsData.cadets.splice(cadetsData.cadets.indexOf((data) => {data.cadetName = cadetName}), 1)
+    console.log("Name: " + _cadetName)
+    console.log("Cadets:")
+    console.log(cadetsData)
+    let index = cadetsData.findIndex((data) => data.cadetName == _cadetName)
+    cadetsData.splice(index, 1)
     fs.writeFileSync('./cadets.json', JSON.stringify(cadetsData))
-    res.send(cadetsData)
+    res.redirect('/')
 })
 
 app.post('/addCadet', (req, res) => {
@@ -42,7 +48,7 @@ app.post('/addCadet', (req, res) => {
     let cadet = new Cadet(cadetName, mon, tues, thurs, fri);
     let cadetsData = fs.readFileSync('./cadets.json', 'utf-8')
     cadetsData = JSON.parse(cadetsData)
-    cadetsData.cadets.unshift(cadet)
+    cadetsData.unshift(cadet)
     fs.writeFileSync('./cadets.json', JSON.stringify(cadetsData))
     res.redirect('/')
 })
@@ -54,7 +60,6 @@ app.get('/addCadet', (req, res) => {
     cadetsData.cadets.unshift(cadet)
     fs.writeFileSync('./cadets.json', JSON.stringify(cadetsData))
     res.send(cadetsData)
-    
 })
 
 app.get('/configCadets', (req, res) => {
