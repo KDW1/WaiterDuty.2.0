@@ -12,11 +12,10 @@ class Cadet {
         this.shiftAmounts = 0;
         this.shifts = [];
         for(let i = 0; i < this.lunchTimes.length; i++) {
-            if(this.cadetName == "Herman Habermann") {
-                console.log("Parsed Time: " + this.getLunchTime(this.lunchTimes[i]))
-            }
             this.parsedLunchTimes.unshift(this.getLunchTime(this.lunchTimes[i]))
         }
+        console.log(this.cadetName)
+        console.log(this.parsedLunchTimes)
     }
 
     
@@ -26,6 +25,7 @@ class Cadet {
 
     
     getLunchTime(num) {
+        console.log(num)
         switch (num) {
             case 0:
                 return "Free Period";

@@ -19,11 +19,14 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 
 app.get('/', (req, res) => {
-    console.log("hi")
+    let { errorMsg } = req.query;
     let cadetsData = JSON.parse(fs.readFileSync('./cadets.json', 'utf-8'));
     let rosterData = JSON.parse(fs.readFileSync('./roster.json', 'utf-8'));
+    if(errorMsg == "CadetFailure") {
+        errorMsg = "Failed to create the cadet";
+    }
     res.render('index', {
-        errorMsg: null,
+        errorMsg: null ?? errorMsg,
         cadetList: cadetsData,
         roster: rosterData
     })
@@ -45,18 +48,22 @@ app.get('/deleteCadet', (req, res) => {
 
 app.post('/addCadet', (req, res) => {
     let { cadetName, mon, tues, thurs, fri } = req.body
-    let cadet = new Cadet(cadetName, mon, tues, thurs, fri);
-    let cadetsData = fs.readFileSync('./cadets.json', 'utf-8')
-    cadetsData = JSON.parse(cadetsData)
-    cadetsData.unshift(cadet)
-    fs.writeFileSync('./cadets.json', JSON.stringify(cadetsData))
-    res.redirect('/')
+    if(cadetName && mon && tues && thurs && fri) { 
+        let cadet = new Cadet(cadetName, parseInt(mon), parseInt(tues), parseInt(thurs), parseInt(fri))
+        let cadetsData = fs.readFileSync('./cadets.json', 'utf-8')
+        cadetsData = JSON.parse(cadetsData)
+        cadetsData.unshift(cadet)
+        fs.writeFileSync('./cadets.json', JSON.stringify(cadetsData))
+        res.redirect('/')
+    } else {
+        res.redirect('/?errorMsg=CadetFailure')
+    }
 })
 
 app.get('/addCadet', (req, res) => {
     let { cadetName, mon, tues, thurs, fri } = req.query;
     let cadetsData = JSON.parse(fs.readFileSync('./cadets.json', 'utf-8'))
-    let cadet = new Cadet(cadetName, mon, tues, thurs, fri)
+    let cadet = new Cadet(cadetName, parseInt(mon), parseInt(tues), parseInt(thurs), parseInt(fri))
     cadetsData.cadets.unshift(cadet)
     fs.writeFileSync('./cadets.json', JSON.stringify(cadetsData))
     res.send(cadetsData)
@@ -65,7 +72,8 @@ app.get('/addCadet', (req, res) => {
 app.get('/configCadets', (req, res) => {
     let cadetList = presetCadetList();
     fs.writeFileSync('./cadets.json', JSON.stringify(cadetList))
-    res.send(cadetList)
+    fs.writeFileSync('./roster.json', JSON.stringify(new Roster()))
+    res.redirect('/')
 })
 
 app.get('/deleteAllCadets', (req, res) => {
