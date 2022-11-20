@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
         errorMsg = "Failed to create the cadet";
     }
     res.render('index', {
-        errorMsg: null ?? errorMsg,
+        debrief: null ?? errorMsg,
         cadetList: cadetsData,
         roster: rosterData
     })
@@ -122,7 +122,7 @@ app.get('/roster', (req, res) => {
         console.log("Error:")
         console.log(relevantInfo)
         res.render('index', {
-            errorMsg: relevantInfo,
+            debrief: relevantInfo,
             roster: null,
             cadetList: JSON.parse(fs.readFileSync('./cadets.json', 'utf-8'))
         })

@@ -11,12 +11,19 @@
     <script src="https://kit.fontawesome.com/eefa1d8796.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <% if(locals.errorMsg) { %>
-        <script>
-            alert('<%=locals.errorMsg%>')
-        </script>
+    <% if(locals.debrief) { %>
+        <h2 style="text-align: center; margin-bottom: 24px;">Ability to Staff Lunch Periods</h2>
+        <% let days = ["Monday", "Tuesday", "Thursday", "Friday"] %> 
+        <% for(let i = 0; i < 4; i++) { %>
+            <hr style="border-width: 4px; width: 50%;">
+            <div style="text-align: center;">
+                <h4 style="display: inline-block;"><%= days[i] %> 1st Lunch: <em <% if(debrief[i][0] == true) { %> style="color: #0f0;" <% } %>  ><%= debrief[i][0] %></em></h3>
+                <h4 style="display: inline-block; margin-left: 12px;"><%= days[i] %> 2nd Lunch: <em <% if(debrief[i][1] == true) { %> style="color: #0d4;" <% } %>  ><%= debrief[i][1] %></em></h3>
+                <h4 style="display: inline-block; margin-left: 12px;"><%= days[i] %> 3rd Lunch: <em <% if(debrief[i][2] == true) { %> style="color: #0d4;" <% } %>  ><%= debrief[i][2] %></em></h3>
+            </div>
+        <% } %>  
     <% } %>  
-    <h1 style="text-align: center;">Cadets Info</h1>
+    <h1 style="text-align: center; margin-top: 36px;">Cadets Info</h1>
     <table style="margin: 12px auto;">
         <tr>
             <th>Cadet Name:</th>
@@ -80,7 +87,7 @@
         </form>
     </div>
     <p style="padding-top: 20px; text-align: center;">
-        <a style="text-align:center; margin: 0 auto;" href="localhost:3000/roster">
+        <a href="/roster">
             Make Roster
         </a>
     </p>

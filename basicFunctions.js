@@ -346,11 +346,11 @@ function createRoster(cadetList, week) {
     for(let i = 0; i < 5; i++) {
         if(i != 2) {
             [cadetList, week, baseShifts] = AssignBreakfastShifts(cadetList, week, baseShifts, i)
-            [cadetList, week, baseShifts] = AssignLunchShifts(cadetList, week, baseShifts, i);
+            [cadetList, week, baseShifts] = AssignLunchShifts(shuffle(cadetList), week, baseShifts, i);
             [cadetList, week, baseShifts] = AssignDinnerShifts(cadetList, week, baseShifts, i);
         } else {
             [cadetList, week, baseShifts] = AssignBreakfastShifts(cadetList, week, baseShifts, i);
-            [cadetList, week, baseShifts] = AssignWednesdayShifts(cadetList, week, baseShifts, i);
+            [cadetList, week, baseShifts] = AssignWednesdayShifts(shuffle(cadetList), week, baseShifts, i);
             [cadetList, week, baseShifts] = AssignDinnerShifts(cadetList, week, baseShifts, i);
         }
     }
@@ -377,21 +377,21 @@ function generateWaiterRoster(cadetList, week) {
         switch (i) {
             case 0:
                 mondayFullLunches = firstLunchPossible && secondLunchPossible && thirdLunchPossible;
-                debrief.unshift(`Monday Lunches | (First : ${firstLunchPossible}) - (Second : ${secondLunchPossible}) - (Third : ${thirdLunchPossible}) \n`);
+                debrief[0] = [firstLunchPossible, secondLunchPossible, thirdLunchPossible];
                 break;
             case 1:
                 tuesdayFullLunches = firstLunchPossible && secondLunchPossible && thirdLunchPossible;
-                debrief.unshift(`Tuesday Lunches | (First : ${firstLunchPossible}) - (Second : ${secondLunchPossible}) - (Third : ${thirdLunchPossible}) \n`);
+                debrief[1] = [firstLunchPossible, secondLunchPossible, thirdLunchPossible];
                 break;
             case 2:
                 break;
             case 3:
                 thursdayFullLunches = firstLunchPossible && secondLunchPossible && thirdLunchPossible;
-                debrief.unshift(`Thursday Lunches | (First : ${firstLunchPossible}) - (Second : ${secondLunchPossible}) - (Third : ${thirdLunchPossible}) \n`);
+                debrief[2] = [firstLunchPossible, secondLunchPossible, thirdLunchPossible];
                 break;
             case 4:
                 fridayFullLunches = firstLunchPossible && secondLunchPossible && thirdLunchPossible;
-                debrief.unshift(`Friday Lunches | (First : ${firstLunchPossible}) - (Second : ${secondLunchPossible}) - (Third : ${thirdLunchPossible}) \n`);
+                debrief[3] = [firstLunchPossible, secondLunchPossible, thirdLunchPossible];
                 break;
         }
     }
