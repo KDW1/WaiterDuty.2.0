@@ -1,80 +1,22 @@
-let fs = require("fs")
+
 const Day = require('./classes/day')
-function getLunchTime(num) {
-    switch (num) {
-        case 0:
-            return "Free Period";
-        case 1:
-            return "1st Lunch";
-        case 2:
-            return "2nd Lunch";
-        case 3:
-            return "3rd Lunch";
-        case 5:
-            return "No Available Lunch"
-    }
-}
-
-
-// function weekInteraction(week = null) {
-//     let data = JSON.parse(fs.readFileSync("./roster.json", "utf-8"))
-//     let weekToReturn = data
-//     if(week == null) {
-//         weekToReturn = data.rosters
-//         return weekToReturn
-//     } 
-//     let days = ["monday","tuesday","wednesday","thursday","friday"]
-//     console.log("Rosters:")
-//     console.log(weekToReturn.rosters[days[week.dayNum-1]])
-//     weekToReturn.rosters[days[week.dayNum-1]] = week;
-//     fs.writeFileSync("./roster.json", JSON.stringify(weekToReturn))
-// }
-// async function bS(change = 0) {
-//     let amt = JSON.parse(await fs.readFileSync("./baseShifts.json", 'utf-8'));
-//     if(change == 0) {
-//         return amt;
-//     }
-//     amt += change;
-//     amt = JSON.stringify(amt);
-//     await fs.writeFileSync("./baseShifts.json", amt);
-//     return amt
-// }
-
-let canRepeat = true;
-
-function toggleRecursive() {
-    canRepeat = !canRepeat;
-    console.log("Can Repeat: ", canRepeat);
-}
 
 function AssignBreakfastShifts(cadetList, week, baseShifts, dayNum) {
-    // Return base shifts, cadet array and the week/roster
-    // data = await weekInteraction(); ---- Week will be passed in
     let days = ["monday","tuesday","wednesday","thursday","friday"]
     let currentDay = week[days[dayNum]];
-    // console.log(data[0])
-    // Object.assign(chosenWeek, data[0][days[currentDay]])
     for (let i = 0; i < cadetList.length; i++) {
         let metTheMinimum = metMinimumNumOfShifts(cadetList, baseShifts)
         if ( metTheMinimum && (cadetList[i].shiftAmounts == baseShifts) && (cadetList[i].shiftAmounts != 0)) {
-            // baseShifts = await bS(1) 
             baseShifts++;
-            // console.log(cadetList);
             console.log(`\n\n${baseShifts} is the base number of shifts at breakfast\n\n`);
-            // console.log(cadetList);
         }
         if (!fullShifts(currentDay.breakfast, 5)) {
-            // console.log("Assigning Breakfast")
             if (cadetList[i].shiftAmounts < baseShifts) {
                 currentDay.assignShift(1, 1, cadetList[i]);
                 // console.log(`${cadetList[i].cadetName} assigned shift, taking ${cadetList[i].shiftAmounts} shifts`);
             }
         }
     }
-    // let obj = { cadets: cadetList }
-    // chosenWeek.breakfast = breakfastShift;
-    // await weekInteraction(chosenWeek);
-    // fs.writeFileSync("./cadets.json", JSON.stringify(cadetList))
     week[days[dayNum]] = currentDay;
     if (Array.isArray(currentDay.breakfast)) {
         if (!fullShifts(currentDay.breakfast, 5) && canRepeat) {
@@ -93,21 +35,16 @@ function AssignWednesdayShifts(cadetList, week, baseShifts, dayNum) {
         if (metTheMinimum && (cadetList[i].shiftAmounts == baseShifts) && (cadetList[i].shiftAmounts != 0)) {
             baseShifts++;
             console.log(`${baseShifts} is the base number of shifts at breakfast`);
-            // console.log(cadetList);
         }
         if (!fullShifts(currentDay.wednesday, 7)) {
             if (cadetList[i].shiftAmounts < baseShifts) {
                 currentDay.assignShift(4, 1, cadetList[i]);
-                // cadetList[i].shiftAmounts++;
                 // console.log(`${cadetList[i].cadetName} assigned shift, taking ${cadetList[i].shiftAmounts} shifts`);
             }
         } else {
             break;
         }
     }
-    // let obj = { cadets: cadetList }
-    // await weekInteraction(chosenWeek);
-    // fs.writeFileSync("./cadets.json", JSON.stringify(obj))
     week[days[dayNum]] = currentDay;
     if (Array.isArray(currentDay.wednesday)) {
         if (!fullShifts(currentDay.wednesday, 7) && canRepeat) {
@@ -126,18 +63,15 @@ function AssignDinnerShifts(cadetList, week, baseShifts, dayNum) {
         if (metMinimum && (cadetList[i].shiftAmounts == baseShifts) && (cadetList[i].shiftAmounts != 0)) {
             baseShifts++;
             console.log(`${baseShifts} is the base number of shifts at dinner`);
-            // console.log(cadetList);
         }
         if (!fullShifts(currentDay.dinners.firstDinner, 3)) {
             if (cadetList[i].shiftAmounts < baseShifts) {
                 currentDay.assignShift(3, 1, cadetList[i]);
-                // cadetList[i].shiftAmounts++;
             }
         }
         if (!fullShifts(currentDay.dinners.secondDinner, 2)) {
             if (cadetList[i].shiftAmounts < baseShifts) {
                 currentDay.assignShift(3, 2, cadetList[i]);
-                // cadetList[i].shiftAmounts++;
             }
         }
     }
@@ -298,17 +232,6 @@ function fullShifts(shiftSection, totalShifts) {
     }
 }
 
-
-function minimumNumberOfShifts(cadetList) {
-    let min = 0;
-    for (let i = 0; i < cadetList.length; i++) {
-        if ((cadetList[i].shiftAmounts < min) && (cadetList[i].shiftAmounts > 0)) {
-            min = cadetList[i].shiftAmounts;
-        }
-    }
-    return min;
-}
-
 function metMinimumNumOfShifts(cadetList, baseShifts) {
     console.log("Base Shifts: " + baseShifts)
     let variations = 0;
@@ -408,6 +331,9 @@ function generateWaiterRoster(cadetList, week) {
 function hasEnoughToFillLunch(cadetList, shift, day) {
     let possibleCandidates = 0;
     for (let i = 0; i < cadetList.length; i++) {
+        if(possibleCandidates >= 3) {
+            return true;
+        }
         if (cadetList[i].lunchTimes[day] == shift) {
             possibleCandidates++;
         }
@@ -439,7 +365,6 @@ function shuffle(array) { //From Stack Overflow ---------------------
 }
 
 
-module.exports = { getLunchTime, toggleRecursive, AssignBreakfastShifts, AssignLunchShifts,
-     AssignDinnerShifts, AssignWednesdayShifts, othersAvailableForLunch, fullShifts,
-    shuffle, hasEnoughToFillLunch, generateWaiterRoster, createRoster, metMinimumNumOfShifts,
-     minimumNumberOfShifts }
+module.exports = { AssignBreakfastShifts, AssignLunchShifts, AssignDinnerShifts, AssignWednesdayShifts,
+     othersAvailableForLunch, fullShifts, shuffle, hasEnoughToFillLunch, generateWaiterRoster,
+     createRoster, metMinimumNumOfShifts }
