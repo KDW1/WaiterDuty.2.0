@@ -19,7 +19,7 @@ function AssignBreakfastShifts(cadetList, week, baseShifts, dayNum) {
     }
     week[days[dayNum]] = currentDay;
     if (Array.isArray(currentDay.breakfast)) {
-        if (!fullShifts(currentDay.breakfast, 5) && canRepeat) {
+        if (!fullShifts(currentDay.breakfast, 5)) {
             return AssignBreakfastShifts(cadetList, week, baseShifts, dayNum);
         } else {
             return [cadetList, week, baseShifts];
@@ -47,7 +47,7 @@ function AssignWednesdayShifts(cadetList, week, baseShifts, dayNum) {
     }
     week[days[dayNum]] = currentDay;
     if (Array.isArray(currentDay.wednesday)) {
-        if (!fullShifts(currentDay.wednesday, 7) && canRepeat) {
+        if (!fullShifts(currentDay.wednesday, 7)) {
             return AssignWednesdayShifts(cadetList, week, baseShifts, dayNum);
         } else {
             return [cadetList, week, baseShifts]; //As in successfully proceeded in all scenarios
@@ -205,7 +205,7 @@ function AssignLunchShifts(cadetList, week, baseShifts, dayNum) {
     let allOk = firstFull && secondFull && thirdFull;
     week[days[dayNum]] = currentDay;
     // console.log(`Should Run Again: 1st) ${runFirstLunchAgain}, 2nd) ${runSecondLunchAgain}, 3rd) ${runThirdLunchAgain}`);
-    if (!allOk && canRepeat) {
+    if (!allOk) {
         if (runFirstLunchAgain) {
             // console.log("First Lunch Not Full on Day:" + dayNum);
         } else if (runSecondLunchAgain) {

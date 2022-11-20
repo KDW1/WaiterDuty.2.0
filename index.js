@@ -98,8 +98,6 @@ app.get('/roster', (req, res) => {
     if(rosterData) {
         roster.fromJson(rosterData)
     }
-    // console.log("Roster Data:")
-    // // console.log(roster)
 
     // //Making CadetList
     if(cadetsData) {
@@ -113,8 +111,6 @@ app.get('/roster', (req, res) => {
     // // console.log(cadetList)
     let relevantInfo = (cadetList) ? basicFuncs.generateWaiterRoster(cadetList, roster) : false;
     if(relevantInfo.roster && relevantInfo.cadetList) {
-        // console.log("Roster:")
-        // console.log(relevantInfo.roster)
         fs.writeFileSync('./roster.json', JSON.stringify(relevantInfo.roster));
         fs.writeFileSync('./cadets.json', JSON.stringify(cadetList));
         res.redirect('/')
@@ -127,8 +123,6 @@ app.get('/roster', (req, res) => {
             cadetList: JSON.parse(fs.readFileSync('./cadets.json', 'utf-8'))
         })
     }
-    // basicFuncs.generateWaiterRoster(cadetList, week)
-    // let response = basicFuncs.generateWaiterRoster(cadetsData, week)
 })
 
 app.listen(port, () => {
