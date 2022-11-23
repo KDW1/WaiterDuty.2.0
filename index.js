@@ -2,6 +2,7 @@ const { json } = require('express')
 const express = require('express')
 const fs = require('fs')
 const { parse } = require('path')
+const { exec } = require('node:child_process')
 const internal = require('stream')
 const bodyParser = require('body-parser')
 const http = require('http')
@@ -17,7 +18,7 @@ const basicFuncs = require('./basicFunctions')
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true }))
 
-
+app.use('/public', express.static('public'))
 app.get('/', (req, res) => {
     let { errorMsg } = req.query;
     let cadetsData = JSON.parse(fs.readFileSync('./cadets.json', 'utf-8'));

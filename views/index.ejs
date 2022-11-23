@@ -3,14 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello Bulma!</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/eefa1d8796.js" crossorigin="anonymous"></script>
+    <title>WaiterDuty.2.0</title>
+    <%- include('./header') %>
 </head>
-<body>
+<body class="bg-orange-500">
+    <% daysAbbreviated = ["mon", "tues", "thurs", "fri"] %> 
     <% if(locals.debrief) { %>
         <h2 style="text-align: center; margin-bottom: 24px;">Ability to Staff Lunch Periods</h2>
         <% let days = ["Monday", "Tuesday", "Thursday", "Friday"] %> 
@@ -23,67 +20,58 @@
             </div>
         <% } %>  
     <% } %>  
-    <h1 style="text-align: center; margin-top: 36px;">Cadets Info</h1>
-    <table style="margin: 12px auto;">
-        <tr>
-            <th>Cadet Name:</th>
-            <th style="padding-left:12px;">Shifts</th>
-            <th style="padding-left:12px;">Monday:</th>
-            <th style="padding-left:12px;">Tuesday:</th>
-            <th style="padding-left:12px;">Thursday:</th>
-            <th style="padding-left:12px;">Friday:</th>
-        </tr>
-        <% if(locals.cadetList) { %>
-            <% locals.cadetList.forEach((cadet) => {%>
-                <tr>
-                    <td><%= cadet.cadetName %></th>
-                    <td style="padding-left:12px;"><%= cadet.shiftAmounts %></td>
-                    <td style="padding-left:12px;"><%= cadet.parsedLunchTimes[0] %></th>
-                    <td style="padding-left:12px;"><%= cadet.parsedLunchTimes[1] %></th>
-                    <td style="padding-left:12px;"><%= cadet.parsedLunchTimes[3] %></th>
-                    <td style="padding-left:12px;"><%= cadet.parsedLunchTimes[4] %></th>
-                    <td style="padding-left:12px;"><a href="/deleteCadet?cadetName=<%= cadet.cadetName %>">Delete</a></th>
-                </tr>
-            <% })%> 
-        <% } %>  
+    <p class="text-center font-semibold text-5xl mt-4 mb-8 text-stone-50">Cadets Info</p>
+    <table class="shadow-2xl shadow-red-600 rounded-xl px-10 py-6 border-separate border-spacing-x-2 bg-white mx-auto table-auto">
+        <thead>
+            <tr class="uppercase text-sm font-bold">
+                <td>Cadet Name:</td>
+                <td>Shifts</td>
+                <td>Monday:</td>
+                <td>Tuesday:</td>
+                <td>Thursday:</td>
+                <td>Friday:</td>
+                <td></td>
+    
+            </tr>
+        </thead>
+        <tbody>
+            <% hoverEffect = "cursor-default transition-all duration-500 delay-100 group-hover:font-semibold group-hover:text-xl" %> 
+            <% expandRow = "group-hover:py-8 transition-all duration-500 delay-100" %> 
+            <% linkHover = "transition-all cursor-clicker duration-300 delay-75 hover:text-red-500" %> 
+            <% if(locals.cadetList) { %>
+                <% locals.cadetList.forEach((cadet) => {%>
+                        <tr class="text-lg group">
+                            <td class="<%= hoverEffect %> <%= expandRow %> "><%= cadet.cadetName %></th>
+                            <td><%= cadet.shiftAmounts %></td>
+                            <td><%= cadet.parsedLunchTimes[0] %></th>
+                            <td><%= cadet.parsedLunchTimes[1] %></th>
+                            <td><%= cadet.parsedLunchTimes[3] %></th>
+                            <td><%= cadet.parsedLunchTimes[4] %></th>
+                            <td><a class="text-slate-200 font-semibold <%= linkHover %> " href="/deleteCadet?cadetName=<%= cadet.cadetName %>">Delete</a></th>
+                        </tr>
+                <% })%> 
+            <% } %>  
+        </tbody>
     </table>
-    <div>
-        <h2 style="text-align: center;">Add a Cadet</h2>
-        <form style="text-align: center;" action="/addCadet" method="POST">
-            <input type="text" name="cadetName" id=""><br>
-            <select style="margin-top: 5px;" name="mon">
-                <option selected>Daily Lunches</option>
-                <option value=1>1st Lunch</option>
-                <option value=2>2nd Lunch</option>
-                <option value=3>3rd Lunch</option>
-                <option value=0>Free Period</option>
-                <option value=5>Can't Make It</option>
-            </select><br>
-            <select style="margin-top: 5px;" name="tues">
-                <option selected>Daily Lunches</option>
-                <option value=1>1st Lunch</option>
-                <option value=2>2nd Lunch</option>
-                <option value=3>3rd Lunch</option>
-                <option value=0>Free Period</option>
-                <option value=5>Can't Make It</option>
-            </select><br>
-            <select style="margin-top: 5px;" name="thurs">
-                <option selected>Daily Lunches</option>
-                <option value=1>1st Lunch</option>
-                <option value=2>2nd Lunch</option>
-                <option value=3>3rd Lunch</option>
-                <option value=0>Free Period</option>
-                <option value=5>Can't Make It</option>
-            </select><br>
-            <select style="margin-top: 5px;" name="fri">
-                <option selected>Daily Lunches</option>
-                <option value=1>1st Lunch</option>
-                <option value=2>2nd Lunch</option>
-                <option value=3>3rd Lunch</option>
-                <option value=0>Free Period</option>
-                <option value=5>Can't Make It</option>
-            </select><br>
-            <input style="margin-top: 5px;" type="submit" value="Click Me">
+    <div class="bg-white shadow-red-600 shadow-2xl rounded-xl px-12 mt-4 w-min min-w-max mx-auto text-center">
+        <p class="text-2xl font-semibold pt-4">Add Cadet</p>
+        <form class="mt-2 text-lg" action="/addCadet" method="POST">
+            <label class="font-semibold pr-2">Cadet Name:</label><br>
+            <input class="border-b-2 outline-none pb-2" type="text" name="cadetName"><br>
+            <div class="pt-4"></div>
+            <% let days = ["Monday", "Tuesday", "Thursday", "Friday"] %> 
+            <% daysAbbreviated.forEach((data, i) => { %>
+                <label class="font-semibold pr-2"><%= days[i] %> Lunch:</label>
+                <select class="mt-1" name="<%= daysAbbreviated %>">
+                    <option selected>Daily Lunches</option>
+                    <option value=1>1st Lunch</option>
+                    <option value=2>2nd Lunch</option>
+                    <option value=3>3rd Lunch</option>
+                    <option value=0>Free Period</option>
+                    <option value=5>Can't Make It</option>
+                </select><br>
+            <% }) %> 
+            <input type="submit" value="Click Me">
         </form>
     </div>
     <p style="padding-top: 20px; text-align: center;">

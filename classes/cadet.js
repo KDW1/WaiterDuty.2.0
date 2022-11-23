@@ -12,7 +12,7 @@ class Cadet {
         this.shiftAmounts = 0;
         this.shifts = [];
         for(let i = 0; i < this.lunchTimes.length; i++) {
-            this.parsedLunchTimes.unshift(this.getLunchTime(this.lunchTimes[i]))
+            this.parsedLunchTimes.push(this.getLunchTime(this.lunchTimes[i]))
         }
         console.log(this.cadetName)
         console.log(this.parsedLunchTimes)
@@ -42,8 +42,8 @@ class Cadet {
  
     get parsedLunchTimes() {
         let parsedLunchTimes = [];
-        for(let i = 0; i < parsedLunchTime; i++) {
-            parsedLunchTimes.unshift(getLunchTime(this.lunchTimes[i]))
+        for(let i = 0; i < parsedLunchTimes.length; i++) {
+            parsedLunchTimes.push(getLunchTime(this.lunchTimes[i]))
         }
         return parsedLunchTimes;
     }
