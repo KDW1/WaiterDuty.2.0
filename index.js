@@ -218,3 +218,5 @@ function presetCadetList() { //To be called from the console | 0 -> "Free Lunch 
     cadetList.unshift(jorgeX, jeronimoC, alonsoP, jakeD, diegoU, boscoF);
     return cadetList
 }
+
+module.exports = app
