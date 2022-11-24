@@ -12,8 +12,8 @@
     <% if(locals.debrief) { %>
         <p class="text-center text-lg text-white underline underline-offset-4 decoration-4 decoration-red-500 font-semibold py-2"><%= locals.debrief %> </p>
     <% } %>  
-    <% if(locals.rosterMade) { %>         
-        <p class="text-center text-lg text-white underline underline-offset-4 decoration-4 decoration-red-500 font-semibold py-2"><%= locals.debrief %> </p>
+    <% if(locals.roster.monday.breakfast.length != 0) { %> 
+        <p class="text-center text-lg text-white font-semibold py-2 basicAnim hover:text-xl"><a href="#roster">Go to Roster -></a></p>
     <% } %> 
     <% if(locals.rosterError) { %>
         <% let days = ["Monday", "Tuesday", "Thursday", "Friday"] %> 
@@ -35,101 +35,114 @@
             </div>
         <% } %>  
     <% } %>  
-
-
-    <table class="boxShadow mt-8 px-10 py-6 border-separate border-spacing-y-2 border-spacing-x-2 mx-auto table-auto">
-        <thead>
-            <tr class="uppercase text-sm font-bold">
-                <td>Cadet Name:</td>
-                <td>Shifts</td>
-                <td>Monday:</td>
-                <td>Tuesday:</td>
-                <td>Thursday:</td>
-                <td>Friday:</td>
-                <td></td>
-    
-            </tr>
-        </thead>
-        <tbody>
-            <% hoverEffect = "cursor-default transition-all duration-500 delay-100 group-hover:font-semibold group-hover:text-xl" %> 
-            <% expandRow = "group-hover:py-2 transition-all duration-500 delay-100" %> 
-            <% linkHover = "basicAnim cursor-clicker duration-300 delay-75 hover:text-red-500" %> 
-            <% if(locals.cadetList && locals.cadetList.length != 0) { %>
-                <% locals.cadetList.forEach((cadet) => {%>
-                        <tr class="text-lg group">
-                            <td class="<%= hoverEffect %> <%= expandRow %> "><%= cadet.cadetName %></th>
-                            <td><%= cadet.shiftAmounts %></td>
-                            <td><%= cadet.parsedLunchTimes[0] %></th>
-                            <td><%= cadet.parsedLunchTimes[1] %></th>
-                            <td><%= cadet.parsedLunchTimes[3] %></th>
-                            <td><%= cadet.parsedLunchTimes[4] %></th>
-                            <td><a class="text-slate-200 font-semibold <%= linkHover %> " href="/deleteCadet?cadetName=<%= cadet.cadetName %>">Delete</a></th>
+    <div class="mt-6 relative grid grid-cols-8 gap-1 w-11/12 mx-auto">
+        <div class="col-span-6">
+            <table class="boxShadow px-10 py-6 border-separate border-spacing-y-2 border-spacing-x-2 mx-auto table-auto">
+                <thead>
+                    <tr class="uppercase text-sm font-bold">
+                        <td>Cadet Name:</td>
+                        <td>Shifts</td>
+                        <td>Monday:</td>
+                        <td>Tuesday:</td>
+                        <td>Thursday:</td>
+                        <td>Friday:</td>
+                        <td></td>
+            
+                    </tr>
+                </thead>
+                <tbody>
+                    <% hoverEffect = "cursor-default transition-all duration-500 delay-100 group-hover:font-semibold group-hover:text-xl" %> 
+                    <% expandRow = "group-hover:py-2 transition-all duration-500 delay-100" %> 
+                    <% linkHover = "basicAnim cursor-clicker duration-300 delay-75 hover:text-red-500" %> 
+                    <% if(locals.cadetList && locals.cadetList.length != 0) { %>
+                        <% locals.cadetList.forEach((cadet) => {%>
+                                <tr class="text-lg group">
+                                    <td class="<%= hoverEffect %> break-words <%= expandRow %> "><%= cadet.cadetName %></th>
+                                    <td><%= cadet.shiftAmounts %></td>
+                                    <td><%= cadet.parsedLunchTimes[0] %></th>
+                                    <td><%= cadet.parsedLunchTimes[1] %></th>
+                                    <td><%= cadet.parsedLunchTimes[3] %></th>
+                                    <td><%= cadet.parsedLunchTimes[4] %></th>
+                                    <td><a class="text-slate-200 font-semibold <%= linkHover %> " href="/deleteCadet?cadetName=<%= cadet.cadetName %>">Delete</a></th>
+                                </tr>
+                        <% })%> 
+                    <% } else { %>
+                        <tr>
+                            <td class="text-lg font-semibold text-gray-600">No Cadets...</td>
                         </tr>
-                <% })%> 
-            <% } else { %>
-                <tr>
-                    <td class="text-lg font-semibold text-gray-600">No Cadets...</td>
-                </tr>
-            <% } %>   
-        </tbody>
-    </table>
-    <div class="boxShadow px-12 mt-4 w-min min-w-max mx-auto text-center">
-        <p class="text-2xl font-semibold pt-4">Add Cadet</p>
-        <form class="mt-2 text-lg" action="/addCadet" method="POST">
-            <label class="font-semibold pr-2">Cadet Name:</label><br>
-            <input placeholder="Kofi B." class="text-center text-gray-800 font-medium border-b-2 outline-none pb-2" type="text" name="cadetName"><br>
-            <div class="pt-4"></div>
-            <% let days = ["Monday", "Tuesday", "Thursday", "Friday"] %> 
-            <% daysAbbreviated.forEach((data, i) => { %>
-                <label class="font-semibold pr-2"><%= days[i] %> Lunch:</label>
-                <select class="mt-1" name="<%= data %>">
-                    <option selected>Daily Lunches</option>
-                    <option value=1>1st Lunch</option>
-                    <option value=2>2nd Lunch</option>
-                    <option value=3>3rd Lunch</option>
-                    <option value=0>Free Period</option>
-                    <option value=5>Can't Make It</option>
-                </select><br>
-            <% }) %> 
-            <input class="cursor-pointer transition-all duration-700 delay-75 text-amber-400 hover:text-orange-400 hover:text-xl text-lg uppercase font-semibold pt-2 pb-4 outline-none" type="submit" value="Click Me">
-        </form>
+                    <% } %>   
+                </tbody>
+            </table>
+        </div>
+        <div class="col-span-2">
+            <div class="boxShadow px-12 h-min min-h-max mx-auto text-center">
+                <p class="text-2xl font-semibold pt-4">Add Cadet</p>
+                <form class="mt-2 text-lg" action="/addCadet" method="POST">
+                    <label class="font-medium text-center text-base text-black">Cadet Name:</label><br>
+                    <input placeholder="Kofi B." class="text-center text-black font-semibold border-b-2 outline-none pb-2" type="text" name="cadetName"><br>
+                    <div class="pt-4"></div>
+                    <% let days = ["Monday", "Tuesday", "Thursday", "Friday"] %> 
+                    <% daysAbbreviated.forEach((data, i) => { %>
+                        <label class="font-semibold pr-2"><%= days[i] %> Lunch:</label>
+                        <select class="mt-1" name="<%= data %>">
+                            <option selected>Daily Lunches</option>
+                            <option value=1>1st Lunch</option>
+                            <option value=2>2nd Lunch</option>
+                            <option value=3>3rd Lunch</option>
+                            <option value=0>Free Period</option>
+                            <option value=5>Can't Make It</option>
+                        </select><br>
+                    <% }) %> 
+                    <input class="cursor-pointer transition-all duration-700 delay-75 text-amber-400 hover:text-orange-400 hover:text-xl text-lg uppercase font-semibold pt-2 pb-4 outline-none" type="submit" value="Click Me">
+                </form>
+            </div>
+            <p class="relative mb-12 boxShadow hover:scale-105 transition-all delay-200 duration-500 text-amber-400 hover:text-orange-400 mt-4 w-min min-w-max px-4 py-2 text-center font-semibold text-lg cursor-pointer">
+                <a href="/save">
+                    Save Cadets and Roster
+                </a>
+            </p>
+        </div>
     </div>
-    <p class="boxShadow hover:scale-105 transition-all delay-200 duration-500 text-amber-400 hover:text-orange-400 mt-4 w-min min-w-max px-4 py-2 mx-auto text-center font-semibold text-lg cursor-pointer">
+
+    
+    <p class="relative mb-12 boxShadow hover:scale-105 transition-all delay-200 duration-500 text-amber-400 hover:text-orange-400 mt-4 w-min min-w-max px-4 py-2 mx-auto text-center font-semibold text-lg cursor-pointer">
         <a href="/roster">
             Make Roster
         </a>
     </p>
-    <p class="text-center text-white font-semibold text-5xl mt-24" id="roster">Roster:</p>
-    <div class="text-center pb-5">
-        <% shiftType = "text-lg font-semibold" %> 
-        <% for(let i = 0; i < 5; i++) { %>
-            <% let days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'] %> 
-            <div class="boxShadow mt-6 px-6 py-6 w-2/3 mx-auto">
-                <p class="text-2xl underline underline-offset-4 decoration-4 decoration-stone-200 font-semibold text-center"><%= days[i].charAt(0).toUpperCase() + days[i].slice(1) %> Schedule</p>
-                <table class="mx-auto table-auto w-full border-separate ">
-                    <% if(locals.roster) { %> 
-                        <% data = roster[days[i]] %> 
-                        <% function iterateShifts(arr) {
-                            let terms = [];
-                            terms = arr.map((data) => {
-                                return data.assignedPerson;
-                            })
-                            return terms.join(", ");
-                        } %> 
-                        <tr><p class="pt-4 <%= shiftType %> ">Breakfast</p><p><%= iterateShifts(data.breakfast) %></p></tr>
-                        <% if(i != 2) { %>
-                            <tr><p class="pt-4 <%= shiftType %> ">1st Lunch</p><p><%= iterateShifts(data.lunches.firstLunch) %></p></tr>
-                            <tr><p class="pt-4 <%= shiftType %> ">2nd Lunch</p><p><%= iterateShifts(data.lunches.secondLunch) %></p></tr>
-                            <tr><p class="pt-4 <%= shiftType %> ">3rd Lunch</p><p><%= iterateShifts(data.lunches.thirdLunch) %></p></tr>
-                        <% } else { %>
-                            <tr><p class="pt-4 <%= shiftType %> ">Lunch</p><p><%= iterateShifts(data.wednesday) %></p></tr>
-                        <% } %>   
-                        <tr><p class="pt-4 <%= shiftType %> ">1st Dinner</p><p><%= iterateShifts(data.dinners.firstDinner) %></p></tr>
-                        <tr><p class="pt-4 <%= shiftType %> ">2nd Dinner</p><p><%= iterateShifts(data.dinners.secondDinner) %></p></tr>
-                    <% } %> 
-                </table>
-            </div>
-        <% } %>  
-    </div>
+    <% if(locals.roster) { %>
+        <p class="text-center text-white font-semibold text-5xl mt-24" id="roster">Roster:</p>
+        <div class="text-center pb-5">
+            <% shiftType = "text-lg font-semibold" %> 
+            <% for(let i = 0; i < 5; i++) { %>
+                <% let days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'] %> 
+                <div class="boxShadow mt-6 px-6 py-6 w-2/3 mx-auto">
+                    <p class="text-2xl underline underline-offset-4 decoration-4 decoration-stone-200 font-semibold text-center"><%= days[i].charAt(0).toUpperCase() + days[i].slice(1) %> Schedule</p>
+                    <table class="mx-auto table-auto w-full border-separate ">
+                        <% if(locals.roster) { %> 
+                            <% data = roster[days[i]] %> 
+                            <% function iterateShifts(arr) {
+                                let terms = [];
+                                terms = arr.map((data) => {
+                                    return data.assignedPerson;
+                                })
+                                return terms.join(", ");
+                            } %> 
+                            <tr><p class="pt-4 <%= shiftType %> ">Breakfast</p><p><%= iterateShifts(data.breakfast) %></p></tr>
+                            <% if(i != 2) { %>
+                                <tr><p class="pt-4 <%= shiftType %> ">1st Lunch</p><p><%= iterateShifts(data.lunches.firstLunch) %></p></tr>
+                                <tr><p class="pt-4 <%= shiftType %> ">2nd Lunch</p><p><%= iterateShifts(data.lunches.secondLunch) %></p></tr>
+                                <tr><p class="pt-4 <%= shiftType %> ">3rd Lunch</p><p><%= iterateShifts(data.lunches.thirdLunch) %></p></tr>
+                            <% } else { %>
+                                <tr><p class="pt-4 <%= shiftType %> ">Lunch</p><p><%= iterateShifts(data.wednesday) %></p></tr>
+                            <% } %>   
+                            <tr><p class="pt-4 <%= shiftType %> ">1st Dinner</p><p><%= iterateShifts(data.dinners.firstDinner) %></p></tr>
+                            <tr><p class="pt-4 <%= shiftType %> ">2nd Dinner</p><p><%= iterateShifts(data.dinners.secondDinner) %></p></tr>
+                        <% } %> 
+                    </table>
+                </div>
+            <% } %>  
+        </div>
+    <% } %>  
 </body>
 </html>

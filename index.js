@@ -19,12 +19,21 @@ app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use('/public', express.static('public'))
+
+if (typeof localStorage === "undefined" || localStorage === null) {
+    var LocalStorage = require('node-localstorage').LocalStorage;
+    localStorage = new LocalStorage('./scratch');
+}
+
+
 app.get('/', (req, res) => {
     let { errorMsg, rosterError } = req.query;
     let cadetsData = JSON.parse(fs.readFileSync('./cadets.json', 'utf-8'));
     let rosterData = JSON.parse(fs.readFileSync('./roster.json', 'utf-8'));
     if(errorMsg == "CadetFailure") {
         errorMsg = "Couldn't add the cadet";
+    } else if(errorMsg == "DuplicateCadet") {
+        errorMsg = "There's already a cadet with that name";
     }
     res.render('index', {
         debrief: null ?? errorMsg,
@@ -50,13 +59,32 @@ app.get('/deleteCadet', (req, res) => {
 
 app.post('/addCadet', (req, res) => {
     let { cadetName, mon, tues, thurs, fri } = req.body
-    if(cadetName && Number.isInteger(mon) && Number.isInteger(tues) && Number.isInteger(thurs) && Number.isInteger(fri)) { 
+    console.log("Request Body:")
+    console.log(req.body)
+    if(cadetName && mon.length != 0 && tues.length != 0 && thurs.length != 0 && fri.length != 0) { 
         let cadet = new Cadet(cadetName, parseInt(mon), parseInt(tues), parseInt(thurs), parseInt(fri))
         let cadetsData = fs.readFileSync('./cadets.json', 'utf-8')
+        
         cadetsData = JSON.parse(cadetsData)
-        cadetsData.unshift(cadet)
-        fs.writeFileSync('./cadets.json', JSON.stringify(cadetsData))
-        res.redirect('/')
+
+        //Checking we haven't already made the cadet
+        let checkIndex = cadetsData.findIndex((data) => {
+            if(data.cadetName == cadetName) {
+                return true;
+            } 
+            return false
+        });
+
+        console.log("Check Index: " + checkIndex)
+
+        if(checkIndex != -1) {
+            res.redirect('/?errorMsg=DuplicateCadet')
+        } else {
+            cadetsData.unshift(cadet)
+    
+            fs.writeFileSync('./cadets.json', JSON.stringify(cadetsData))
+            res.redirect('/')
+        }
     } else {
         res.redirect('/?errorMsg=CadetFailure')
     }
@@ -86,6 +114,12 @@ app.get('/deleteAllCadets', (req, res) => {
     res.send(cadetList)
 })
 
+app.get('/save', (req, res) => {
+    localStorage.setItem('cadetList', fs.readFileSync("./cadets.json", 'utf-8'))
+    localStorage.setItem('roster', fs.readFileSync("./roster.json", 'utf-8'))
+    res.redirect('/')
+})
+
 app.get('/roster', (req, res) => {
     console.log("Creating roster")
     // //Getting Cadet Info
@@ -113,12 +147,19 @@ app.get('/roster', (req, res) => {
     // // console.log(cadetList)
     let relevantInfo = (cadetList) ? basicFuncs.generateWaiterRoster(cadetList, roster) : false;
     if(relevantInfo.roster && relevantInfo.cadetList) {
+        console.log(relevantInfo.roster);
         fs.writeFileSync('./roster.json', JSON.stringify(relevantInfo.roster));
         fs.writeFileSync('./cadets.json', JSON.stringify(cadetList));
         res.redirect('/')
     } else {
         console.log("Error:")
         console.log(relevantInfo)
+        cadetList.forEach((i) => {
+            cadetList[i].shifts = [];
+            cadetList[i].shiftAmounts = 0;
+        })
+        fs.writeFileSync('./roster.json', JSON.stringify(new Roster()))
+        fs.writeFileSync('./cadets.json', JSON.stringify(cadetList));
         res.render('index', {
             debrief: "Roster Error, can't fill every lunch period",
             rosterError: relevantInfo,
@@ -128,8 +169,29 @@ app.get('/roster', (req, res) => {
     }
 })
 
+app.get('/deleteRoster', (req, res) => {
+    let cadetList = JSON.parse(fs.readFileSync('./cadets.json', 'utf-8'))
+    cadetList.forEach((i) => {
+        cadetList[i].shifts = [];
+        cadetList[i].shiftAmounts = 0;
+    })
+    fs.writeFileSync('./roster.json', JSON.stringify(new Roster()))
+    fs.writeFileSync('./cadets.json', JSON.stringify(cadetList));
+    res.render('index', {
+        debrief: "Roster Error, can't fill every lunch period",
+        rosterError: relevantInfo,
+        roster: null,
+        cadetList: JSON.parse(fs.readFileSync('./cadets.json', 'utf-8'))
+    })
+})
 app.listen(port, () => {
     console.log(`Listening on port:${port}`)
+    if(localStorage.getItem("cadetList")) {
+        fs.writeFileSync("./cadets.json", localStorage.getItem("cadetList"))
+    }
+    if(localStorage.getItem("roster")) {
+        fs.writeFileSync("./roster.json", localStorage.getItem("roster"))
+    }
 })
 
 function presetCadetList() { //To be called from the console | 0 -> "Free Lunch Period" | 5 -> "Not Available"
