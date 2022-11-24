@@ -300,21 +300,21 @@ function generateWaiterRoster(cadetList, week) {
         switch (i) {
             case 0:
                 mondayFullLunches = firstLunchPossible && secondLunchPossible && thirdLunchPossible;
-                debrief[0] = [firstLunchPossible, secondLunchPossible, thirdLunchPossible];
+                debrief[0] = [coveredOrNot(firstLunchPossible), coveredOrNot(secondLunchPossible), coveredOrNot(thirdLunchPossible)];
                 break;
             case 1:
                 tuesdayFullLunches = firstLunchPossible && secondLunchPossible && thirdLunchPossible;
-                debrief[1] = [firstLunchPossible, secondLunchPossible, thirdLunchPossible];
+                debrief[1] = [coveredOrNot(firstLunchPossible), coveredOrNot(secondLunchPossible), coveredOrNot(thirdLunchPossible)];
                 break;
             case 2:
                 break;
             case 3:
                 thursdayFullLunches = firstLunchPossible && secondLunchPossible && thirdLunchPossible;
-                debrief[2] = [firstLunchPossible, secondLunchPossible, thirdLunchPossible];
+                debrief[2] = [coveredOrNot(firstLunchPossible), coveredOrNot(secondLunchPossible), coveredOrNot(thirdLunchPossible)];
                 break;
             case 4:
                 fridayFullLunches = firstLunchPossible && secondLunchPossible && thirdLunchPossible;
-                debrief[3] = [firstLunchPossible, secondLunchPossible, thirdLunchPossible];
+                debrief[3] = [coveredOrNot(firstLunchPossible), coveredOrNot(secondLunchPossible), coveredOrNot(thirdLunchPossible)];
                 break;
         }
     }
@@ -327,7 +327,13 @@ function generateWaiterRoster(cadetList, week) {
     }
 }
 
-
+function coveredOrNot(condition) {
+    if(condition) {
+        return "Covered"
+    } else {
+        return "Not Enough People"
+    }
+}
 function hasEnoughToFillLunch(cadetList, shift, day) {
     let possibleCandidates = 0;
     for (let i = 0; i < cadetList.length; i++) {

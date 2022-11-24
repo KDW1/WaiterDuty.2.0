@@ -20,14 +20,15 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use('/public', express.static('public'))
 app.get('/', (req, res) => {
-    let { errorMsg } = req.query;
+    let { errorMsg, rosterError } = req.query;
     let cadetsData = JSON.parse(fs.readFileSync('./cadets.json', 'utf-8'));
     let rosterData = JSON.parse(fs.readFileSync('./roster.json', 'utf-8'));
     if(errorMsg == "CadetFailure") {
-        errorMsg = "Failed to create the cadet";
+        errorMsg = "Couldn't add the cadet";
     }
     res.render('index', {
         debrief: null ?? errorMsg,
+        rosterError: null ?? rosterError,
         cadetList: cadetsData,
         roster: rosterData
     })
@@ -49,7 +50,7 @@ app.get('/deleteCadet', (req, res) => {
 
 app.post('/addCadet', (req, res) => {
     let { cadetName, mon, tues, thurs, fri } = req.body
-    if(cadetName && mon && tues && thurs && fri) { 
+    if(cadetName && Number.isInteger(mon) && Number.isInteger(tues) && Number.isInteger(thurs) && Number.isInteger(fri)) { 
         let cadet = new Cadet(cadetName, parseInt(mon), parseInt(tues), parseInt(thurs), parseInt(fri))
         let cadetsData = fs.readFileSync('./cadets.json', 'utf-8')
         cadetsData = JSON.parse(cadetsData)
@@ -119,7 +120,8 @@ app.get('/roster', (req, res) => {
         console.log("Error:")
         console.log(relevantInfo)
         res.render('index', {
-            debrief: relevantInfo,
+            debrief: "Roster Error, can't fill every lunch period",
+            rosterError: relevantInfo,
             roster: null,
             cadetList: JSON.parse(fs.readFileSync('./cadets.json', 'utf-8'))
         })

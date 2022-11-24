@@ -36,7 +36,7 @@ class Cadet {
             case 3:
                 return "3rd Lunch";
             case 5:
-                return "No Available Lunch"
+                return "Can't Make It"
         }
     }
  

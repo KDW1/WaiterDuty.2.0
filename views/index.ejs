@@ -7,21 +7,37 @@
     <%- include('./header') %>
 </head>
 <body class="bg-orange-500">
-    <% daysAbbreviated = ["mon", "tues", "thurs", "fri"] %> 
+    <% daysAbbreviated = ["mon", "tues", "thurs", "fri"] %>
+    <p class="w-1/4 mx-auto text-center font-semibold text-5xl mt-4 text-stone-50">Cadets Info</p> 
     <% if(locals.debrief) { %>
-        <h2 style="text-align: center; margin-bottom: 24px;">Ability to Staff Lunch Periods</h2>
+        <p class="text-center text-lg text-white underline underline-offset-4 decoration-4 decoration-red-500 font-semibold py-2"><%= locals.debrief %> </p>
+    <% } %>  
+    <% if(locals.rosterMade) { %>         
+        <p class="text-center text-lg text-white underline underline-offset-4 decoration-4 decoration-red-500 font-semibold py-2"><%= locals.debrief %> </p>
+    <% } %> 
+    <% if(locals.rosterError) { %>
         <% let days = ["Monday", "Tuesday", "Thursday", "Friday"] %> 
-        <% for(let i = 0; i < 4; i++) { %>
-            <hr style="border-width: 4px; width: 50%;">
-            <div style="text-align: center;">
-                <h4 style="display: inline-block;"><%= days[i] %> 1st Lunch: <em <% if(debrief[i][0] == true) { %> style="color: #0f0;" <% } %>  ><%= debrief[i][0] %></em></h3>
-                <h4 style="display: inline-block; margin-left: 12px;"><%= days[i] %> 2nd Lunch: <em <% if(debrief[i][1] == true) { %> style="color: #0d4;" <% } %>  ><%= debrief[i][1] %></em></h3>
-                <h4 style="display: inline-block; margin-left: 12px;"><%= days[i] %> 3rd Lunch: <em <% if(debrief[i][2] == true) { %> style="color: #0d4;" <% } %>  ><%= debrief[i][2] %></em></h3>
+        <% function spanClass(status) {
+            if(status == "Covered") {
+                return "text-stone-50 hover:text-xl transition-all ease-in-out delay-75 duration-300"
+            } else {
+                return "text-stone-50 hover:text-xl transition-all ease-in-out delay-75 duration-300 underline underline-offset-4 decoration-4 decoration-orange-600"
+            }
+        } 
+        %> 
+        <% for(let i = 0; i < days.length; i++) { %>
+            <div>
+                <p class="text-center text-2xl font-semibold text-white mt-4"><%= days[i] %>:</p>
+                <% results = rosterError[i] %> 
+                <p class="text-center text-lg font-semibold text-orange-300">1st Lunch: <span class="<%= spanClass(results[0]) %>"><%= results[0] %></span>,
+                     2nd Lunch: <span class="<%= spanClass(results[1]) %>"><%= results[1] %></span>,
+                      3rd Lunch: <span class="<%= spanClass(results[2]) %>"><%= results[2] %></span></p>
             </div>
         <% } %>  
     <% } %>  
-    <p class="text-center font-semibold text-5xl mt-4 mb-8 text-stone-50">Cadets Info</p>
-    <table class="shadow-2xl shadow-red-600 rounded-xl px-10 py-6 border-separate border-spacing-x-2 bg-white mx-auto table-auto">
+
+
+    <table class="boxShadow mt-8 px-10 py-6 border-separate border-spacing-y-2 border-spacing-x-2 mx-auto table-auto">
         <thead>
             <tr class="uppercase text-sm font-bold">
                 <td>Cadet Name:</td>
@@ -36,9 +52,9 @@
         </thead>
         <tbody>
             <% hoverEffect = "cursor-default transition-all duration-500 delay-100 group-hover:font-semibold group-hover:text-xl" %> 
-            <% expandRow = "group-hover:py-8 transition-all duration-500 delay-100" %> 
-            <% linkHover = "transition-all cursor-clicker duration-300 delay-75 hover:text-red-500" %> 
-            <% if(locals.cadetList) { %>
+            <% expandRow = "group-hover:py-2 transition-all duration-500 delay-100" %> 
+            <% linkHover = "basicAnim cursor-clicker duration-300 delay-75 hover:text-red-500" %> 
+            <% if(locals.cadetList && locals.cadetList.length != 0) { %>
                 <% locals.cadetList.forEach((cadet) => {%>
                         <tr class="text-lg group">
                             <td class="<%= hoverEffect %> <%= expandRow %> "><%= cadet.cadetName %></th>
@@ -50,19 +66,23 @@
                             <td><a class="text-slate-200 font-semibold <%= linkHover %> " href="/deleteCadet?cadetName=<%= cadet.cadetName %>">Delete</a></th>
                         </tr>
                 <% })%> 
-            <% } %>  
+            <% } else { %>
+                <tr>
+                    <td class="text-lg font-semibold text-gray-600">No Cadets...</td>
+                </tr>
+            <% } %>   
         </tbody>
     </table>
-    <div class="bg-white shadow-red-600 shadow-2xl rounded-xl px-12 mt-4 w-min min-w-max mx-auto text-center">
+    <div class="boxShadow px-12 mt-4 w-min min-w-max mx-auto text-center">
         <p class="text-2xl font-semibold pt-4">Add Cadet</p>
         <form class="mt-2 text-lg" action="/addCadet" method="POST">
             <label class="font-semibold pr-2">Cadet Name:</label><br>
-            <input class="border-b-2 outline-none pb-2" type="text" name="cadetName"><br>
+            <input placeholder="Kofi B." class="text-center text-gray-800 font-medium border-b-2 outline-none pb-2" type="text" name="cadetName"><br>
             <div class="pt-4"></div>
             <% let days = ["Monday", "Tuesday", "Thursday", "Friday"] %> 
             <% daysAbbreviated.forEach((data, i) => { %>
                 <label class="font-semibold pr-2"><%= days[i] %> Lunch:</label>
-                <select class="mt-1" name="<%= daysAbbreviated %>">
+                <select class="mt-1" name="<%= data %>">
                     <option selected>Daily Lunches</option>
                     <option value=1>1st Lunch</option>
                     <option value=2>2nd Lunch</option>
@@ -71,40 +91,44 @@
                     <option value=5>Can't Make It</option>
                 </select><br>
             <% }) %> 
-            <input type="submit" value="Click Me">
+            <input class="cursor-pointer transition-all duration-700 delay-75 text-amber-400 hover:text-orange-400 hover:text-xl text-lg uppercase font-semibold pt-2 pb-4 outline-none" type="submit" value="Click Me">
         </form>
     </div>
-    <p style="padding-top: 20px; text-align: center;">
+    <p class="boxShadow hover:scale-105 transition-all delay-200 duration-500 text-amber-400 hover:text-orange-400 mt-4 w-min min-w-max px-4 py-2 mx-auto text-center font-semibold text-lg cursor-pointer">
         <a href="/roster">
             Make Roster
         </a>
     </p>
-    <h1 style="text-align:center; padding-top: 24px;">Roster</h1>
-    <div style="text-align:center; padding-top: 12px;">
-        
+    <p class="text-center text-white font-semibold text-5xl mt-24" id="roster">Roster:</p>
+    <div class="text-center pb-5">
+        <% shiftType = "text-lg font-semibold" %> 
         <% for(let i = 0; i < 5; i++) { %>
             <% let days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'] %> 
-            <h3><%= days[i].charAt(0).toUpperCase() + days[i].slice(1) %> Schedule</h3>
-            <table style="margin: 24px auto;">
-                <% if(locals.roster) { %> 
-                    <% data = roster[days[i]] %> 
-                    <% function iterateShifts(arr) {
-                        let terms = [];
-                        terms = arr.map((data) => {
-                            return data.assignedPerson;
-                        })
-                        return terms.join(", ");
-                    } %> 
-                    <tr><th>Breakfast</th><td><%= iterateShifts(data.breakfast) %></td></tr>
-                    <% if(i != 2) { %>
-                        <tr><th>1st Lunch</th><td><%= iterateShifts(data.lunches.firstLunch) %></td></tr>
-                        <tr><th>2nd Lunch</th><td><%= iterateShifts(data.lunches.secondLunch) %></td></tr>
-                        <tr><th>3rd Lunch</th><td><%= iterateShifts(data.lunches.thirdLunch) %></td></tr>
-                    <% } %>  
-                    <tr><th>1st Dinner</th><td><%= iterateShifts(data.dinners.firstDinner) %></td></tr>
-                    <tr><th>2nd Dinner</th><td><%= iterateShifts(data.dinners.secondDinner) %></td></tr>
-                <% } %> 
-            </table>
+            <div class="boxShadow mt-6 px-6 py-6 w-2/3 mx-auto">
+                <p class="text-2xl underline underline-offset-4 decoration-4 decoration-stone-200 font-semibold text-center"><%= days[i].charAt(0).toUpperCase() + days[i].slice(1) %> Schedule</p>
+                <table class="mx-auto table-auto w-full border-separate ">
+                    <% if(locals.roster) { %> 
+                        <% data = roster[days[i]] %> 
+                        <% function iterateShifts(arr) {
+                            let terms = [];
+                            terms = arr.map((data) => {
+                                return data.assignedPerson;
+                            })
+                            return terms.join(", ");
+                        } %> 
+                        <tr><p class="pt-4 <%= shiftType %> ">Breakfast</p><p><%= iterateShifts(data.breakfast) %></p></tr>
+                        <% if(i != 2) { %>
+                            <tr><p class="pt-4 <%= shiftType %> ">1st Lunch</p><p><%= iterateShifts(data.lunches.firstLunch) %></p></tr>
+                            <tr><p class="pt-4 <%= shiftType %> ">2nd Lunch</p><p><%= iterateShifts(data.lunches.secondLunch) %></p></tr>
+                            <tr><p class="pt-4 <%= shiftType %> ">3rd Lunch</p><p><%= iterateShifts(data.lunches.thirdLunch) %></p></tr>
+                        <% } else { %>
+                            <tr><p class="pt-4 <%= shiftType %> ">Lunch</p><p><%= iterateShifts(data.wednesday) %></p></tr>
+                        <% } %>   
+                        <tr><p class="pt-4 <%= shiftType %> ">1st Dinner</p><p><%= iterateShifts(data.dinners.firstDinner) %></p></tr>
+                        <tr><p class="pt-4 <%= shiftType %> ">2nd Dinner</p><p><%= iterateShifts(data.dinners.secondDinner) %></p></tr>
+                    <% } %> 
+                </table>
+            </div>
         <% } %>  
     </div>
 </body>
