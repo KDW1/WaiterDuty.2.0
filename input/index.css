@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.basicAnim {
+    @apply transition-all ease-in-out;
+}
+
+.boxShadow {
+    @apply bg-white rounded-xl shadow-2xl shadow-red-600;
+}
