@@ -7,7 +7,7 @@
     "node": "18.x"
   },
   "scripts": {
-    "start": "npm run build && node .",
+    "start": "npm i && npm run build && node .",
     "build": "tailwindcss build ./input/index.css -o ./public/index.css",
     "watch": "tailwindcss build ./input/index.css -o ./public/index.css --watch"
   },
