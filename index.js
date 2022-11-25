@@ -2,13 +2,15 @@ const { json } = require('express')
 const express = require('express')
 const fs = require('fs')
 const { parse } = require('path')
-const { exec } = require('node:child_process')
 const internal = require('stream')
 const bodyParser = require('body-parser')
 const http = require('http')
 const app = express()
 const port = 3000
 const path = require('path')
+
+require('dotenv').config()
+
 app.set('view engine', 'ejs')
 
 const Cadet = require('./classes/cadet')
@@ -193,7 +195,7 @@ app.get('/roster.json', (req, res) => {
     res.sendFile('.jsonFiles/roster.json', { root: path.join(__dirname)})
 })
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
     console.log(`Listening on port:${port}`)
 })
 
