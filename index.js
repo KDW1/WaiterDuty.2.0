@@ -8,6 +8,7 @@ const bodyParser = require('body-parser')
 const http = require('http')
 const app = express()
 const port = 3000
+const path = require('path')
 app.set('view engine', 'ejs')
 
 const Cadet = require('./classes/cadet')
@@ -176,6 +177,20 @@ app.get('/deleteRoster', (req, res) => {
         cadetList: JSON.parse(fs.readFileSync('./cadets.json', 'utf-8'))
     })
 })
+
+app.get('/clearAll', (req, res) => {
+    fs.writeFileSync('./roster.json', JSON.stringify(new Roster()))
+    fs.writeFileSync('./cadets.json', JSON.stringify([]))
+    res.redirect('/')
+})
+app.get('/cadets.json', (req, res) => {
+    res.sendFile('./cadets.json', { root: path.join(__dirname)})
+})
+
+app.get('/roster.json', (req, res) => {
+    res.sendFile('./roster.json', { root: path.join(__dirname)})
+})
+
 app.listen(port, () => {
     console.log(`Listening on port:${port}`)
 })
