@@ -14,7 +14,7 @@ app.set('view engine', 'ejs')
 const Cadet = require('./classes/cadet')
 const Day = require('./classes/day')
 const Roster = require('./classes/roster')
-const basicFuncs = require('./basicFunctions')
+const basicFuncs = require('./utils/basicFunctions')
 
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -23,8 +23,8 @@ app.use('/public', express.static('public'))
 
 app.get('/', (req, res) => {
     let { errorMsg, rosterError } = req.query;
-    let cadetsData = JSON.parse(fs.readFileSync('./cadets.json', 'utf-8'));
-    let rosterData = JSON.parse(fs.readFileSync('./roster.json', 'utf-8'));
+    let cadetsData = JSON.parse(fs.readFileSync('./jsonFiles/cadets.json', 'utf-8'));
+    let rosterData = JSON.parse(fs.readFileSync('./jsonFiles/roster.json', 'utf-8'));
     if(errorMsg == "CadetFailure") {
         errorMsg = "Couldn't add the cadet";
     } else if(errorMsg == "DuplicateCadet") {
@@ -41,14 +41,14 @@ app.get('/', (req, res) => {
 app.get('/deleteCadet', (req, res) => {
     console.log("Trying to delete a cadet")
     let _cadetName = req.query.cadetName
-    let cadetsData = fs.readFileSync('./cadets.json', 'utf-8')
+    let cadetsData = fs.readFileSync('./jsonFiles/cadets.json', 'utf-8')
     cadetsData = JSON.parse(cadetsData)
     console.log("Name: " + _cadetName)
     console.log("Cadets:")
     console.log(cadetsData)
     let index = cadetsData.findIndex((data) => data.cadetName == _cadetName)
     cadetsData.splice(index, 1)
-    fs.writeFileSync('./cadets.json', JSON.stringify(cadetsData))
+    fs.writeFileSync('./jsonFiles/cadets.json', JSON.stringify(cadetsData))
     res.redirect('/')
 })
 
@@ -58,7 +58,7 @@ app.post('/addCadet', (req, res) => {
     console.log(req.body)
     if(cadetName && mon.length != 0 && tues.length != 0 && thurs.length != 0 && fri.length != 0) { 
         let cadet = new Cadet(cadetName, parseInt(mon), parseInt(tues), parseInt(thurs), parseInt(fri))
-        let cadetsData = fs.readFileSync('./cadets.json', 'utf-8')
+        let cadetsData = fs.readFileSync('./jsonFiles/cadets.json', 'utf-8')
         
         cadetsData = JSON.parse(cadetsData)
 
@@ -77,7 +77,7 @@ app.post('/addCadet', (req, res) => {
         } else {
             cadetsData.unshift(cadet)
     
-            fs.writeFileSync('./cadets.json', JSON.stringify(cadetsData))
+            fs.writeFileSync('./jsonFiles/cadets.json', JSON.stringify(cadetsData))
             res.redirect('/')
         }
     } else {
@@ -87,17 +87,17 @@ app.post('/addCadet', (req, res) => {
 
 app.get('/addCadet', (req, res) => {
     let { cadetName, mon, tues, thurs, fri } = req.query;
-    let cadetsData = JSON.parse(fs.readFileSync('./cadets.json', 'utf-8'))
+    let cadetsData = JSON.parse(fs.readFileSync('./jsonFiles/cadets.json', 'utf-8'))
     let cadet = new Cadet(cadetName, parseInt(mon), parseInt(tues), parseInt(thurs), parseInt(fri))
     cadetsData.cadets.unshift(cadet)
-    fs.writeFileSync('./cadets.json', JSON.stringify(cadetsData))
+    fs.writeFileSync('./jsonFiles/cadets.json', JSON.stringify(cadetsData))
     res.send(cadetsData)
 })
 
 app.get('/configCadets', (req, res) => {
     let cadetList = presetCadetList();
-    fs.writeFileSync('./cadets.json', JSON.stringify(cadetList))
-    fs.writeFileSync('./roster.json', JSON.stringify(new Roster()))
+    fs.writeFileSync('./jsonFiles/cadets.json', JSON.stringify(cadetList))
+    fs.writeFileSync('./jsonFiles/roster.json', JSON.stringify(new Roster()))
     res.redirect('/')
 })
 
@@ -105,7 +105,7 @@ app.get('/deleteAllCadets', (req, res) => {
     let cadetList = {
         cadets: []
     }
-    fs.writeFileSync('./cadets.json', JSON.stringify(cadetList))
+    fs.writeFileSync('./jsonFiles/cadets.json', JSON.stringify(cadetList))
     res.send(cadetList)
 })
 
@@ -118,12 +118,12 @@ app.get('/roster', (req, res) => {
     // //Getting Cadet Info
 
     let cadetList = [];
-    let cadetsData = JSON.parse(fs.readFileSync('./cadets.json', 'utf-8'));
+    let cadetsData = JSON.parse(fs.readFileSync('./jsonFiles/cadets.json', 'utf-8'));
 
     //Getting Roster/Week info 
 
     let roster = new Roster();
-    let rosterData = JSON.parse(fs.readFileSync('./roster.json', 'utf-8'))
+    let rosterData = JSON.parse(fs.readFileSync('./jsonFiles/roster.json', 'utf-8'))
     if(rosterData) {
         roster.fromJson(rosterData)
     }
@@ -141,8 +141,8 @@ app.get('/roster', (req, res) => {
     let relevantInfo = (cadetList) ? basicFuncs.generateWaiterRoster(cadetList, roster) : false;
     if(relevantInfo.roster && relevantInfo.cadetList) {
         console.log(relevantInfo.roster);
-        fs.writeFileSync('./roster.json', JSON.stringify(relevantInfo.roster));
-        fs.writeFileSync('./cadets.json', JSON.stringify(cadetList));
+        fs.writeFileSync('./jsonFiles/roster.json', JSON.stringify(relevantInfo.roster));
+        fs.writeFileSync('./jsonFiles/cadets.json', JSON.stringify(cadetList));
         res.redirect('/')
     } else {
         console.log("Error:")
@@ -151,44 +151,44 @@ app.get('/roster', (req, res) => {
             cadetList[i].shifts = [];
             cadetList[i].shiftAmounts = 0;
         })
-        fs.writeFileSync('./roster.json', JSON.stringify(new Roster()))
-        fs.writeFileSync('./cadets.json', JSON.stringify(cadetList));
+        fs.writeFileSync('./jsonFiles/roster.json', JSON.stringify(new Roster()))
+        fs.writeFileSync('./jsonFiles/cadets.json', JSON.stringify(cadetList));
         res.render('index', {
             debrief: "Roster Error, can't fill every lunch period",
             rosterError: relevantInfo,
             roster: null,
-            cadetList: JSON.parse(fs.readFileSync('./cadets.json', 'utf-8'))
+            cadetList: JSON.parse(fs.readFileSync('./jsonFiles/cadets.json', 'utf-8'))
         })
     }
 })
 
 app.get('/deleteRoster', (req, res) => {
-    let cadetList = JSON.parse(fs.readFileSync('./cadets.json', 'utf-8'))
+    let cadetList = JSON.parse(fs.readFileSync('./jsonFiles/cadets.json', 'utf-8'))
     cadetList.forEach((i) => {
         cadetList[i].shifts = [];
         cadetList[i].shiftAmounts = 0;
     })
-    fs.writeFileSync('./roster.json', JSON.stringify(new Roster()))
-    fs.writeFileSync('./cadets.json', JSON.stringify(cadetList));
+    fs.writeFileSync('./jsonFiles/roster.json', JSON.stringify(new Roster()))
+    fs.writeFileSync('./jsonFiles/cadets.json', JSON.stringify(cadetList));
     res.render('index', {
         debrief: "Roster Error, can't fill every lunch period",
         rosterError: relevantInfo,
         roster: null,
-        cadetList: JSON.parse(fs.readFileSync('./cadets.json', 'utf-8'))
+        cadetList: JSON.parse(fs.readFileSync('./jsonFiles/cadets.json', 'utf-8'))
     })
 })
 
 app.get('/clearAll', (req, res) => {
-    fs.writeFileSync('./roster.json', JSON.stringify(new Roster()))
-    fs.writeFileSync('./cadets.json', JSON.stringify([]))
+    fs.writeFileSync('./jsonFiles/roster.json', JSON.stringify(new Roster()))
+    fs.writeFileSync('./jsonFiles/cadets.json', JSON.stringify([]))
     res.redirect('/')
 })
 app.get('/cadets.json', (req, res) => {
-    res.sendFile('./cadets.json', { root: path.join(__dirname)})
+    res.sendFile('./jsonFiles/cadets.json', { root: path.join(__dirname)})
 })
 
 app.get('/roster.json', (req, res) => {
-    res.sendFile('./roster.json', { root: path.join(__dirname)})
+    res.sendFile('.jsonFiles/roster.json', { root: path.join(__dirname)})
 })
 
 app.listen(port, () => {
