@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A small Waiter Duty Application to make rosters easy to make\\",
   "main": "index.js",
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "start": "npm run build && node .",
     "build": "tailwindcss build ./input/index.css -o ./public/index.css",

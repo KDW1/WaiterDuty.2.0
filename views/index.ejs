@@ -12,7 +12,7 @@
     <% if(locals.debrief) { %>
         <p class="text-center text-lg text-white underline underline-offset-4 decoration-4 decoration-red-500 font-semibold py-2"><%= locals.debrief %> </p>
     <% } %>  
-    <% if(locals.roster.monday.breakfast.length != 0) { %> 
+    <% if(locals.rosterMade) { %> 
         <p class="text-center text-lg text-white font-semibold py-2 basicAnim hover:text-xl"><a href="#roster">Go to Roster -></a></p>
     <% } %> 
     <% if(locals.rosterError) { %>
@@ -37,7 +37,7 @@
     <% } %>  
     <div class="mt-6 relative grid grid-cols-8 gap-1 w-11/12 mx-auto">
         <div class="col-span-6">
-            <table class="boxShadow px-10 py-6 border-separate border-spacing-y-2 border-spacing-x-2 mx-auto table-auto">
+            <table class="w-11/12 boxShadow px-10 py-6 border-separate border-spacing-y-2 border-spacing-x-2 mx-auto table-auto">
                 <thead>
                     <tr class="uppercase text-sm font-bold">
                         <td>Cadet Name:</td>

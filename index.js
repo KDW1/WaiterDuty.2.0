@@ -136,8 +136,8 @@ app.get('/roster', (req, res) => {
             cadetList.unshift(cadet);
         }
     }
-    // // console.log("Cadets:");
-    // // console.log(cadetList)
+    console.log("Cadets:");
+    console.log(cadetList)
     let relevantInfo = (cadetList) ? basicFuncs.generateWaiterRoster(cadetList, roster) : false;
     if(relevantInfo.roster && relevantInfo.cadetList) {
         console.log(relevantInfo.roster);
@@ -147,7 +147,8 @@ app.get('/roster', (req, res) => {
     } else {
         console.log("Error:")
         console.log(relevantInfo)
-        cadetList.forEach((i) => {
+        cadetList.forEach((data, i) => {
+            console.log(data)
             cadetList[i].shifts = [];
             cadetList[i].shiftAmounts = 0;
         })
@@ -156,6 +157,7 @@ app.get('/roster', (req, res) => {
         res.render('index', {
             debrief: "Roster Error, can't fill every lunch period",
             rosterError: relevantInfo,
+            rosterMade: false,
             roster: null,
             cadetList: JSON.parse(fs.readFileSync('./jsonFiles/cadets.json', 'utf-8'))
         })
