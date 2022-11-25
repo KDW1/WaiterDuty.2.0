@@ -8,8 +8,8 @@
   },
   "scripts": {
     "start": "npm i && npm run build && node .",
-    "build": "tailwindcss build ./input/index.css -o ./public/index.css",
-    "watch": "tailwindcss build ./input/index.css -o ./public/index.css --watch"
+    "build": "npx tailwindcss -i ./input/index.css -o ./public/index.css",
+    "watch": "npx tailwindcss -i ./input/index.css -o ./public/index.css --watch"
   },
   "repository": {
     "type": "git",
