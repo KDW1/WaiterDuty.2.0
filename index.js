@@ -20,12 +20,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use('/public', express.static('public'))
 
-if (typeof localStorage === "undefined" || localStorage === null) {
-    var LocalStorage = require('node-localstorage').LocalStorage;
-    localStorage = new LocalStorage('./scratch');
-}
-
-
 app.get('/', (req, res) => {
     let { errorMsg, rosterError } = req.query;
     let cadetsData = JSON.parse(fs.readFileSync('./cadets.json', 'utf-8'));
@@ -115,8 +109,6 @@ app.get('/deleteAllCadets', (req, res) => {
 })
 
 app.get('/save', (req, res) => {
-    localStorage.setItem('cadetList', fs.readFileSync("./cadets.json", 'utf-8'))
-    localStorage.setItem('roster', fs.readFileSync("./roster.json", 'utf-8'))
     res.redirect('/')
 })
 
@@ -186,12 +178,6 @@ app.get('/deleteRoster', (req, res) => {
 })
 app.listen(port, () => {
     console.log(`Listening on port:${port}`)
-    if(localStorage.getItem("cadetList")) {
-        fs.writeFileSync("./cadets.json", localStorage.getItem("cadetList"))
-    }
-    if(localStorage.getItem("roster")) {
-        fs.writeFileSync("./roster.json", localStorage.getItem("roster"))
-    }
 })
 
 function presetCadetList() { //To be called from the console | 0 -> "Free Lunch Period" | 5 -> "Not Available"
