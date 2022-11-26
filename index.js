@@ -127,7 +127,7 @@ app.get('/addCadet', (req, res) => {
 
 app.get('/configCadets', (req, res) => {
     let cadetList = presetCadetList();
-    req.session.cadets = []
+    req.session.cadets = cadetList
     req.session.roster = new Roster()
     res.redirect('/')
 })
@@ -213,6 +213,17 @@ app.get('/clearAll', (req, res) => {
     req.session.cadets = [];
     res.redirect('/')
 })
+
+app.get('/clearCadets', (req, res) => {
+    req.session.cadets = [];
+    res.redirect('/')
+})
+
+app.get('/clearRoster', (req, res) => {
+    req.session.roster = new Roster();
+    res.redirect('/')
+})
+
 app.get('/cadets.json', (req, res) => {
     res.sendFile('./jsonFiles/cadets.json', { root: path.join(__dirname)})
 })

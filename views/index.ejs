@@ -8,7 +8,7 @@
 </head>
 <body class="bg-orange-500">
     <% daysAbbreviated = ["mon", "tues", "thurs", "fri"] %>
-    <p class="w-1/4 mx-auto text-center font-semibold text-5xl mt-4 text-stone-50">Cadets Info</p> 
+    <p class="w-1/4 mx-auto text-center font-semibold md:text-sm lg:text-lg text-4xl mt-4 text-stone-50">Cadets Info</p> 
     <% if(locals.debrief) { %>
         <p class="text-center text-lg text-white underline underline-offset-4 decoration-4 decoration-red-500 font-semibold py-2"><%= locals.debrief %> </p>
     <% } %>  
@@ -35,9 +35,9 @@
             </div>
         <% } %>  
     <% } %>  
-    <div class="mt-6 relative grid grid-cols-8 gap-1 w-11/12 mx-auto">
-        <div class="col-span-6">
-            <table class="w-11/12 boxShadow px-10 py-6 border-separate border-spacing-y-2 border-spacing-x-2 mx-auto table-auto">
+    <div class="mt-6 w-11/12 relative mx-auto grid grid-cols-6 gap-6">
+        <div class="lg:col-span-6 col-span-4">
+            <table class="w-full boxShadow px-10 py-6 border-separate border-spacing-y-2 border-spacing-x-2 mx-auto table-auto">
                 <thead>
                     <tr class="uppercase text-sm font-bold">
                         <td>Cadet Name:</td>
@@ -74,12 +74,12 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-span-2">
-            <div class="boxShadow px-12 h-min min-h-max mx-auto text-center">
+        <div class="lg:col-span-6 col-span-2">
+            <div class="boxShadow w-full px-12 h-min min-h-max text-center">
                 <p class="text-2xl font-semibold pt-4">Add Cadet</p>
                 <form class="mt-2 text-lg" action="/addCadet" method="POST">
                     <label class="font-medium text-center text-base text-black">Cadet Name:</label><br>
-                    <input placeholder="Kofi B." class="text-center text-black font-semibold border-b-2 outline-none pb-2" type="text" name="cadetName"><br>
+                    <input placeholder="Kofi B." class="text-center text-black font-semibold border-b-2 outline-none pb-2 w-full" type="text" name="cadetName"><br>
                     <div class="pt-4"></div>
                     <% let days = ["Monday", "Tuesday", "Thursday", "Friday"] %> 
                     <% daysAbbreviated.forEach((data, i) => { %>
@@ -96,9 +96,19 @@
                     <input class="cursor-pointer transition-all duration-700 delay-75 text-amber-400 hover:text-orange-400 hover:text-xl text-lg uppercase font-semibold pt-2 pb-4 outline-none" type="submit" value="Click Me">
                 </form>
             </div>
+            <p class="relative boxShadow hover:scale-105 transition-all delay-200 duration-500 text-amber-400 hover:text-orange-400 mt-4 w-min min-w-max px-4 py-2 text-center font-semibold text-lg cursor-pointer">
+                <a href="/clearAll">
+                    Clear Cadets and Rosters
+                </a>
+            </p>
+            <p class="relative boxShadow hover:scale-105 transition-all delay-200 duration-500 text-amber-400 hover:text-orange-400 mt-4 w-min min-w-max px-4 py-2 text-center font-semibold text-lg cursor-pointer">
+                <a href="/clearCadets">
+                    Clear Cadets
+                </a>
+            </p>
             <p class="relative mb-12 boxShadow hover:scale-105 transition-all delay-200 duration-500 text-amber-400 hover:text-orange-400 mt-4 w-min min-w-max px-4 py-2 text-center font-semibold text-lg cursor-pointer">
-                <a href="/save">
-                    Save Cadets and Roster
+                <a href="/clearRoster">
+                    Clear Roster
                 </a>
             </p>
         </div>
