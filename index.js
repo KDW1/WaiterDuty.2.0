@@ -1,14 +1,17 @@
 const { json } = require('express')
 const express = require('express')
+const session = require('express-session')
 const fs = require('fs')
 const { parse } = require('path')
 const internal = require('stream')
+const sqlite = require('better-sqlite3')
 const bodyParser = require('body-parser')
 const http = require('http')
 const app = express()
 const port = 3000
 const path = require('path')
 const localStorage = require('localStorage');
+const cookieParser = require('cookie-parser')
 
 require('dotenv').config()
 
@@ -18,18 +21,42 @@ const Cadet = require('./classes/cadet')
 const Roster = require('./classes/roster')
 const basicFuncs = require('./utils/basicFunctions')
 
-let cadetList = [];
-let roster = new Roster();
+const SqliteStore = require("better-sqlite3-session-store")(session)
+const db = new sqlite("sessions.db")
 
+app.use(cookieParser())
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true }))
 
+app.use(session({
+    secret: process.env.secret,
+    resave: false,
+    cookie: { secure: false },
+    store: app.use(
+      session({
+        store: new SqliteStore({
+          client: db, 
+          expired: {
+            clear: true,
+            intervalMs: 900000 //ms = 15min
+          }
+        }),
+        secret: "keyboard cat",
+        resave: false
+      })
+    ),
+    saveUninitialized: true
+  }))
+
 app.use('/public', express.static('public'))
+
+session.cadets = session.cadets || []
+session.roster = session.roster || new Roster()
 
 app.get('/', (req, res) => {
     let { errorMsg, rosterError } = req.query;
-    let cadetsData = JSON.parse(localStorage.getItem('cadets'));
-    let rosterData = JSON.parse(localStorage.getItem('roster'));
+    let cadetsData = req.session.cadets
+    let rosterData = req.session.roster
     if(errorMsg == "CadetFailure") {
         errorMsg = "Couldn't add the cadet";
     } else if(errorMsg == "DuplicateCadet") {
@@ -46,14 +73,14 @@ app.get('/', (req, res) => {
 app.get('/deleteCadet', (req, res) => {
     console.log("Trying to delete a cadet")
     let _cadetName = req.query.cadetName
-    let cadetsData = localStorage.getItem('cadets')
+    let cadetsData = req.session.cadets
     cadetsData = JSON.parse(cadetsData)
     console.log("Name: " + _cadetName)
     console.log("Cadets:")
     console.log(cadetsData)
     let index = cadetsData.findIndex((data) => data.cadetName == _cadetName)
     cadetsData.splice(index, 1)
-    localStorage.setItem('cadets', JSON.stringify(cadetsData))
+    req.session.cadets = cadetsData
     res.redirect('/')
 })
 
@@ -63,10 +90,8 @@ app.post('/addCadet', (req, res) => {
     console.log(req.body)
     if(cadetName && mon.length != 0 && tues.length != 0 && thurs.length != 0 && fri.length != 0) { 
         let cadet = new Cadet(cadetName, parseInt(mon), parseInt(tues), parseInt(thurs), parseInt(fri))
-        let cadetsData = localStorage.getItem('cadets')
-        
-        cadetsData = JSON.parse(cadetsData)
-
+        let cadetsData = req.session.cadets ?? []
+        console.log("Session Data: " + req.session.cadets )
         let checkIndex
 
         //Checking we haven't already made the cadet
@@ -83,8 +108,7 @@ app.post('/addCadet', (req, res) => {
             res.redirect('/?errorMsg=DuplicateCadet')
         } else {
             cadetsData.unshift(cadet)
-    
-            localStorage.setItem('cadets', JSON.stringify(cadetsData))
+            req.session.cadets = cadetsData;
             res.redirect('/')
         }
     } else {
@@ -97,19 +121,19 @@ app.get('/addCadet', (req, res) => {
     let cadetsData = JSON.parse(localStorage.getItem('cadets'))
     let cadet = new Cadet(cadetName, parseInt(mon), parseInt(tues), parseInt(thurs), parseInt(fri))
     cadetsData.cadets.unshift(cadet)
-    localStorage.setItem('cadets', JSON.stringify(cadetsData))
+    req.session.cadets = cadetsData;
     res.send(cadetsData)
 })
 
 app.get('/configCadets', (req, res) => {
     let cadetList = presetCadetList();
-    localStorage.setItem('cadets', JSON.stringify(cadetList))
-    localStorage.setItem('roster', JSON.stringify(new Roster()))
+    req.session.cadets = []
+    req.session.roster = new Roster()
     res.redirect('/')
 })
 
 app.get('/deleteAllCadets', (req, res) => {
-    localStorage.setItem('cadets', JSON.stringify([]))
+    req.session.cadetList = []
     res.send(cadetList)
 })
 
@@ -122,12 +146,12 @@ app.get('/roster', (req, res) => {
     // //Getting Cadet Info
 
     let cadetList = [];
-    let cadetsData = JSON.parse(localStorage.getItem('cadets'));
+    let cadetsData = req.session.cadetList;
 
     //Getting Roster/Week info 
 
     let roster = new Roster();
-    let rosterData = JSON.parse(localStorage.getItem('roster'))
+    let rosterData = req.session.roster;
     if(rosterData) {
         roster.fromJson(rosterData)
     }
@@ -145,8 +169,8 @@ app.get('/roster', (req, res) => {
     let relevantInfo = (cadetList) ? basicFuncs.generateWaiterRoster(cadetList, roster) : false;
     if(relevantInfo.roster && relevantInfo.cadetList) {
         console.log(relevantInfo.roster);
-        localStorage.setItem('roster', JSON.stringify(relevantInfo.roster))
-        localStorage.setItem('cadets', JSON.stringify(relevantInfo.cadet))
+        req.session.roster = relevantInfo.roster;
+        req.session.cadets = relevantInfo.cadetList;
         res.redirect('/')
     } else {
         console.log("Error:")
@@ -156,37 +180,37 @@ app.get('/roster', (req, res) => {
             cadetList[i].shifts = [];
             cadetList[i].shiftAmounts = 0;
         })
-        localStorage.setItem('roster', JSON.stringify(new Roster()))
-        localStorage.setItem('cadets', JSON.stringify(cadetList))
+        req.session.roster = new Roster();
+        req.session.cadets = cadetList;
         res.render('index', {
             debrief: "Roster Error, can't fill every lunch period",
             rosterError: relevantInfo,
             rosterMade: false,
             roster: null,
-            cadetList: JSON.parse(localStorage.getItem('cadets'))
+            cadetList: JSON.parse(req.session.cadets)
         })
     }
 })
 
 app.get('/deleteRoster', (req, res) => {
-    let cadetList = JSON.parse(localStorage.getItem('cadets'))
+    let cadetList = req.session.cadets
     cadetList.forEach((i) => {
         cadetList[i].shifts = [];
         cadetList[i].shiftAmounts = 0;
     })
-    localStorage.setItem('roster', JSON.stringify(new Roster()))
-    localStorage.setItem('cadets', JSON.stringify(cadetList))
+    req.session.roster = new Roster();
+    req.session.cadets = cadetList;
     res.render('index', {
         debrief: "Roster Error, can't fill every lunch period",
         rosterError: relevantInfo,
         roster: null,
-        cadetList: JSON.parse(localStorage.getItem('cadets'))
+        cadetList: JSON.parse(req.session.cadets)
     })
 })
 
 app.get('/clearAll', (req, res) => {
-    localStorage.setItem('roster', JSON.stringify(new Roster()))
-    localStorage.setItem("cadets", JSON.stringify([]))
+    req.session.roster = new Roster();
+    req.session.cadets = [];
     res.redirect('/')
 })
 app.get('/cadets.json', (req, res) => {
@@ -198,8 +222,6 @@ app.get('/roster.json', (req, res) => {
 })
 
 app.listen(process.env.PORT || port, () => {
-    localStorage.setItem('cadets', localStorage.getItem('cadets') || JSON.stringify([]))
-    localStorage.setItem('roster', localStorage.getItem('roster') || JSON.stringify(new Roster()))
     console.log(`Listening on port:${port}`)
 })
 
