@@ -5,14 +5,15 @@ module.exports = {
   ],
   theme: {
     screens: {
+      'bruh': '430px',
 
-      'sm': '600px',
+      'sm': '550px',
       // => @media (min-width: 640px) { ... }
 
-      'md': '650px',
+      'md': '675px',
       // => @media (min-width: 768px) { ... }
 
-      'lg': '1024px',
+      'lg': '1050px',
       // => @media (min-width: 1024px) { ... }
 
       'xl': '1280px',

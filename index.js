@@ -146,7 +146,7 @@ app.get('/roster', (req, res) => {
     // //Getting Cadet Info
 
     let cadetList = [];
-    let cadetsData = req.session.cadetList;
+    let cadetsData = req.session.cadets;
 
     //Getting Roster/Week info 
 
@@ -187,7 +187,7 @@ app.get('/roster', (req, res) => {
             rosterError: relevantInfo,
             rosterMade: false,
             roster: null,
-            cadetList: JSON.parse(req.session.cadets)
+            cadetList: req.session.cadets
         })
     }
 })
