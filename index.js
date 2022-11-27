@@ -74,7 +74,6 @@ app.get('/deleteCadet', (req, res) => {
     console.log("Trying to delete a cadet")
     let _cadetName = req.query.cadetName
     let cadetsData = req.session.cadets
-    cadetsData = JSON.parse(cadetsData)
     console.log("Name: " + _cadetName)
     console.log("Cadets:")
     console.log(cadetsData)
@@ -118,7 +117,7 @@ app.post('/addCadet', (req, res) => {
 
 app.get('/addCadet', (req, res) => {
     let { cadetName, mon, tues, thurs, fri } = req.query;
-    let cadetsData = JSON.parse(localStorage.getItem('cadets'))
+    let cadetsData = req.session.cadets
     let cadet = new Cadet(cadetName, parseInt(mon), parseInt(tues), parseInt(thurs), parseInt(fri))
     cadetsData.cadets.unshift(cadet)
     req.session.cadets = cadetsData;
@@ -204,7 +203,7 @@ app.get('/deleteRoster', (req, res) => {
         debrief: "Roster Error, can't fill every lunch period",
         rosterError: relevantInfo,
         roster: null,
-        cadetList: JSON.parse(req.session.cadets)
+        cadetList: req.session.cadets
     })
 })
 
