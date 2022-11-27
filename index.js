@@ -85,12 +85,11 @@ app.get('/deleteCadet', (req, res) => {
 
 app.post('/addCadet', (req, res) => {
     let { cadetName, mon, tues, thurs, fri } = req.body
-    console.log("Request Body:")
-    console.log(req.body)
+    // console.log("Request Body:")
+    // console.log(req.body)
     if(cadetName && mon.length != 0 && tues.length != 0 && thurs.length != 0 && fri.length != 0) { 
         let cadet = new Cadet(cadetName, parseInt(mon), parseInt(tues), parseInt(thurs), parseInt(fri))
         let cadetsData = req.session.cadets ?? []
-        console.log("Session Data: " + req.session.cadets )
         let checkIndex
 
         //Checking we haven't already made the cadet
@@ -100,8 +99,6 @@ app.post('/addCadet', (req, res) => {
                 } 
             return false
         });
-    
-        console.log("Check Index: " + checkIndex)
 
         if(checkIndex != -1) {
             res.redirect('/?errorMsg=DuplicateCadet')
@@ -144,32 +141,28 @@ app.get('/roster', (req, res) => {
     console.log("Creating roster")
     // //Getting Cadet Info
 
-    let cadetList = [];
-    let cadetsData = req.session.cadets;
+    let cadetList = req.session.cadets;
 
     //Getting Roster/Week info 
 
     let roster = new Roster();
-    let rosterData = req.session.roster;
-    if(rosterData) {
-        roster.fromJson(rosterData)
-    }
 
-    // //Making CadetList
-    if(cadetsData) {
-        for(let i = 0; i < cadetsData.length; i++) {
-            let cadet = new Cadet();
-            cadet.fromJson(cadetsData[i]);
-            cadetList.unshift(cadet);
-        }
-    }
     console.log("Cadets:");
     console.log(cadetList)
+
+    for(let i = 0; i < cadetList.length; i++) {
+        cadetList[i].shifts = [];
+        cadetList[i].shiftAmounts = 0;
+    }
+    
     let relevantInfo = (cadetList) ? basicFuncs.generateWaiterRoster(cadetList, roster) : false;
     if(relevantInfo.roster && relevantInfo.cadetList) {
+        console.log("Roster:")
         console.log(relevantInfo.roster);
         req.session.roster = relevantInfo.roster;
         req.session.cadets = relevantInfo.cadetList;
+        console.log("Cadets (New):")
+        console.log(relevantInfo.cadetList)
         res.redirect('/')
     } else {
         console.log("Error:")

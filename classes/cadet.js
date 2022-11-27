@@ -14,8 +14,6 @@ class Cadet {
         for(let i = 0; i < this.lunchTimes.length; i++) {
             this.parsedLunchTimes.push(this.getLunchTime(this.lunchTimes[i]))
         }
-        console.log(this.cadetName)
-        console.log(this.parsedLunchTimes)
     }
 
     
@@ -25,7 +23,6 @@ class Cadet {
 
     
     getLunchTime(num) {
-        console.log(num)
         switch (num) {
             case 0:
                 return "Free Period";

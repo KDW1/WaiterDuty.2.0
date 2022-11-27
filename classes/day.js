@@ -92,30 +92,30 @@ class Day {
 
     get firstLunchFull() {
         if (this.lunches.firstLunch.length == 3) {
-            console.log("First is Full");
+            // console.log("First is Full");
             return true;
         } else {
-            console.log("First isn't Full");
+            // console.log("First isn't Full");
             return false;
         }
     }
 
     get secondLunchFull() {
         if (this.lunches.secondLunch.length == 3) {
-            console.log("Second is Full");
+            // console.log("Second is Full");
             return true;
         } else {
-            console.log("Second isn't Full");
+            // console.log("Second isn't Full");
             return false;
         }
     }
 
     get thirdLunchFull() {
         if (this.lunches.thirdLunch.length == 3) {
-            console.log("Third is Full");
+            // console.log("Third is Full");
             return true;
         } else {
-            console.log("Third isn't Full");
+            // console.log("Third isn't Full");
             return false;
         }
     }
@@ -141,7 +141,7 @@ class Day {
     }
 
     assignShift(timePeriod, shift, cadet) {
-        console.log("Assigning Shift")
+        // console.log("Assigning Shift")
         switch (timePeriod) {
             case 1:
                 this.breakfast.unshift(new Shift(this.dayNum, timePeriod, shift, cadet.cadetName));

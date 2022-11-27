@@ -233,7 +233,7 @@ function fullShifts(shiftSection, totalShifts) {
 }
 
 function metMinimumNumOfShifts(cadetList, baseShifts) {
-    console.log("Base Shifts: " + baseShifts)
+    // console.log("Base Shifts: " + baseShifts)
     let variations = 0;
     if (Array.isArray(cadetList)) {
         for (let i = 0; i < cadetList.length; i++) {
@@ -248,7 +248,7 @@ function metMinimumNumOfShifts(cadetList, baseShifts) {
         return false;
     }
     if (variations == 0) {
-        console.log("\n\nEveryone has met the minimum number of shifts\n\n");
+        // console.log("\n\nEveryone has met the minimum number of shifts\n\n");
         return true;
     }
     if (!(variations != 0) && !(variations == 0)) {
@@ -268,19 +268,15 @@ function createRoster(cadetList, week) {
     console.log("Week Length:")
     for(let i = 0; i < 5; i++) {
         if(i != 2) {
-            [cadetList, week, baseShifts] = AssignBreakfastShifts(cadetList, week, baseShifts, i)
-            [cadetList, week, baseShifts] = AssignLunchShifts(shuffle(cadetList), week, baseShifts, i);
-            [cadetList, week, baseShifts] = AssignDinnerShifts(cadetList, week, baseShifts, i);
+            [cadetList, week, baseShifts] = AssignBreakfastShifts(shuffle(cadetList), week, baseShifts, i)
+            [cadetList, week, baseShifts] = AssignLunchShifts(cadetList, week, baseShifts, i);
+            [cadetList, week, baseShifts] = AssignDinnerShifts(shuffle(cadetList), week, baseShifts, i);
         } else {
-            [cadetList, week, baseShifts] = AssignBreakfastShifts(cadetList, week, baseShifts, i);
-            [cadetList, week, baseShifts] = AssignWednesdayShifts(shuffle(cadetList), week, baseShifts, i);
-            [cadetList, week, baseShifts] = AssignDinnerShifts(cadetList, week, baseShifts, i);
+            [cadetList, week, baseShifts] = AssignBreakfastShifts(shuffle(cadetList), week, baseShifts, i);
+            [cadetList, week, baseShifts] = AssignWednesdayShifts(cadetList, week, baseShifts, i);
+            [cadetList, week, baseShifts] = AssignDinnerShifts(shuffle(cadetList), week, baseShifts, i);
         }
     }
-    console.log("Roster:");
-    console.log(week)
-    console.log("\n\n\nCadets:");
-    console.log(cadetList)
     return {
         cadetList: cadetList,
         roster: week
@@ -320,7 +316,6 @@ function generateWaiterRoster(cadetList, week) {
     }
     let rosterPossible = mondayFullLunches && tuesdayFullLunches && thursdayFullLunches && fridayFullLunches;
     if (rosterPossible) {
-        console.log("Creating a roster")
         return createRoster(cadetList, week);
     } else {
         return debrief;
@@ -352,7 +347,6 @@ function hasEnoughToFillLunch(cadetList, shift, day) {
 }
 
 function shuffle(array) { //From Stack Overflow ---------------------
-    console.log(array)
     let currentIndex = array.length, randomIndex;
 
     // While there remain elements to shuffle.
