@@ -46,11 +46,11 @@
                     <% locals.cadetList.forEach((cadet) => {%>
                             <div class="text-center w-full text-base sm:text-xl group mb-6 <%= expandRow %>">
                                 <p class="<%= hoverEffect %> text-lg sm:text-2xl break-words"><%= cadet.cadetName %></p>
-                                <p><%= cadet.shiftAmounts %></p>
-                                <p><%= cadet.parsedLunchTimes[0] %></p>
-                                <p><%= cadet.parsedLunchTimes[1] %></p>
-                                <p><%= cadet.parsedLunchTimes[3] %></p>
-                                <p><%= cadet.parsedLunchTimes[4] %><ph>
+                                <p><span class="font-semibold">Shifts: </span><%= cadet.shiftAmounts %></p>
+                                <p><span class="font-semibold">Monday: </span><%= cadet.parsedLunchTimes[0] %></p>
+                                <p><span class="font-semibold">Tuesday: </span><%= cadet.parsedLunchTimes[1] %></p>
+                                <p><span class="font-semibold">Thursday: </span><%= cadet.parsedLunchTimes[3] %></p>
+                                <p><span class="font-semibold">Friday: </span><%= cadet.parsedLunchTimes[4] %><ph>
                                 <p><a class="text-slate-200 text-lg sm:text-2xl <%= linkHover %> " href="/deleteCadet?cadetName=<%= cadet.cadetName %>">Delete</a></p>
                             </div>
                     <% })%> 
