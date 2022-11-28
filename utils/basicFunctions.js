@@ -150,18 +150,21 @@ function AssignLunchShifts(cadetList, week, baseShifts, dayNum) {
                 if (!firstFull) {
                     if ((overWorked == false) || noOneLeftForFirst) {
                         currentDay.assignShift(2, 1, cadetList[i]);
+                        break;
                         // cadetList[i].shiftAmounts++;
                     }
                 }
                 if (!secondFull) {
                     if ((overWorked == false) || noOneLeftForSecond) {
                         currentDay.assignShift(2, 2, cadetList[i]);
+                        break;
                         // cadetList[i].shiftAmounts++;
                     }
                 }
                 if (!thirdFull) {
                     if ((overWorked == false) || noOneLeftForThird) {
                         currentDay.assignShift(2, 3, cadetList[i]);
+                        break;
                         // cadetList[i].shiftAmounts++;
                     }
                 }
@@ -170,6 +173,7 @@ function AssignLunchShifts(cadetList, week, baseShifts, dayNum) {
                 if (!firstFull) {
                     if ((overWorked == false) || noOneLeftForFirst) {
                         currentDay.assignShift(2, 1, cadetList[i]);
+                        break;
                         // cadetList[i].shiftAmounts++;
                     }
                 }
@@ -178,6 +182,7 @@ function AssignLunchShifts(cadetList, week, baseShifts, dayNum) {
                 if (!secondFull) {
                     if ((overWorked == false) || noOneLeftForSecond) {
                         currentDay.assignShift(2, 2, cadetList[i]);
+                        break;
                         // cadetList[i].shiftAmounts++;
                     }
                 }
@@ -186,6 +191,7 @@ function AssignLunchShifts(cadetList, week, baseShifts, dayNum) {
                 if (!thirdFull) {
                     if ((overWorked == false) || noOneLeftForThird) {
                         currentDay.assignShift(2, 3, cadetList[i]);
+                        break;
                         // cadetList[i].shiftAmounts++;
                     }
                 }
