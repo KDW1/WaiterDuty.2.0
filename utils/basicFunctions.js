@@ -276,11 +276,11 @@ function createRoster(cadetList, week) {
         if(i != 2) {
             [cadetList, week, baseShifts] = AssignBreakfastShifts(shuffle(cadetList), week, baseShifts, i)
             [cadetList, week, baseShifts] = AssignLunchShifts(cadetList, week, baseShifts, i);
-            [cadetList, week, baseShifts] = AssignDinnerShifts(shuffle(cadetList), week, baseShifts, i);
+            [cadetList, week, baseShifts] = AssignDinnerShifts(cadetList, week, baseShifts, i);
         } else {
             [cadetList, week, baseShifts] = AssignBreakfastShifts(shuffle(cadetList), week, baseShifts, i);
             [cadetList, week, baseShifts] = AssignWednesdayShifts(cadetList, week, baseShifts, i);
-            [cadetList, week, baseShifts] = AssignDinnerShifts(shuffle(cadetList), week, baseShifts, i);
+            [cadetList, week, baseShifts] = AssignDinnerShifts(cadetList, week, baseShifts, i);
         }
     }
     return {
