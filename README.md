@@ -1,4 +1,5 @@
 # Waiter Duty - Culver Academies Project
+![Screenshot (88)](https://user-images.githubusercontent.com/51097023/209421283-bf17e481-09a6-4994-aa0a-909b39e4bf94.png)
 ### Web App is at: [https://polar-falls-23162.herokuapp.com](https://polar-falls-23162.herokuapp.com/) (Heroku application will only be up until Nov. 28th 😞)
 ----
 ### The Reason behind it all:
