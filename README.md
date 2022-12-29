@@ -1,5 +1,5 @@
 # Waiter Duty - Culver Academies Project
-### Web App is at: [https://waiter-duty.herokuapp.com](https://polar-falls-23162.herokuapp.com/)
+### Web App is at: [https://waiter-duty.herokuapp.com](https://waiter-duty.herokuapp.com/)
 ----
 ![Screenshot (88)](https://user-images.githubusercontent.com/51097023/209421283-bf17e481-09a6-4994-aa0a-909b39e4bf94.png)
 ### The Reason behind it all:
