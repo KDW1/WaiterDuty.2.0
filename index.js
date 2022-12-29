@@ -58,7 +58,7 @@ app.get('/', (req, res) => {
     let cadetsData = req.session.cadets
     let rosterData = req.session.roster
     if(errorMsg == "CadetFailure") {
-        errorMsg = "Couldn't add the cadet";
+        errorMsg = "Can't add cadet, not enough information...";
     } else if(errorMsg == "DuplicateCadet") {
         errorMsg = "There's already a cadet with that name";
     }
@@ -87,7 +87,7 @@ app.post('/addCadet', (req, res) => {
     let { cadetName, mon, tues, thurs, fri } = req.body
     // console.log("Request Body:")
     // console.log(req.body)
-    if(cadetName && mon.length != 0 && tues.length != 0 && thurs.length != 0 && fri.length != 0) { 
+    if(cadetName && mon != -1 && tues != -1 && thurs != -1 && fri != -1) { 
         let cadet = new Cadet(cadetName, parseInt(mon), parseInt(tues), parseInt(thurs), parseInt(fri))
         let cadetsData = req.session.cadets ?? []
         let checkIndex

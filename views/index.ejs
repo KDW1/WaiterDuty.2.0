@@ -108,7 +108,7 @@
                     <% daysAbbreviated.forEach((data, i) => { %>
                         <label class="font-semibold pr-2"><%= days[i] %> Lunch:</label>
                         <select class="mt-1" name="<%= data %>">
-                            <option selected>Daily Lunches</option>
+                            <option value=-1 selected>Daily Lunches</option>
                             <option value=1>1st Lunch</option>
                             <option value=2>2nd Lunch</option>
                             <option value=3>3rd Lunch</option>
