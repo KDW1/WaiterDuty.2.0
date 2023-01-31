@@ -35,31 +35,16 @@
             </div>
         <% } %>  
     <% } %>  
-    <div class="mt-6 w-11/12 relative mx-auto grid grid-cols-6 gap-6">
+    <% if(locals.roster.monday.breakfast.length > 0) { %>
+        <p class="relative mb-4 boxShadow hover:scale-105 transition-all delay-200 duration-500 text-amber-400 hover:text-orange-400 mt-4 w-min min-w-max px-4 py-2 mx-auto text-center font-semibold text-lg cursor-pointer">
+            <a href="/viewRoster">
+                View Roster
+            </a>
+        </p>
+    <% } %>  
+    <div class="mt-6 w-11/12 relative mx-auto grid grid-cols-6 gap-4">
         <div class="relative col-span-6 lg:col-span-4">
-            <div class="w-full boxShadow md:hidden flex-col px-10 py-6">
-                <p class="text-xl sm:text-2xl font-semibold mx-auto mb-4 border-b-2 w-min min-w-max">Cadets:</p>
-                <% hoverEffect = "cursor-default transition-all duration-500 delay-100 group-hover:font-semibold group-hover:scale-105" %> 
-                <% expandRow = "group-hover:py-2 transition-all duration-500 delay-100" %> 
-                <% linkHover = "basicAnim cursor-clicker duration-300 delay-75 hover:text-red-500" %> 
-                <% if(locals.cadetList && locals.cadetList.length != 0) { %>
-                    <% locals.cadetList.forEach((cadet) => {%>
-                            <div class="text-center w-full text-base sm:text-xl group mb-6 <%= expandRow %>">
-                                <p class="<%= hoverEffect %> text-lg sm:text-2xl break-words"><%= cadet.cadetName %></p>
-                                <p><span class="font-semibold">Shifts: </span><%= cadet.shiftAmounts %></p>
-                                <p><span class="font-semibold">Monday: </span><%= cadet.parsedLunchTimes[0] %></p>
-                                <p><span class="font-semibold">Tuesday: </span><%= cadet.parsedLunchTimes[1] %></p>
-                                <p><span class="font-semibold">Thursday: </span><%= cadet.parsedLunchTimes[3] %></p>
-                                <p><span class="font-semibold">Friday: </span><%= cadet.parsedLunchTimes[4] %><ph>
-                                <p><a class="text-slate-200 text-lg sm:text-2xl <%= linkHover %> " href="/deleteCadet?cadetName=<%= cadet.cadetName %>">Delete</a></p>
-                            </div>
-                    <% })%> 
-                <% } else { %>
-                    <div>
-                        <p class="text-lg font-semibold text-gray-600">No Cadets...</p>
-                    </div>
-                <% } %>   
-            </div>
+            <!--List of Cadets and More-->
             <table class="md:table-auto md:table hidden w-full boxShadow px-10 py-6 border-separate border-spacing-y-2 border-spacing-x-2">
                 <thead>
                     <tr class="uppercase text-sm font-bold">
@@ -74,13 +59,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% hoverEffect = "cursor-default transition-all duration-500 delay-100 group-hover:font-semibold group-hover:text-xl" %> 
+                    <% hoverEffect = "cursor-default transition-all duration-500 delay-100 group-hover:font-semibold" %> 
                     <% expandRow = "group-hover:py-2 transition-all duration-500 delay-100" %> 
                     <% linkHover = "basicAnim cursor-clicker duration-300 delay-75 hover:text-red-500" %> 
                     <% if(locals.cadetList && locals.cadetList.length != 0) { %>
                         <% locals.cadetList.forEach((cadet) => {%>
                                 <tr class="text-base group">
-                                    <td class="<%= hoverEffect %> text-lg break-words <%= expandRow %> "><%= cadet.cadetName %></th>
+                                    <td class="<%= hoverEffect %> text-lg <%= expandRow %> "><%= cadet.cadetName %></th>
                                     <td><%= cadet.shiftAmounts %></td>
                                     <td><%= cadet.parsedLunchTimes[0] %></th>
                                     <td><%= cadet.parsedLunchTimes[1] %></th>
@@ -143,7 +128,7 @@
             Make Roster
         </a>
     </p>
-    <% if(locals.roster) { %>
+    <% if(locals.roster.monday.breakfast.length > 0) { %>
         <p class="text-center text-white font-semibold text-5xl mt-24" id="roster">Roster:</p>
         <div class="text-center pb-5">
             <% shiftType = "text-lg font-semibold" %> 

@@ -137,6 +137,12 @@ app.get('/save', (req, res) => {
     res.redirect('/')
 })
 
+app.get('/viewRoster', (req, res) => {
+    res.render('roster', {
+        roster: req.session.roster
+    })
+})
+
 app.get('/roster', (req, res) => {
     console.log("Creating roster")
     // //Getting Cadet Info
@@ -145,6 +151,14 @@ app.get('/roster', (req, res) => {
 
     //Getting Roster/Week info 
 
+    if(!cadetList || cadetList.length == 0) {
+        res.render('index', {
+            debrief: "Roster Error, there are no cadets for roster",
+            rosterMade: false,
+            roster: null,
+            cadetList: req.session.cadets
+        })
+    }
     let roster = new Roster();
 
     console.log("Cadets:");

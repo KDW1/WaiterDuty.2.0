@@ -6,8 +6,8 @@
   "engines": {
     "node": "18.x"
   },
-  "scripts": { 
-    "start": "npm run build && node .", 
+  "scripts": {
+    "start": "concurrently \"npm run watch\" \"nodemon .\"",
     "build": "npx tailwindcss -i ./input/index.css -o ./public/index.css",
     "watch": "npx tailwindcss -i ./input/index.css -o ./public/index.css --watch"
   },
