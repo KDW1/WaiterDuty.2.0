@@ -62,11 +62,15 @@ app.get('/', (req, res) => {
     } else if(errorMsg == "DuplicateCadet") {
         errorMsg = "There's already a cadet with that name";
     }
+    console.log(rosterData);
+    let hasRoster = (rosterData) ? true : false;
+    console.log("Has Roster: " + hasRoster);
     res.render('index', {
         debrief: null ?? errorMsg,
         rosterError: null ?? rosterError,
         cadetList: cadetsData,
-        roster: rosterData
+        roster: rosterData,
+        hasRoster: hasRoster
     })
 })
 
@@ -138,6 +142,7 @@ app.get('/save', (req, res) => {
 })
 
 app.get('/viewRoster', (req, res) => {
+    console.log(req.session.roster);
     res.render('roster', {
         roster: req.session.roster
     })

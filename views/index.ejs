@@ -8,7 +8,7 @@
 </head>
 <body class="bg-orange-500">
     <% daysAbbreviated = ["mon", "tues", "thurs", "fri"] %>
-    <p class="w-min min-w-max mx-auto text-center font-semibold text-xl sm:text-2xl md:text-3xl lg:text-4xl mt-4 text-stone-50">Cadets Info</p> 
+    <p class="w-min min-w-max mx-auto text-center font-semibold text-xl sm:text-2xl md:text-3xl lg:text-4xl mt-6 text-stone-50">Cadets Info</p> 
     <% if(locals.debrief) { %>
         <p class="text-center text-lg text-white underline underline-offset-4 decoration-4 decoration-red-500 font-semibold py-2"><%= locals.debrief %> </p>
     <% } %>  
@@ -35,7 +35,7 @@
             </div>
         <% } %>  
     <% } %>  
-    <% if(locals.roster.monday.breakfast.length > 0) { %>
+    <% if(locals.hasRoster > 0) { %>
         <p class="relative mb-4 boxShadow hover:scale-105 transition-all delay-200 duration-500 text-amber-400 hover:text-orange-400 mt-4 w-min min-w-max px-4 py-2 mx-auto text-center font-semibold text-lg cursor-pointer">
             <a href="/viewRoster">
                 View Roster
@@ -128,7 +128,7 @@
             Make Roster
         </a>
     </p>
-    <% if(locals.roster.monday.breakfast.length > 0) { %>
+    <% if(locals.hasRoster > 0) { %>
         <p class="text-center text-white font-semibold text-5xl mt-24" id="roster">Roster:</p>
         <div class="text-center pb-5">
             <% shiftType = "text-lg font-semibold" %> 
