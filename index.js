@@ -63,7 +63,7 @@ app.get('/', (req, res) => {
         errorMsg = "There's already a cadet with that name";
     }
     console.log(rosterData);
-    let hasRoster = (rosterData) ? true : false;
+    let hasRoster = (rosterData.monday.breakfast.length > 0) ? true : false;
     console.log("Has Roster: " + hasRoster);
     res.render('index', {
         debrief: null ?? errorMsg,
@@ -142,7 +142,7 @@ app.get('/save', (req, res) => {
 })
 
 app.get('/viewRoster', (req, res) => {
-    console.log(req.session.roster);
+    console.log(req.session.roster)
     res.render('roster', {
         roster: req.session.roster
     })
@@ -246,6 +246,7 @@ app.get('/roster.json', (req, res) => {
 app.listen(process.env.PORT || port, () => {
     console.log(`Listening on port:${port}`)
 })
+
 
 function presetCadetList() { //To be called from the console | 0 -> "Free Lunch Period" | 5 -> "Not Available"
     console.log("\nLoading Preset Cadet List");

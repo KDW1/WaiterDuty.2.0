@@ -1,7 +1,7 @@
 {
   "name": "waiterduty.2.0",
   "version": "1.0.0",
-  "description": "A small Waiter Duty Application to make rosters easy to make\\",
+  "description": "A small Waiter Duty Application to mnpake rosters easy to make\\",
   "main": "index.js",
   "engines": {
     "node": "18.x"
