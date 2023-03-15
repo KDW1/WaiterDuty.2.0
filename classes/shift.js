@@ -3,12 +3,14 @@ class Shift {
     timePeriod = 0;
     shift = 0;
     assignedPerson = "";
+    attended = true;
 
-    constructor(dayNum, timePeriod, shift, cadetName) {
+    constructor(dayNum, timePeriod, shift, cadetName, attended = true) {
         this.dayNum = dayNum;
         this.timePeriod = timePeriod;
         this.shift = shift;
         this.assignedPerson = cadetName;
+        this.attended = attended;
     }
     
     fromJson(json) {

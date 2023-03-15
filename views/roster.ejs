@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WaiterDuty.2.0</title>
+    <%- include('./header') %>
+</head>
+<body class="bg-orange-500">
+    <p class="text-center text-white font-semibold text-5xl mt-4" id="roster">Roster:</p>
+    <p class="relative boxShadow hover:scale-105 transition-all delay-200 duration-500 text-amber-400 hover:text-orange-400 mt-4 w-min min-w-max px-4 py-2 mx-auto text-center font-semibold text-lg cursor-pointer">
+        <a href="/">
+            Back Home
+        </a>
+    </p>
+    <p  class="text-center text-white font-semibold text-2xl mt-8" id="percent">
+        <%= Intl.NumberFormat('default', {
+            style: 'percent',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          }).format(locals.roster.attendancePercent); %> Attendance
+    </p>
+    <div class="hidden"></div>
+    <div class="grid gap-2 grid-cols-3 w-2/3 mt-6 mx-auto">
+        <div id="rosters" class="text-center pb-5 col-span-2 px-4">
+            <% shiftType = "text-sm font-semibold text-start" %>
+            <% nameType = "name text-start text-base" %> 
+            <% for(let i = 0; i < 5; i++) { %>
+                <% let days = ['mon', 'tue', 'wed', 'thurs', 'fri'] %> 
+                <% let daysFull = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'] %> 
+                <div id="<%=days[i]%>Table" class="boxShadow mb-6 px-6 py-6 mx-auto">
+                    <p class="text-2xl underline underline-offset-4 decoration-4 decoration-stone-200 font-semibold text-center"><%= daysFull[i].charAt(0).toUpperCase() + daysFull[i].slice(1) %> Schedule</p>
+                    <table class="mx-auto table-auto w-full border-separate">
+                            <% data = roster[daysFull[i]] %> 
+                            <% function iterateShifts(arr) {
+                                let terms = [];
+                                terms = arr.map((data) => {
+                                    return data;
+                                })
+                                return terms;
+                            } %> 
+                            <tr class="w-1/2">
+                                <p class="pt-4 <%= shiftType %>">Breakfast</p>
+                                <% iterateShifts(data.breakfast).map((data) => { %>
+                                <% let percentColor = (data.attended) ? 'bg-green-300' : 'bg-red-300' %>
+                                <div onclick="changeAttendance(this)" class="flex w-full mt-2 px-2 py-1 <%= percentColor %> rounded-md">
+                                    <div id="name" class="<%= nameType %>"><%= data.assignedPerson %> <%= data.attended %></div>
+                                    <svg class="fill-white h-5 ml-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                        <!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                        <path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+                                    </svg>
+                                </div>
+                            <% });%>
+                            </tr>
+                            <% if(i != 2) { %>
+                                <tr><p class="pt-4 <%= shiftType %> ">1st Lunch</p><% iterateShifts(data.lunches.firstLunch).map((data) => { %>
+                                    <p class="<%= nameType %>"><%= data.assignedPerson %> <%= data.attended %></p>
+                                <% });%></tr>
+                                <tr><p class="pt-4 <%= shiftType %> ">2nd Lunch</p><% iterateShifts(data.lunches.secondLunch).map((data) => { %>
+                                    <p class="<%= nameType %>"><%= data.assignedPerson %> <%= data.attended %></p>
+                                <% });%></tr>
+                                <tr><p class="pt-4 <%= shiftType %> ">3rd Lunch</p><% iterateShifts(data.lunches.thirdLunch).map((data) => { %>
+                                    <p class="<%= nameType %>"><%= data.assignedPerson %> <%= data.attended %></p>
+                                <% });%></tr>
+                            <% } else { %>
+                                <tr><p class="pt-4 <%= shiftType %> ">Lunch</p><% iterateShifts(data.wednesday).map((data) => { %>
+                                    <p class="<%= nameType %>"><%= data.assignedPerson %> <%= data.attended %></p>
+                                <% });%></tr>
+                            <% } %>   
+                            <tr><p class="pt-4 <%= shiftType %> ">1st Dinner</p><% iterateShifts(data.dinners.firstDinner).map((data) => { %>
+                                <p class="<%= nameType %>"><%= data.assignedPerson %> <%= data.attended %></p>
+                            <% });%></tr>
+                            <tr><p class="pt-4 <%= shiftType %> ">2nd Dinner</p><% iterateShifts(data.dinners.secondDinner).map((data) => { %>
+                                <p class="<%= nameType %>"><%= data.assignedPerson %> <%= data.attended %></p>
+                            <% });%></tr>
+                    </table>
+                </div>
+            <% } %>  
+        </div>
+        <select id="days" class="px-2 py-2 rounded-md col-span-1 h-min">
+            <option selected value="nan">No Day Selected</option>
+            <option value="mon">Monday</option>
+            <option value="tue">Tuesday</option>
+            <option value="wed">Wednesday</option>
+            <option value="thurs">Thursday</option>
+            <option value="fri">Friday</option>
+        </select>
+    </div>
+    <script src="jquery-3.6.1.min.js"></script>
+    <script>   
+    let date = new Date();
+    console.log(date.getDate()); 
+    //Range of 1-
+    let days = ['mon', 'tues', 'wed', 'thurs', 'fri'];
+    let selectElem = document.getElementById("days");
+    if(date.getDate() <= 4) {
+        console.log(days[date.getDate()]);
+    }
+    selectElem.addEventListener('change', (e) => {
+        let day = selectElem.value;
+        console.log(day);
+        let elems = document.getElementById("rosters").children;
+        if(day != 'nan') {
+            for(let i = 0; i < elems.length; i++) {
+                let elem = elems[i];
+                if(elem.id == day + "Table") {
+                    if(elem.classList.contains('hidden')) elem.classList.remove('hidden');
+                    continue;
+                } else {
+                    if(!elem.classList.contains('hidden')) elem.classList.add('hidden');
+                }
+            }
+        } else {
+            console.log("what");
+            
+            for(let i = 0; i < elems.length; i++) {
+                let elem = elems[i];
+                if(elem.classList.contains('hidden')) elem.classList.remove('hidden');
+                continue;
+            }
+        }
+    })
+
+    function changeAttendance(elem) {
+        if(elem.classList.contains('bg-green-300')) {
+            elem.classList.remove('bg-green-300');
+            elem.classList.add('bg-red-300');
+        } else if(elem.classList.contains('bg-red-300')) {
+            elem.classList.add('bg-green-300');
+            elem.classList.remove('bg-red-300');
+        }
+        let name = elem.querySelector('#name');
+        console.log(name.innerHTML);
+    }
+    </script>
+</body>
+</html>

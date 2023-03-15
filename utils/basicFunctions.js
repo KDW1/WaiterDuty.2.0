@@ -8,7 +8,7 @@ function AssignBreakfastShifts(cadetList, week, baseShifts, dayNum) {
         let metTheMinimum = metMinimumNumOfShifts(cadetList, baseShifts)
         if ( metTheMinimum && (cadetList[i].shiftAmounts == baseShifts) && (cadetList[i].shiftAmounts != 0)) {
             baseShifts++;
-            console.log(`\n\n${baseShifts} is the base number of shifts at breakfast\n\n`);
+            // console.log(`\n\n${baseShifts} is the base number of shifts at breakfast\n\n`);
         }
         if (!fullShifts(currentDay.breakfast, 5)) {
             if (cadetList[i].shiftAmounts < baseShifts) {
@@ -34,7 +34,7 @@ function AssignWednesdayShifts(cadetList, week, baseShifts, dayNum) {
         let metTheMinimum = metMinimumNumOfShifts(cadetList, baseShifts)
         if (metTheMinimum && (cadetList[i].shiftAmounts == baseShifts) && (cadetList[i].shiftAmounts != 0)) {
             baseShifts++;
-            console.log(`${baseShifts} is the base number of shifts at breakfast`);
+            // console.log(`${baseShifts} is the base number of shifts at breakfast`);
         }
         if (!fullShifts(currentDay.wednesday, 7)) {
             if (cadetList[i].shiftAmounts < baseShifts) {
@@ -62,7 +62,7 @@ function AssignDinnerShifts(cadetList, week, baseShifts, dayNum) {
         let metMinimum = metMinimumNumOfShifts(cadetList, baseShifts);
         if (metMinimum && (cadetList[i].shiftAmounts == baseShifts) && (cadetList[i].shiftAmounts != 0)) {
             baseShifts++;
-            console.log(`${baseShifts} is the base number of shifts at dinner`);
+            // console.log(`${baseShifts} is the base number of shifts at dinner`);
         }
         if (!fullShifts(currentDay.dinners.firstDinner, 3)) {
             if (cadetList[i].shiftAmounts < baseShifts) {
@@ -130,7 +130,7 @@ function AssignLunchShifts(cadetList, week, baseShifts, dayNum) {
     for (let i = 0; i < cadetList.length; i++) {
         if (metMinimumNumOfShifts(cadetList, baseShifts) && (cadetList[i].shiftAmounts != 0)) {
             baseShifts++;
-            console.log(`${baseShifts} is the base number of shifts at lunch`);
+            // console.log(`${baseShifts} is the base number of shifts at lunch`);
         }
         let overWorked = cadetList[i].shiftAmounts >= baseShifts;
         //For each 'availableForLunch' need to add a baseShifts parameter

@@ -62,8 +62,12 @@ app.get('/', (req, res) => {
     } else if(errorMsg == "DuplicateCadet") {
         errorMsg = "There's already a cadet with that name";
     }
-    console.log(rosterData);
-    let hasRoster = (rosterData.monday.breakfast.length > 0) ? true : false;
+    let hasRoster;
+    if(rosterData) {
+        hasRoster = (rosterData.monday.breakfast.length > 0) ? true : false;
+    } else {
+        hasRoster = false;
+    }
     console.log("Has Roster: " + hasRoster);
     res.render('index', {
         debrief: null ?? errorMsg,
@@ -142,10 +146,19 @@ app.get('/save', (req, res) => {
 })
 
 app.get('/viewRoster', (req, res) => {
-    console.log(req.session.roster)
-    res.render('roster', {
-        roster: req.session.roster
-    })
+    let rosterData = req.session.roster
+    if(!rosterData) {
+        res.redirect('/')
+    }
+    let hasRoster = (rosterData.monday.breakfast.length > 0) ? true : false;
+    console.log(req.session.roster.monday)
+    if(hasRoster) {
+        res.render('roster', {
+            roster: req.session.roster
+        })
+    } else {
+        res.redirect('/');
+    }
 })
 
 app.get('/roster', (req, res) => {
@@ -176,12 +189,13 @@ app.get('/roster', (req, res) => {
     
     let relevantInfo = (cadetList) ? basicFuncs.generateWaiterRoster(cadetList, roster) : false;
     if(relevantInfo.roster && relevantInfo.cadetList) {
+        relevantInfo.roster.checkAttendance();
         console.log("Roster:")
-        console.log(relevantInfo.roster);
+        // console.log(relevantInfo.roster);
         req.session.roster = relevantInfo.roster;
         req.session.cadets = relevantInfo.cadetList;
-        console.log("Cadets (New):")
-        console.log(relevantInfo.cadetList)
+        // console.log("Cadets (New):")
+        // console.log(relevantInfo.cadetList)
         res.redirect('/')
     } else {
         console.log("Error:")

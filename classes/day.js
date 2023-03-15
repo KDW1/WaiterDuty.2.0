@@ -1,13 +1,16 @@
+const { all } = require("..");
 let Shift = require("./shift")
 
 class Day {
     breakfast = [];
     wednesday = [];
+
     lunches = {
         firstLunch: [],
         secondLunch: [],
         thirdLunch: []
     };
+
     dinners = {
         firstDinner: [],
         secondDinner: []
@@ -15,10 +18,31 @@ class Day {
 
     dayNum = 0;
 
+    attendancePercent = 0;
+
     constructor(dayNum) {
         this.dayNum = dayNum;
     }
 
+    checkAttendance() {
+        let numOfShifts = 0;
+        let numAttended = 0;
+
+        let allShifts = [];
+        allShifts.push(...this.breakfast, ...this.wednesday, ...this.dinners.firstDinner, ...this.dinners.secondDinner);
+        allShifts.push(...this.lunches.firstLunch, ...this.lunches.secondLunch, ...this.lunches.thirdLunch);
+
+
+        for(let i = 0; i < allShifts.length; i++) {
+            numOfShifts++;
+            let shift = allShifts[i];
+            if(shift.attended) {
+                numAttended++;
+            }
+        }
+
+        this.attendancePercent = numAttended/numOfShifts;
+    }
     returnArrOfShifts(arr) {
         if(!arr || arr.length == 0) {
             return [];
@@ -88,6 +112,8 @@ class Day {
         this.lunches = this.returnArrOfShiftsLunch(json.lunches);
         this.dinners = this.returnArrOfShiftsDinner(json.dinners);
         this.dayNum = json.dayNum;
+        this.timePeriods.push(this.breakfast, this.wednesday, this.lunches.firstLunch, this.lunches.secondLunch, this.lunches.thirdLunch);
+        this.timePeriods.push(this.dinners.firstDinner, this.dinners.secondDinner);
     }
 
     get firstLunchFull() {
