@@ -20,6 +20,10 @@ class Day {
 
     attendancePercent = 0;
 
+    allShifts = [];
+
+    timePeriods = [];
+
     constructor(dayNum) {
         this.dayNum = dayNum;
     }
@@ -28,14 +32,13 @@ class Day {
         let numOfShifts = 0;
         let numAttended = 0;
 
-        let allShifts = [];
-        allShifts.push(...this.breakfast, ...this.wednesday, ...this.dinners.firstDinner, ...this.dinners.secondDinner);
-        allShifts.push(...this.lunches.firstLunch, ...this.lunches.secondLunch, ...this.lunches.thirdLunch);
+        this.allShifts.push(...this.breakfast, ...this.wednesday, ...this.dinners.firstDinner, ...this.dinners.secondDinner);
+        this.allShifts.push(...this.lunches.firstLunch, ...this.lunches.secondLunch, ...this.lunches.thirdLunch);
 
 
-        for(let i = 0; i < allShifts.length; i++) {
+        for(let i = 0; i < this.allShifts.length; i++) {
             numOfShifts++;
-            let shift = allShifts[i];
+            let shift = this.allShifts[i];
             if(shift.attended) {
                 numAttended++;
             }

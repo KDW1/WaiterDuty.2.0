@@ -24,6 +24,8 @@ const basicFuncs = require('./utils/basicFunctions')
 const SqliteStore = require("better-sqlite3-session-store")(session)
 const db = new sqlite("sessions.db")
 
+let activeRoster = null;
+
 app.use(cookieParser())
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -54,6 +56,10 @@ session.cadets = session.cadets || []
 session.roster = session.roster || new Roster()
 
 app.get('/', (req, res) => {
+    if(!activeRoster) {
+        activeRoster = new Roster()
+        activeRoster.fromJson(req.session.roster);
+    }
     let { errorMsg, rosterError } = req.query;
     let cadetsData = req.session.cadets
     let rosterData = req.session.roster
@@ -146,12 +152,16 @@ app.get('/save', (req, res) => {
 })
 
 app.get('/viewRoster', (req, res) => {
+    if(!activeRoster) {
+        activeRoster = new Roster()
+        activeRoster.fromJson(req.session.roster);
+    }
     let rosterData = req.session.roster
     if(!rosterData) {
         res.redirect('/')
     }
     let hasRoster = (rosterData.monday.breakfast.length > 0) ? true : false;
-    console.log(req.session.roster.monday)
+    // console.log(req.session.roster.monday)
     if(hasRoster) {
         res.render('roster', {
             roster: req.session.roster
@@ -192,6 +202,7 @@ app.get('/roster', (req, res) => {
         relevantInfo.roster.checkAttendance();
         console.log("Roster:")
         // console.log(relevantInfo.roster);
+        activeRoster = relevantInfo.roster;
         req.session.roster = relevantInfo.roster;
         req.session.cadets = relevantInfo.cadetList;
         // console.log("Cadets (New):")
@@ -255,6 +266,75 @@ app.get('/cadets.json', (req, res) => {
 
 app.get('/roster.json', (req, res) => {
     res.sendFile('.jsonFiles/roster.json', { root: path.join(__dirname)})
+})
+
+app.get('/changeAttendance', (req, res) => {
+    let {name, day, timePeriod, section, attendanceStatus} = req.query;
+    timePeriod = parseInt(timePeriod);
+    section = parseInt(section);
+    // console.log(day);
+    // console.log(req.session.roster.monday)
+    if(!activeRoster) {
+        activeRoster = new Roster()
+        activeRoster.fromJson(req.session.roster);
+    }
+    // console.log(activeRoster);
+    let curr = activeRoster[day];
+    // console.log(curr);
+    switch (timePeriod) {
+        case 1:
+            curr = curr.breakfast;
+            break;
+        case 2:
+            if(day == 'wednesday') {
+                curr = curr.wednesday;
+                break;
+            }
+            curr = curr.lunches;
+            break;
+        case 3:
+            curr = curr.dinners; 
+            break;
+        default:
+            break;
+    }
+    // console.log('Section:');
+    // console.log(curr);
+
+    if(timePeriod == 2 && day != 'wednesday') {
+        switch (section) {
+            case 1:
+                curr = curr.firstLunch;
+                break;
+            case 2:
+                curr = curr.secondLunch;
+                break;
+            case 3: 
+                curr = curr.thirdLunch;
+                break;
+            default:
+                break;
+        }
+    } else if(timePeriod == 3) {
+        switch (section) {
+            case 1:
+                curr = curr.firstDinner;
+                break;
+            case 2:
+                curr = curr.secondDinner;
+                break;
+            default:
+                break;
+        }
+    }
+    console.log("Shifts:");
+    console.log(curr);
+    curr = curr.find((data) => data.assignedPerson == name);
+    curr.attended = (attendanceStatus == 'true');
+    // console.log(curr);
+    activeRoster.checkAttendance();
+    res.send({dayNum: curr.dayNum, dayPercent: activeRoster[day].attendancePercent, rosterPercent: activeRoster.attendancePercent});
+    // console.log(curr);
 })
 
 app.listen(process.env.PORT || port, () => {

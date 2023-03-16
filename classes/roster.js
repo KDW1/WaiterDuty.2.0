@@ -22,13 +22,13 @@ class Roster {
 
     checkAttendance() {
         let percent = 0;
-        console.log("Checking attendance");
+        // console.log("Checking attendance");
         this.days.forEach((day) => {
-            console.log("Day: " + day.dayNum);
+            // console.log("Day: " + day.dayNum);
             day.checkAttendance();
             percent += day.attendancePercent;
         })
-        console.log("Percent %: " + percent);
+        // console.log("Percent %: " + percent);
         this.attendancePercent = percent/5;
     }
 
