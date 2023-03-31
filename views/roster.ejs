@@ -23,6 +23,9 @@
     <p  class="text-center text-white font-semibold text-2xl mt-2" id="dayPercent">
         
     </p>
+    <p class="text-rose-700 font-bold text-lg mt-2 text-center hidden" id="minWarning">
+        *Doesn't meet minimum
+    </p>
     <div class="hidden"></div>
     <div class="grid gap-2 grid-cols-3 w-2/3 mt-6 mx-auto">
         <div id="rosters" class="text-center pb-5 col-span-2 px-4">
@@ -45,6 +48,7 @@
                             <tr class="w-1/2">
                                 <p class="pt-4 <%= shiftType %>">Breakfast</p>
                                 <% iterateShifts(data.breakfast).map((data) => { %>
+                                    <p><%= data.attended %></p>
                                 <% let percentColor = (data.attended) ? 'bg-green-300' : 'bg-red-300' %>
                                 <div onclick="changeAttendance(this, '<%=daysFull[i]%>', 1)" class="flex w-full mt-2 px-2 py-1 <%= percentColor %> rounded-md">
                                     <div id="name" class="<%= nameType %>"><%= data.assignedPerson %></div>
@@ -116,14 +120,24 @@
                 </div>
             <% } %>  
         </div>
-        <select id="days" class="px-2 py-2 rounded-md col-span-1 h-min">
-            <option selected value="nan">No Day Selected</option>
-            <option value="mon">Monday</option>
-            <option value="tue">Tuesday</option>
-            <option value="wed">Wednesday</option>
-            <option value="thurs">Thursday</option>
-            <option value="fri">Friday</option>
-        </select>
+        <div class="col-span-1">
+            <select id="days" class="px-2 py-2 rounded-md w-full h-min">
+                <option selected value="nan">No Day Selected</option>
+                <option value="mon">Monday</option>
+                <option value="tue">Tuesday</option>
+                <option value="wed">Wednesday</option>
+                <option value="thurs">Thursday</option>
+                <option value="fri">Friday</option>
+            </select>
+            <div class="flex-col text-white font-lg font-bold">
+                Minimum Attendance:
+                <div>
+                    <input value="80" max="100" min="0" class="mt-2 bg-transparent border-b-2 border-white outline-none w-1/2 lg:w-1/5" type="number" name="minimumPer" id="minimumPer">
+                    %
+                </div>
+            </div>
+        </div>
+        <div class="text-rose-700 hidden"></div>
     </div>
     <script src="jquery-3.6.1.min.js"></script>
     <script>   
@@ -135,12 +149,26 @@
     let selectElem = document.getElementById("days");
     let roster = '<%=JSON.stringify(locals.roster)%>'.replaceAll('&#34;', '\"');
     let currentDay = '';
+    let minimum = 0;
     roster = JSON.parse(roster); 
     console.log("Roster: ")
     console.log(roster)
     if(date.getDate() <= 4) {
         console.log(days[date.getDate()]);
     }
+
+    document.getElementById("minimumPer").addEventListener('input', (e) => {
+        let value = document.getElementById("minimumPer").value;
+        if(value < 0) {
+            document.getElementById("minimumPer").value = 0;
+        } else if(value > 100) {
+            document.getElementById("minimumPer").value = 100;
+        }
+        let overallPercent = roster.attendancePercent;
+        minimum = value/100;
+        changeWarning(overallPercent, minimum);
+    })
+
     selectElem.addEventListener('change', (e) => {
         let day = selectElem.value;
         let dayInd = days.indexOf(day);
@@ -176,6 +204,16 @@
         }
     })
 
+    function changeWarning(percent, min) {
+        let warn = document.getElementById("minWarning");
+        console.log(percent)
+        if(percent < min) {
+            if(minWarning.classList.contains("hidden")) minWarning.classList.remove("hidden");
+        } else {
+            if(!minWarning.classList.contains("hidden")) minWarning.classList.add("hidden");
+        }
+    }
+
     async function changeAttendance(elem, day, timePeriod, section = 0) {
         let attending = true;
         if(elem.classList.contains('bg-green-300')) {
@@ -202,10 +240,12 @@
         // console.log("Percent Share: " + percentShare);
         let name = elem.querySelector('#name').innerHTML;
         console.log(name);
+
         document.getElementById("percent").innerHTML = `...`;
         if (currentDay != '') {
             document.getElementById("dayPercent").innerHTML = `...`;
         }
+
         let url = `/changeAttendance?name=${name}&day=${day}&timePeriod=${timePeriod}&section=${section}&attendanceStatus=${attending}`;
         let json = await fetch(url).then(response => response.json()).then(response => response);
         
@@ -229,9 +269,13 @@
             document.getElementById("dayPercent").innerHTML = `${currDay}: ${dPer}`;
         }
 
+        roster.attendancePercent = json.rosterPercent;
         roster[currDay.toLowerCase()].attendancePercent = json.dayPercent;
 
         document.getElementById("percent").innerHTML = `${rPer} Attendance`;
+
+        
+        changeWarning(roster.attendancePercent, minimum);
 
         // console.log(`Day ${day}, Time Period: ${timePeriod}, Section: ${section}`);
     }
