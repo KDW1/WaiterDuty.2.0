@@ -23,6 +23,10 @@
     <p  class="text-center text-white font-semibold text-2xl mt-2" id="dayPercent">
         
     </p>
+    <p  class="text-center text-white font-semibold text-lg mt-2 hover:scale-105 transition duration-500" id="dayPercent">
+        Toggle between <span class="text-green-500 bg-white px-1.5 py-0.5 rounded-xl">present</span> and <span class="bg-white text-red-500 px-1.5 py-0.5 rounded-xl">absent</span> for a waiter duty shift. <br>
+        
+    </p>
     <p class="text-rose-700 font-bold text-lg mt-2 text-center hidden" id="minWarning">
         *Doesn't meet minimum
     </p>
@@ -48,14 +52,9 @@
                             <tr class="w-1/2">
                                 <p class="pt-4 <%= shiftType %>">Breakfast</p>
                                 <% iterateShifts(data.breakfast).map((data) => { %>
-                                    <p><%= data.attended %></p>
                                 <% let percentColor = (data.attended) ? 'bg-green-300' : 'bg-red-300' %>
                                 <div onclick="changeAttendance(this, '<%=daysFull[i]%>', 1)" class="flex w-full mt-2 px-2 py-1 <%= percentColor %> rounded-md">
                                     <div id="name" class="<%= nameType %>"><%= data.assignedPerson %></div>
-                                    <svg class="fill-white h-5 ml-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                        <!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                        <path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
-                                    </svg>
                                 </div>
                             <% });%>
                             </tr>
@@ -205,6 +204,7 @@
     })
 
     function changeWarning(percent, min) {
+        let dayPercent = document.getElementById("dayPercent").value;
         let warn = document.getElementById("minWarning");
         console.log(percent)
         if(percent < min) {

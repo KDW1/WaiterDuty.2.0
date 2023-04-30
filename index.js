@@ -56,10 +56,6 @@ session.cadets = session.cadets || []
 session.roster = session.roster || new Roster()
 
 app.get('/', (req, res) => {
-    if(!activeRoster) {
-        activeRoster = new Roster()
-        activeRoster.fromJson(req.session.roster);
-    }
     let { errorMsg, rosterError } = req.query;
     let cadetsData = req.session.cadets
     let rosterData = req.session.roster
@@ -69,6 +65,12 @@ app.get('/', (req, res) => {
         errorMsg = "There's already a cadet with that name";
     }
     let hasRoster;
+    
+    if(!activeRoster && rosterData) {
+        activeRoster = new Roster()
+        activeRoster.fromJson(req.session.roster);
+    }
+
     if(rosterData) {
         hasRoster = (rosterData.monday.breakfast.length > 0) ? true : false;
     } else {
