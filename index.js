@@ -154,7 +154,7 @@ app.get('/save', (req, res) => {
 })
 
 app.get('/viewRoster', (req, res) => {
-    if(!activeRoster) {
+    if(!activeRoster && activeRoster.monday.breakfast.length > 0) {
         activeRoster = new Roster()
         activeRoster.fromJson(req.session.roster);
     }
