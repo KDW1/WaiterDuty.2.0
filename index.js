@@ -154,10 +154,6 @@ app.get('/save', (req, res) => {
 })
 
 app.get('/viewRoster', (req, res) => {
-    if(!activeRoster && activeRoster.monday.breakfast.length > 0) {
-        activeRoster = new Roster()
-        activeRoster.fromJson(req.session.roster);
-    }
     let rosterData = req.session.roster
     if(!rosterData) {
         res.redirect('/')
@@ -165,6 +161,10 @@ app.get('/viewRoster', (req, res) => {
     let hasRoster = (rosterData.monday.breakfast.length > 0) ? true : false;
     // console.log(req.session.roster.monday)
     if(hasRoster) {
+        if(!activeRoster) {
+            activeRoster = new Roster()
+            activeRoster.fromJson(req.session.roster);
+        }
         res.render('roster', {
             roster: req.session.roster
         })
